@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--Поддержка транзакций-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!--Поддержка анотаций для бинов и прочего @Autowired etc -->
+    <context:annotation-config/>
+    <!--Сканируем пакеты на наличие бинов -->
+    <context:component-scan base-package="ru.eleron.osa.lris.otcenka"/>
+    <!--Здесь будут подгружаться переменные из файла util.property -->
+    <context:property-placeholder location="classpath:util.property"/>
+    <!--определяем бин настроек для транзакций -->
+    <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+    <!--Настройка ентити менеджера ВАЖНО!!!!!! -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <!--Вот тут и будет искать ентити классы и мапить их -->
+        <property name="packagesToScan" value="ru.eleron.osa.lris.otcenka.entity"/>
+        <!--Вот тут базовые настройки -->
+        <property name="dataSource" ref="dataSource"/>
+        <!--Говорим какая реализация jpa -->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <!--доп настройки реализации -->
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">${dialect}</prop>
+                <prop key="hibernate.show_sql">${showSql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hbm2dll.auto}</prop>
+            </props>
+        </property>
+    </bean>
+    <!--САМОЕ ВАЖНОЕ обеспечиваем работу с транзакциями и натройка другим бином emf -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+</beans>

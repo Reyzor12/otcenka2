@@ -1,0 +1,7 @@
+driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+url=jdbc:sqlserver://localhost:1433;databaseName=otcenka3
+password=eleronadmin
+user=sa
+dialect=org.hibernate.dialect.SQLServerDialect
+showSql=true
+hbm2dll.auto=update
