@@ -10,6 +10,10 @@ import javax.validation.constraints.Size;
 })
 public class User extends AbstractEntities {
 
+    public static final Integer BASE_ROLE = 1;
+    public static final Integer HEAD_DEPARTMENT_ROLE = 2;
+    public static final Integer HEAD_ROLE = 3;
+
     @NotNull(message = "name of user is null")
     @Size(max = 30, message = "user name can't be more than 30 chars")
     @Column(name = "name")
@@ -26,6 +30,9 @@ public class User extends AbstractEntities {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department",referencedColumnName = "id")
     private Department department;
+    @NotNull(message = "role of user is null")
+    @Column(name = "role")
+    private Integer role;
 
     public User(){super();}
     public User(Long id){super(id);}
@@ -34,10 +41,15 @@ public class User extends AbstractEntities {
         this.name = name;
         this.secondName = secondName;
         this.lastName = lastName;
+        this.role = HEAD_ROLE;
     }
     public User(String name, String secondName, String lastName, Department department){
         this(name,secondName,lastName);
         this.department = department;
+    }
+    public User(String name, String secondName, String lastName, Department department, Integer role){
+        this(name,secondName,lastName,department);
+        this.role = role;
     }
 
     public String getName() {
@@ -70,5 +82,13 @@ public class User extends AbstractEntities {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 }
