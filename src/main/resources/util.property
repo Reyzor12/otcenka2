@@ -1,5 +1,5 @@
 driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
-url=jdbc:sqlserver://localhost:1433;databaseName=otcenka3
+url=jdbc:sqlserver://localhost:1433;databaseName=otcenka4
 password=eleronadmin
 user=sa
 dialect=org.hibernate.dialect.SQLServerDialect
