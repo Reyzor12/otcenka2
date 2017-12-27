@@ -12,6 +12,8 @@ public class Department extends AbstractEntities {
     private String name;
     @OneToMany(mappedBy = "department",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> users;
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Report> reports;
 
     public Department(){super();};
     public Department(Long id){super(id);};
@@ -36,4 +38,31 @@ public class Department extends AbstractEntities {
         this.users = users;
     }
 
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Department that = (Department) o;
+
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }

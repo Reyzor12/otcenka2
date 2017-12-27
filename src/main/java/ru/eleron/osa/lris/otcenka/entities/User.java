@@ -91,4 +91,33 @@ public class User extends AbstractEntities {
     public void setRole(Integer role) {
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!name.equals(user.name)) return false;
+        if (!secondName.equals(user.secondName)) return false;
+        if (!lastName.equals(user.lastName)) return false;
+        if (!department.equals(user.department)) return false;
+        return role.equals(user.role);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + secondName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + department.hashCode();
+        result = 31 * result + role.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString(){
+        return name + " " + secondName + " " + lastName;
+    }
 }
