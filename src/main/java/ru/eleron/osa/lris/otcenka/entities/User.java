@@ -16,22 +16,22 @@ public class User extends AbstractEntities {
 
     @NotNull(message = "name of user is null")
     @Size(max = 30, message = "user name can't be more than 30 chars")
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
     private String name;
     @NotNull(message = "second name of user is null")
     @Size(max = 30, message = "user second name can't be more than 30 chars")
-    @Column(name = "secondName")
+    @Column(name = "secondName",nullable = false)
     private String secondName;
     @NotNull(message = "last name of user is null")
     @Size(max = 30, message = "user last name can't be more than 30 chars")
-    @Column(name = "lastName")
+    @Column(name = "lastName",nullable = false)
     private String lastName;
     @NotNull(message = "department of user is null")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "department",referencedColumnName = "id")
+    @JoinColumn(name = "department",referencedColumnName = "id",nullable = false)
     private Department department;
     @NotNull(message = "role of user is null")
-    @Column(name = "role")
+    @Column(name = "role",nullable = false)
     private Integer role;
 
     public User(){super();}

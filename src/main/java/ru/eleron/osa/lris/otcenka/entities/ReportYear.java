@@ -3,12 +3,14 @@ package ru.eleron.osa.lris.otcenka.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "reportYear")
 public class ReportYear extends AbstractEntities {
 
-    @Column(name = "year")
+    @NotNull(message = "year of ReportYear can't be null")
+    @Column(name = "year",nullable = false)
     private Integer year;
 
     public ReportYear(){super();}

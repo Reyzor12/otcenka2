@@ -10,32 +10,32 @@ import java.util.List;
 public class Report extends AbstractEntities {
 
     @NotNull(message = "shortName of report can't be null")
-    @Column(name = "shortName")
+    @Column(name = "shortName",nullable = false)
     private String shortName;
     @NotNull(message = "fullName of report can't be null")
-    @Column(name = "fullName")
+    @Column(name = "fullName",nullable = false)
     private String fullName;
     @NotNull(message = "dateStart of report can't be null")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "dateStart")
+    @JoinColumn(name = "dateStart",nullable = false)
     private ReportYear dateStart;
     @NotNull(message = "dateEnd of report can't be null")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "dateEnd")
+    @JoinColumn(name = "dateEnd",nullable = false)
     private ReportYear dateEnd;
     @NotNull(message = "responsible of report can't be null")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "responsible")
+    @JoinColumn(name = "responsible",nullable = false)
     private User responsible;
     @OneToMany(fetch = FetchType.EAGER)
     private List<User> performers;
     @NotNull(message = "department of report can't be null")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "department")
+    @JoinColumn(name = "department",nullable = false)
     private Department department;
     @NotNull(message = "percentagePerYear of report can't be null")
     @Max(value=100)
-    @Column(name = "percentagePerYear")
+    @Column(name = "percentagePerYear",nullable = false)
     private Integer percentagePerYear;
     @OneToMany(mappedBy = "report", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OpenReport> openReportList;
