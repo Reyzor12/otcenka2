@@ -18,6 +18,7 @@ public class SceneLoader {
         Parent root = (Parent) loader.load(url);
         stage.setScene(new Scene(root,800,600));
         stage.show();
+        log.info("scene " + url + " load");
     }
     public static void setStage(Stage stageArg){
         stage = stageArg;
