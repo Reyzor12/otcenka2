@@ -6,11 +6,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "review")
 public class Review extends AbstractEntities {
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department")
     private Department department;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userSend")
     private User user;
     @Column(name = "text")
     private String text;

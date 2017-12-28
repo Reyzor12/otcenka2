@@ -24,6 +24,8 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
     private Class<T> clazz;
     private String className;
 
+    public BaseOperation(){}
+
     public BaseOperation(Class<T> clazz){
         this.clazz = clazz;
         this.className = clazz.getName();
