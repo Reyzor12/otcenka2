@@ -34,11 +34,13 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
     @Override
     public void add(T object) {
         entityManager.persist(object);
+        log.info("add " + className + " with object " + object);
     }
 
     @Override
     public void remove(T object) {
-
+        entityManager.remove(object);
+        log.info("remove " + className + " with object " + object);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
 
     @Override
     public List<T> getList() {
-        return null;
+        return entityManager.createQuery("from " + className).getResultList();
     }
 
     @Override
