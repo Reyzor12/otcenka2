@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.eleron.osa.lris.otcenka.entities.AbstractEntities;
 import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
 
 import javax.persistence.EntityManager;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class BaseOperation<T> implements BaseOperationIF<T> {
+public class BaseOperation<T extends AbstractEntities> implements BaseOperationIF<T> {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -33,7 +34,7 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
 
     @Override
     public void add(T object) {
-        entityManager.persist(object);
+        entityManager.merge(object);
         log.info("add " + className + " with object " + object);
     }
 
@@ -51,11 +52,17 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
 
     @Override
     public List<T> getList() {
+        log.info("get list of " + className);
         return entityManager.createQuery("from " + className).getResultList();
     }
 
     @Override
     public boolean update(T object) {
+        T obj = entityManager.find(clazz,object.getId());
+        if(obj != null) {
+            entityManager.merge(object);
+            return true;
+        }
         return false;
     }
 }

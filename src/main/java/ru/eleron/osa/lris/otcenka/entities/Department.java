@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name="department")
 public class Department extends AbstractEntities {
     @NotNull(message = "department name is null")
-    @Column(name = "name",unique = true,nullable = false)
+    @Column(name = "name",unique = false,nullable = false)
     private String name;
     @OneToMany(mappedBy = "department",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> users;
