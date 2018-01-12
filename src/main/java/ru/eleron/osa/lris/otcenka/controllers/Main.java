@@ -24,6 +24,8 @@ public class Main {
     public void startInit(){
         loadData = new LoadData();
         progressBarLoadProgramm.progressProperty().bind(loadData.progressProperty());
-        new Thread(loadData).start();
+        Thread t = new Thread(loadData);
+        t.setDaemon(true);
+        t.start();
     }
 }

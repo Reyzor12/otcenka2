@@ -11,7 +11,7 @@ public class Department extends AbstractEntities {
     @Column(name = "name",unique = true,nullable = false)
     private String name;
     @OneToMany(mappedBy = "department",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User> users;
+    private List<User> users1;
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Report> reports;
 
@@ -31,11 +31,11 @@ public class Department extends AbstractEntities {
     }
 
     public List<User> getUsers() {
-        return users;
+        return users1;
     }
 
     public void setUsers(List<User> users) {
-        this.users = users;
+        this.users1 = users;
     }
 
     public List<Report> getReports() {

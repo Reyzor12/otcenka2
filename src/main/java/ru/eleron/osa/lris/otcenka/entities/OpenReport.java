@@ -16,14 +16,14 @@ public class OpenReport extends AbstractEntities {
     @Column(name = "percentagePerMonth",nullable = false)
     private Integer percentagePerMonth;
     @NotNull(message = "reportYear of OpenReport can't be null")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reportYear",nullable = false)
     private ReportYear reportYear;
     @NotNull(message = "reportMonth of OpenReport can't be null")
     @Column(name = "reportMonth",nullable = false)
     private Integer reportMonth;
     @NotNull(message = "report of OpenReport can't be null")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "report",nullable = false)
     private Report report;
     @Column(name = "comment")
