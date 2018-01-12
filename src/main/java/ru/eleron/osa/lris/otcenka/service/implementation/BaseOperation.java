@@ -2,6 +2,8 @@ package ru.eleron.osa.lris.otcenka.service.implementation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +16,8 @@ import java.util.List;
 @EnableTransactionManagement
 public class BaseOperation<T> implements BaseOperationIF<T> {
 
-    @PersistenceContext
-    EntityManager entityManager;
+    @Autowired
+    SessionFactory sessionFactory;
 
     private static final Logger log = LogManager.getLogger();
     private Class<T> clazz;
@@ -29,7 +31,9 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
     @Override
     @Transactional
     public void add(T object) {
-        entityManager.persist(object);
+
+        sessionFactory.getCurrentSession().save(object);
+
     }
 
     @Override
@@ -41,14 +45,13 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
     @Override
     @Transactional
     public void removeById(Long id) {
-        entityManager.remove(entityManager.find(clazz,id));
-        log.info("found " + className + " with id = " + id);
+
     }
 
     @Override
     @Transactional
     public List<T> getList() {
-        return null;
+        return (List<T>) sessionFactory.getCurrentSession().createQuery("FROM " + className).list();
     }
 
     @Override

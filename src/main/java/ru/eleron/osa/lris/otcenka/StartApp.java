@@ -26,7 +26,10 @@ public class StartApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.setHeight(720);
+        primaryStage.setWidth(1024);
+        primaryStage.setResizable(false);
         SceneLoader.setStage(primaryStage);
-        SceneLoader.loadScene("view/Main.fxml");
+        SceneLoader.loadScene("view/FirstNewUser.fxml");
     }
 }
