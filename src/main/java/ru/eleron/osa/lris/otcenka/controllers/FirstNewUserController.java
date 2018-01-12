@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.Department;
 import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
