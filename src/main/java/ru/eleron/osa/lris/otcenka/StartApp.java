@@ -18,9 +18,9 @@ public class StartApp extends Application {
 
     public static void main(String[] args){
         //ApplicationContext context = new ClassPathXmlApplicationContext("springContext.xml");
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.scan("ru.eleron.osa.lris.otcenka");
-        context.refresh();
+        //AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        //context.scan("ru.eleron.osa.lris.otcenka");
+        //context.refresh();
         launch(args);
     }
 
