@@ -29,17 +29,18 @@ public class LogDao {
         return result;
     }
 /*
-    @Around("execution(* ru.eleron.osa.lris.otcenka.controllers..*.initialize(..))")
+    @Around("execution(static * ru.eleron.osa.lris.otcenka.utilities.SceneLoader.loadScene(..))")
     public Object logInitializeControllers(ProceedingJoinPoint proceedingJoinPoint){
         String packageName = proceedingJoinPoint.getTarget().toString();
-        log.info("starting initialize frame " + packageName);
+        Object[] args = proceedingJoinPoint.getArgs();
+        log.info("starting load scene " + args[0] + " from package"  + packageName);
         Object result = null;
         try{
             result = proceedingJoinPoint.proceed();
         } catch (Throwable e) {
-            log.error("fail initialize frame",e);
+            log.error("fail load scene",e);
         }
-        log.info("frame was succussful load");
+        log.info("scene was succussful load");
         return result;
     }*/
 }

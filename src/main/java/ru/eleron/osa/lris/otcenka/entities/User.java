@@ -41,7 +41,7 @@ public class User extends AbstractEntities {
         this.name = name;
         this.secondName = secondName;
         this.lastName = lastName;
-        this.role = HEAD_ROLE;
+        this.role = BASE_ROLE;
     }
     public User(String name, String secondName, String lastName, Department department){
         this(name,secondName,lastName);
