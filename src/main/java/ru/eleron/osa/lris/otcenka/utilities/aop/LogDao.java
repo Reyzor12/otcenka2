@@ -28,7 +28,7 @@ public class LogDao {
         log.info("method " + methodName + " return " + result);
         return result;
     }
-
+/*
     @Around("execution(* ru.eleron.osa.lris.otcenka.controllers..*.initialize(..))")
     public Object logInitializeControllers(ProceedingJoinPoint proceedingJoinPoint){
         String packageName = proceedingJoinPoint.getTarget().toString();
@@ -41,5 +41,5 @@ public class LogDao {
         }
         log.info("frame was succussful load");
         return result;
-    }
+    }*/
 }
