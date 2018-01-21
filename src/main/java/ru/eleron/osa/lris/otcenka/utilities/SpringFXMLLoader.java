@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class SpringFXMLLoader {
 
-    //private static final ApplicationContext APPLICATION_CONTEXT = new ClassPathXmlApplicationContext("springContext.xml");
+//    private static final ApplicationContext APPLICATION_CONTEXT = new ClassPathXmlApplicationContext("springContext.xml");
     private static final AnnotationConfigApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext();
 
     public SpringFXMLLoader(){

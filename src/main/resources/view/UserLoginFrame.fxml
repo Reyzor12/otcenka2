@@ -6,8 +6,8 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.UserLoginFrameController">
    <children>
-      <Button layoutX="662.0" layoutY="653.0" mnemonicParsing="false" text="Войти" />
-      <Button layoutX="842.0" layoutY="646.0" mnemonicParsing="false" text="Выйти" />
-      <ListView layoutX="36.0" layoutY="37.0" prefHeight="569.0" prefWidth="925.0" />
+      <Button onAction="#enter" layoutX="662.0" layoutY="653.0" mnemonicParsing="false" text="Войти" />
+      <Button onAction="#exit" layoutX="842.0" layoutY="646.0" mnemonicParsing="false" text="Выйти" />
+      <ListView fx:id="listView" layoutX="36.0" layoutY="37.0" prefHeight="569.0" prefWidth="925.0" />
    </children>
 </AnchorPane>

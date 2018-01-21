@@ -7,13 +7,18 @@ import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
+import ru.eleron.osa.lris.otcenka.entities.ComputerName;
 import ru.eleron.osa.lris.otcenka.entities.Department;
 import ru.eleron.osa.lris.otcenka.entities.User;
 import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
+import ru.eleron.osa.lris.otcenka.service.dao.ComputerNameDao;
 import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 import ru.eleron.osa.lris.otcenka.utilities.TextFieldUtil;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Component
 public class FirstNewUserController {
@@ -30,7 +35,8 @@ public class FirstNewUserController {
     @Autowired
     private UserSession userSession;
 
-    private ComputerNameDao
+    @Autowired
+    private ComputerNameDao<ComputerName> computerNameDao;
 
     @FXML
     private TextField textFieldName;
@@ -75,7 +81,12 @@ public class FirstNewUserController {
     @FXML
     public void saveUser(){
         if(checkData()){
-            gfdgfdgs //тут короче надо добавить чтобы компьютер добавлялся
+            //gfdgfdgs //тут короче надо добавить чтобы компьютер добавлялся
+            try {
+                computerNameDao.add(new ComputerName(InetAddress.getLocalHost().getHostAddress(),choiceBoxDepartment.getValue()));
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
             userDao.add(new User(textFieldName.getText(), textFieldSurname.getText(), textFieldLastname.getText(),choiceBoxDepartment.getValue()));
             userSession.setUser(userDao.getUserByData(textFieldName.getText(),textFieldSurname.getText(),textFieldLastname.getText(),choiceBoxDepartment.getValue()).get(0));
             SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");

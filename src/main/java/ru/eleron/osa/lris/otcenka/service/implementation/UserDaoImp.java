@@ -16,6 +16,7 @@ import java.util.List;
 public class UserDaoImp extends BaseOperation<User> implements UserDao<User> {
 
     private static final String GET_USER_BY_PARAM = "FROM User WHERE name=:name AND secondName=:secondName AND lastName=:lastName AND department=:department";
+    private static final String GET_USER_BY_DEPARTMENT = "FROM User WHERE department=:department";
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -33,5 +34,14 @@ public class UserDaoImp extends BaseOperation<User> implements UserDao<User> {
                 .setParameter("secondName",surname)
                 .setParameter("lastName",lastname)
                 .setParameter("department",department).list();
+    }
+
+    @Override
+    @Transactional
+    public List<User> getUserByDepartment(Department department) {
+        return sessionFactory.getCurrentSession()
+                .createQuery(GET_USER_BY_DEPARTMENT)
+                .setParameter("department",department)
+                .list();
     }
 }

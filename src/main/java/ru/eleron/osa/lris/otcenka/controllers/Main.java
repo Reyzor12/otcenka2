@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.ComputerName;
+import ru.eleron.osa.lris.otcenka.service.dao.BaseDataFromDB;
 import ru.eleron.osa.lris.otcenka.service.dao.ComputerNameDao;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
@@ -21,10 +22,14 @@ public class Main {
     @Autowired
     private ComputerNameDao<ComputerName>  computerNameDao;
 
+    @Autowired
+    private BaseDataFromDB baseDataFromDB;
+
     public void initialize(){
 
         try {
             userSession.setComputerName(computerNameDao.containsInDB(InetAddress.getLocalHost().getHostAddress()));
+            System.out.println(baseDataFromDB.getServerData());;
 
         } catch (UnknownHostException e) {
             e.printStackTrace();
