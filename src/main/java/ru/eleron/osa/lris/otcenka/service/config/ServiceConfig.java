@@ -3,11 +3,12 @@ package ru.eleron.osa.lris.otcenka.service.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.*;
 import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
 import ru.eleron.osa.lris.otcenka.service.implementation.BaseOperation;
 
-@Configuration
+@Component
 public class ServiceConfig {
 
     @Bean

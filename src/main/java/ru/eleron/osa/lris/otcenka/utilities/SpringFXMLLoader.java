@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.eleron.osa.lris.otcenka.service.config.HibernateConfig;
 
 import java.io.IOException;
 

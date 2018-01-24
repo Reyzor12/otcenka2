@@ -28,8 +28,7 @@ public class LogDao {
         log.info("method " + methodName + " return " + result);
         return result;
     }
-/*
-    @Around("execution(static * ru.eleron.osa.lris.otcenka.utilities.SceneLoader.loadScene(..))")
+    /*@Around("execution(static * ru.eleron.osa.lris.otcenka.utilities.SceneLoader.loadScene(..))")
     public Object logInitializeControllers(ProceedingJoinPoint proceedingJoinPoint){
         String packageName = proceedingJoinPoint.getTarget().toString();
         Object[] args = proceedingJoinPoint.getArgs();

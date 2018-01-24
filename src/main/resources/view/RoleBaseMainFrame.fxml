@@ -15,9 +15,9 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button layoutX="62.0" layoutY="49.0" mnemonicParsing="false" text="Новый пользователь" />
-                  <Button layoutX="94.0" layoutY="125.0" mnemonicParsing="false" text="Отзыв" />
-                  <Button layoutX="45.0" layoutY="201.0" mnemonicParsing="false" text="Смена пользователя" />
+                  <Button onAction="#addNewUser" layoutX="62.0" layoutY="49.0" mnemonicParsing="false" text="Новый пользователь" />
+                  <Button onAction="#addNewReview" layoutX="94.0" layoutY="125.0" mnemonicParsing="false" text="Отзыв" />
+                  <Button onAction="#changeUser" layoutX="45.0" layoutY="201.0" mnemonicParsing="false" text="Смена пользователя" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

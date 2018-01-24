@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.NewUserController">
+   <children>
+      <Button onAction="#addNewUser" layoutX="650.0" layoutY="662.0" mnemonicParsing="false" text="Создать" />
+      <Button onAction="#back" layoutX="850.0" layoutY="662.0" mnemonicParsing="false" text="Отмена" />
+      <Label layoutX="459.0" layoutY="61.0" text="Новый пользователь" />
+      <Label layoutX="106.0" layoutY="161.0" text="Имя" />
+      <Label layoutX="104.0" layoutY="236.0" text="Фамилия" />
+      <Label layoutX="115.0" layoutY="331.0" text="Отчество" />
+      <Label layoutX="127.0" layoutY="395.0" text="Отдел" />
+      <TextField fx:id="textFieldName" layoutX="256.0" layoutY="157.0" />
+      <TextField fx:id="textFieldSurname" layoutX="270.0" layoutY="232.0" />
+      <TextField fx:id="textFieldLastname" layoutX="270.0" layoutY="327.0" />
+      <ChoiceBox fx:id="choiceBoxDepartment" layoutX="270.0" layoutY="391.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

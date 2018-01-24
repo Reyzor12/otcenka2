@@ -10,7 +10,7 @@ public class ComputerName extends AbstractEntities {
     @Column(name = "computerName",nullable = false)
     private String computerName;
     @NotNull(message = "department of ComputerName can't be null")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department",nullable = false)
     private Department department;
 

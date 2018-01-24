@@ -3,21 +3,29 @@ package ru.eleron.osa.lris.otcenka.controllers;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.User;
 import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
+import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
 @Component
 public class UserLoginFrameController {
+
+    private static final Logger log = LogManager.getLogger();
 
     @Autowired
     private UserDao<User> userDao;
 
     @Autowired
     private UserSession userSession;
+
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     @FXML
     private ListView<User> listView;
@@ -41,7 +49,8 @@ public class UserLoginFrameController {
                 break;
             }
             default: {
-                //EROR HERE;
+                log.warn("User have undefined role id = " + userSession.getUser().getRole());
+                messageGenerator.getWarningMessage("Пользователь имеет недопутимую роль, свяжитесь с разработчиками!");
             }
         }
     }

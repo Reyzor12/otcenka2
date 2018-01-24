@@ -4,39 +4,32 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
-import ru.eleron.osa.lris.otcenka.entities.ComputerName;
 import ru.eleron.osa.lris.otcenka.entities.Department;
 import ru.eleron.osa.lris.otcenka.entities.User;
-import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
-import ru.eleron.osa.lris.otcenka.service.dao.ComputerNameDao;
 import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 import ru.eleron.osa.lris.otcenka.utilities.TextFieldUtil;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 @Component
-public class FirstNewUserController {
+public class NewUserController {
 
-    @Autowired
-    private BaseOperationIF<Department> departmentBaseOperation;
-
-    @Autowired
-    private UserDao<User> userDao;
-
-    @Autowired
-    private MessageGenerator messageGenerator;
+    public static final Logger log = LogManager.getLogger();
 
     @Autowired
     private UserSession userSession;
 
     @Autowired
-    private ComputerNameDao<ComputerName> computerNameDao;
+    private MessageGenerator messageGenerator;
+
+    @Autowired
+    private UserDao<User> userDao;
 
     @FXML
     private TextField textFieldName;
@@ -50,18 +43,13 @@ public class FirstNewUserController {
     @FXML
     private ChoiceBox<Department> choiceBoxDepartment;
 
-    private User newUser;
-
     public void initialize(){
-        choiceBoxDepartment.setItems(FXCollections.observableArrayList(departmentBaseOperation.getList()));
+        choiceBoxDepartment.setItems(FXCollections.observableArrayList(userSession.getComputerName().getDepartment()));
+        choiceBoxDepartment.setValue(userSession.getComputerName().getDepartment());
+        choiceBoxDepartment.setDisable(true);
         TextFieldUtil.insertOnly(textFieldName,TextFieldUtil.CHAR_ONLY_REGEX);
         TextFieldUtil.insertOnly(textFieldSurname,TextFieldUtil.CHAR_ONLY_REGEX);
         TextFieldUtil.insertOnly(textFieldLastname,TextFieldUtil.CHAR_ONLY_REGEX);
-    }
-
-    @FXML
-    public void exit(){
-        SceneLoader.stage.close();
     }
 
     public Boolean checkData(){
@@ -79,19 +67,24 @@ public class FirstNewUserController {
     }
 
     @FXML
-    public void saveUser(){
+    public void addNewUser(){
+
         if(checkData()){
-            try {
-                computerNameDao.add(new ComputerName(InetAddress.getLocalHost().getHostAddress(),choiceBoxDepartment.getValue()));
-                userSession.setComputerName(computerNameDao.containsInDB(InetAddress.getLocalHost().getHostAddress()));
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
             userDao.add(new User(textFieldName.getText(), textFieldSurname.getText(), textFieldLastname.getText(),choiceBoxDepartment.getValue()));
-            userSession.setUser(userDao.getUserByData(textFieldName.getText(),textFieldSurname.getText(),textFieldLastname.getText(),choiceBoxDepartment.getValue()).get(0));
-            SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");
+            back();
         } else{
             messageGenerator.getWarningMessage("Не все поля были заполнены или данный пользователь уже существует");
+        }
+    }
+
+    @FXML
+    public void back(){
+        switch(userSession.getUser().getRole()){
+            case 1: SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");break;
+            default: {
+                log.warn("user with id " + userSession.getUser().getId() + " has unappropriate role");
+                messageGenerator.getWarningMessage("У пользователя сбились права доступа, обратитись к разработчику программы");
+            };break;
         }
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import ru.eleron.osa.lris.otcenka.service.dao.BaseDataFromDB;
 
+import java.util.Date;
+
 @Component
 @EnableTransactionManagement
 public class BaseDataFromDBImp implements BaseDataFromDB {
@@ -19,8 +21,8 @@ public class BaseDataFromDBImp implements BaseDataFromDB {
 
     @Override
     @Transactional
-    public String getServerData() {
-        //TODO GET SERVER TIME
-        return (sessionFactory.getCurrentSession().createNativeQuery(CURRENT_SERVER_DATE).getSingleResult()).getDate().toString();
+    public Date getServerData() {
+
+        return (Date)(sessionFactory.getCurrentSession().createNativeQuery(CURRENT_SERVER_DATE)).getResultList().get(0);
     }
 }
