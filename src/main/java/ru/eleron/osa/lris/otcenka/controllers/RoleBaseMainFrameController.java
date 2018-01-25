@@ -15,8 +15,11 @@ import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 @Component
 public class RoleBaseMainFrameController {
 
+    @Autowired
+    private UserSession userSession;
+
     @FXML
-    private TableView<OpenReport> tableView;
+    private TableView<OpenReport> tableViewOpenReport;
 
     @FXML
     private TableColumn<OpenReport,String> tableColumnNameOfReport;
@@ -45,10 +48,18 @@ public class RoleBaseMainFrameController {
     }
 
     @FXML
-    public void addNewReview(){}
+    public void addNewReview(){
+        SceneLoader.loadScene("view/ReviewFrame.fxml");
+    }
 
     @FXML
     public void changeUser(){
         SceneLoader.loadScene("view/UserLoginFrame.fxml");
+    }
+
+    @FXML
+    public void addNewReport(){
+        userSession.setChoosenOpenReport(null);
+        SceneLoader.loadScene("view/NewReport.fxml");
     }
 }

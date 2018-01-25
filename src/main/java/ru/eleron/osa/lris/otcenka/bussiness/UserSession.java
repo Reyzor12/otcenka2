@@ -20,6 +20,8 @@ public class UserSession {
 
     private List<OpenReport> openreportList;
 
+    private OpenReport choosenOpenReport;
+
     public ComputerName getComputerName() {
         return computerName;
     }
@@ -50,5 +52,13 @@ public class UserSession {
 
     public void setServerDate(Date serverDate) {
         this.serverDate = serverDate;
+    }
+
+    public OpenReport getChoosenOpenReport() {
+        return choosenOpenReport;
+    }
+
+    public void setChoosenOpenReport(OpenReport choosenOpenReport) {
+        this.choosenOpenReport = choosenOpenReport;
     }
 }

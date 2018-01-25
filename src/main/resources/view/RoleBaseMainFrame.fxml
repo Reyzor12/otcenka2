@@ -9,15 +9,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.RoleBaseMainFrameController">
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.RoleBaseMainFrameController">
    <children>
       <SplitPane dividerPositions="0.25146771037182" layoutX="398.0" layoutY="269.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button onAction="#addNewUser" layoutX="62.0" layoutY="49.0" mnemonicParsing="false" text="Новый пользователь" />
-                  <Button onAction="#addNewReview" layoutX="94.0" layoutY="125.0" mnemonicParsing="false" text="Отзыв" />
-                  <Button onAction="#changeUser" layoutX="45.0" layoutY="201.0" mnemonicParsing="false" text="Смена пользователя" />
+                  <Button layoutX="62.0" layoutY="49.0" mnemonicParsing="false" onAction="#addNewUser" text="Новый пользователь" />
+                  <Button layoutX="94.0" layoutY="125.0" mnemonicParsing="false" onAction="#addNewReview" text="Отзыв" />
+                  <Button layoutX="45.0" layoutY="201.0" mnemonicParsing="false" onAction="#changeUser" text="Смена пользователя" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -28,7 +28,7 @@
                            <children>
                               <TextField fx:id="textFieldNameOfReport" layoutX="168.0" layoutY="42.0" />
                               <ChoiceBox fx:id="choiceBoxStatusOfReport" layoutX="531.0" layoutY="42.0" prefWidth="150.0" />
-                              <Button layoutX="47.0" layoutY="198.0" mnemonicParsing="false" text="Создать" />
+                              <Button onAction="#addNewReport" layoutX="47.0" layoutY="198.0" mnemonicParsing="false" text="Создать" />
                               <Button layoutX="186.0" layoutY="198.0" mnemonicParsing="false" text="Удалить" />
                               <Button layoutX="315.0" layoutY="198.0" mnemonicParsing="false" text="Редактировать" />
                               <Button layoutX="447.0" layoutY="198.0" mnemonicParsing="false" text="Заполнить" />
@@ -41,11 +41,12 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TableView fx:id="tableView" layoutX="154.0" layoutY="91.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="tableViewOpenReport" layoutX="154.0" layoutY="91.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                   <TableColumn fx:id="tableColumnNameOfReport" prefWidth="75.0" text="Название" />
                                   <TableColumn fx:id="tableColumnOwnerOfReport" prefWidth="75.0" text="Исполнитель" />
                                     <TableColumn fx:id="tableColumnStatusOfReport" prefWidth="75.0" text="Статус" />
+                                    <TableColumn prefWidth="75.0" text="Коментарий" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
