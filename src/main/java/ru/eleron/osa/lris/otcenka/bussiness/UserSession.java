@@ -1,10 +1,7 @@
 package ru.eleron.osa.lris.otcenka.bussiness;
 
 import org.springframework.stereotype.Component;
-import ru.eleron.osa.lris.otcenka.entities.ComputerName;
-import ru.eleron.osa.lris.otcenka.entities.Department;
-import ru.eleron.osa.lris.otcenka.entities.OpenReport;
-import ru.eleron.osa.lris.otcenka.entities.User;
+import ru.eleron.osa.lris.otcenka.entities.*;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +18,8 @@ public class UserSession {
     private List<OpenReport> openreportList;
 
     private OpenReport choosenOpenReport;
+
+    private List<ReportYear> reportYearList;
 
     public ComputerName getComputerName() {
         return computerName;
@@ -60,5 +59,13 @@ public class UserSession {
 
     public void setChoosenOpenReport(OpenReport choosenOpenReport) {
         this.choosenOpenReport = choosenOpenReport;
+    }
+
+    public List<ReportYear> getReportYearList() {
+        return reportYearList;
+    }
+
+    public void setReportYearList(List<ReportYear> reportYearList) {
+        this.reportYearList = reportYearList;
     }
 }
