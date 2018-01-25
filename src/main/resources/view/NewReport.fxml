@@ -26,8 +26,8 @@
                   <Label layoutX="50.0" layoutY="96.0" text="Полное название" />
                   <Label layoutX="50.0" layoutY="194.0" text="Дата начала" />
                   <Label layoutX="323.0" layoutY="194.0" text="Дата конца" />
-                  <ChoiceBox layoutX="134.0" layoutY="190.0" prefWidth="150.0" />
-                  <ChoiceBox layoutX="413.0" layoutY="190.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="choiceBoxStart" onAction="#startDate" layoutX="134.0" layoutY="190.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="choiceBoxEnd" onAction="#endDate" layoutX="413.0" layoutY="190.0" prefWidth="150.0" />
                   <TextField layoutX="182.0" layoutY="39.0" />
                   <TextField layoutX="182.0" layoutY="92.0" />
                   <Label layoutX="50.0" layoutY="273.0" text="Процент за год" />

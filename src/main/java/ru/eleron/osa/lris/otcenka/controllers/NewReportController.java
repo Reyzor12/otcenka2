@@ -1,6 +1,8 @@
 package ru.eleron.osa.lris.otcenka.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +27,22 @@ public class NewReportController {
     @Autowired
     private BaseOperationIF<ReportYear> baseOperationReportYear;
 
+    @FXML
+    private ChoiceBox<ReportYear> choiceBoxStart;
+
+    @FXML
+    private ChoiceBox<ReportYear> choiceBoxEnd;
+
+    //private Integer timeFlag;
+
     public void initialize(){
 
         if(userSession.getReportYearList() == null){
             userSession.setReportYearList(baseOperationReportYear.getList());
         }
+
+        choiceBoxEnd.setItems(FXCollections.observableArrayList(userSession.getReportYearList()));
+        choiceBoxStart.setItems(FXCollections.observableArrayList(userSession.getReportYearList()));
 
         if(userSession.getChoosenOpenReport() == null){
 
@@ -45,5 +58,15 @@ public class NewReportController {
             default: log.warn("user with id = " + userSession.getUser().getId() + " has undefined role with id = " + userSession.getUser().getRole());
             messageGenerator.getInfoMessage("Пользователь с неправильно заданной ролью, обратитесь к разработчику программы");
         }
+    }
+
+    @FXML
+    public void endDate(){
+        choiceBoxStart.setItems(FXCollections.observableArrayList(userSession.getReportYearList().subList(0,userSession.getReportYearList().indexOf(choiceBoxEnd.getValue()))));
+    }
+
+    @FXML
+    public void startDate(){
+        choiceBoxEnd.setItems(FXCollections.observableArrayList(userSession.getReportYearList().subList(userSession.getReportYearList().indexOf(choiceBoxEnd.getValue())+1,userSession.getReportYearList().size())));
     }
 }
