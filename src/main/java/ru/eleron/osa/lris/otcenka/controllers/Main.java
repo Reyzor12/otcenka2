@@ -29,6 +29,7 @@ public class Main {
 
         try {
             userSession.setComputerName(computerNameDao.containsInDB(InetAddress.getLocalHost().getHostAddress()));
+            userSession.setServerDate(baseDataFromDB.getServerData());
 
         } catch (UnknownHostException e) {
             e.printStackTrace();

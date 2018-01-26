@@ -27,7 +27,8 @@ public class Report extends AbstractEntities {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "responsible",nullable = false)
     private User responsible;
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="report_user", joinColumns={@JoinColumn(name="report_id")},inverseJoinColumns={@JoinColumn(name="user_id")})
     private List<User> performers;
     @NotNull(message = "department of report can't be null")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,6 +52,10 @@ public class Report extends AbstractEntities {
         this.responsible = responsible;
         this.department = department;
         this.percentagePerYear = percentagePerYear;
+    }
+    public Report(String shortName,String fullName,ReportYear dateStart,ReportYear dateEnd,User responsible,List<User> performers,Department department,Integer percentagePerYear){
+        this(shortName,fullName,dateStart,dateEnd,responsible,department,percentagePerYear);
+        this.performers = performers;
     }
     public Report(String shortName,String fullName,ReportYear dateStart,ReportYear dateEnd,User responsible,List<User> performers,Department department,Integer percentagePerYear,List<OpenReport> openReportList){
         this(shortName,fullName,dateStart,dateEnd,responsible,department,percentagePerYear);

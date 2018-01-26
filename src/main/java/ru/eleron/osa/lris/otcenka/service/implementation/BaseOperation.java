@@ -29,7 +29,7 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
     @Transactional
     public void add(T object) {
 
-        sessionFactory.getCurrentSession().save(object);
+        sessionFactory.getCurrentSession().persist(object);
 
     }
 

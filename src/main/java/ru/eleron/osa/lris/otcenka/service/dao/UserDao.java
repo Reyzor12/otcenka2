@@ -1,7 +1,6 @@
 package ru.eleron.osa.lris.otcenka.service.dao;
 
 import ru.eleron.osa.lris.otcenka.entities.Department;
-import ru.eleron.osa.lris.otcenka.entities.User;
 
 import java.util.List;
 

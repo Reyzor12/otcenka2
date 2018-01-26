@@ -21,6 +21,8 @@ public class UserSession {
 
     private List<ReportYear> reportYearList;
 
+    private List<User> usersOfDepartment;
+
     public ComputerName getComputerName() {
         return computerName;
     }
@@ -67,5 +69,21 @@ public class UserSession {
 
     public void setReportYearList(List<ReportYear> reportYearList) {
         this.reportYearList = reportYearList;
+    }
+
+    public List<User> getUsersOfDepartment() {
+        return usersOfDepartment;
+    }
+
+    public void setUsersOfDepartment(List<User> usersOfDepartment) {
+        this.usersOfDepartment = usersOfDepartment;
+    }
+
+    public ReportYear getCurrentReportYear(Integer year){
+        ReportYear y1 = new ReportYear(year);
+        for(ReportYear y: getReportYearList()){
+            if(y.equals(y1)) return y;
+        }
+        return null;
     }
 }
