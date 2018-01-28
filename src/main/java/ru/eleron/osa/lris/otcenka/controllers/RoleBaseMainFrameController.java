@@ -1,22 +1,32 @@
 package ru.eleron.osa.lris.otcenka.controllers;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.User;
+import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
+
+import java.util.List;
 
 @Component
 public class RoleBaseMainFrameController {
 
     @Autowired
     private UserSession userSession;
+
+    @Autowired
+    private BaseOperationIF<OpenReport> baseOperationOpenReport;
 
     @FXML
     private TableView<OpenReport> tableViewOpenReport;
@@ -39,7 +49,12 @@ public class RoleBaseMainFrameController {
     @FXML
     private ChoiceBox<Integer> choiceBoxStatusOfReport;
 
+    private List<OpenReport> openReportList;
+
     public void initialize(){
+        openReportList = baseOperationOpenReport.getList();
+        tableColumnNameOfReport.setCellValueFactory((param ->  new SimpleStringProperty(param.getValue().getReport().getShortName())));
+        tableViewOpenReport.setItems(FXCollections.observableArrayList(openReportList));
     }
 
     @FXML
