@@ -3,6 +3,8 @@ package ru.eleron.osa.lris.otcenka.controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -53,6 +55,8 @@ public class RoleBaseMainFrameController {
     @FXML
     private ChoiceBox<String> choiceBoxStatusOfReport;
 
+    private FilteredList<OpenReport> filteredListOpenReport;
+
     private List<OpenReport> openReportList;
 
     public void initialize(){
@@ -63,7 +67,10 @@ public class RoleBaseMainFrameController {
         tableColumnOwnerOfReport.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getReport().getResponsible().toString()));
         tableColumnStatusOfReport.setCellValueFactory((param) -> new SimpleStringProperty(ConvertorForUse.convertStatusToString(param.getValue().getStatus())));
         tableColumnComment.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getComment()==null?"нет комментариев":"есть комментарий"));
-        tableViewOpenReport.setItems(FXCollections.observableArrayList(openReportList));
+        filteredListOpenReport = new FilteredList<>(FXCollections.observableArrayList(openReportList),p->true);
+        SortedList<OpenReport> sortedListOpenReport = new SortedList<>(filteredListOpenReport);
+        sortedListOpenReport.comparatorProperty().bind(tableViewOpenReport.comparatorProperty());
+        tableViewOpenReport.setItems(sortedListOpenReport);
     }
 
     @FXML
