@@ -24,7 +24,7 @@ public class Report extends AbstractEntities {
     @JoinColumn(name = "dateEnd",nullable = false)
     private ReportYear dateEnd;
     @NotNull(message = "responsible of report can't be null")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "responsible",nullable = false)
     private User responsible;
     @ManyToMany(fetch=FetchType.LAZY)

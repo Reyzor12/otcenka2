@@ -31,7 +31,7 @@ public class UserLoginFrameController {
     private ListView<User> listView;
 
     public void initialize(){
-        listView.setItems(FXCollections.observableArrayList(userDao.getUserByDepartment(userSession.getComputerName().getDepartment())));
+        listView.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
     }
 
     @FXML

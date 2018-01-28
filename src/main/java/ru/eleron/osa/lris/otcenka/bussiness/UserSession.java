@@ -1,13 +1,18 @@
 package ru.eleron.osa.lris.otcenka.bussiness;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.*;
+import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
 
 import java.util.Date;
 import java.util.List;
 
 @Component
 public class UserSession {
+
+    @Autowired
+    private UserDao<User> userDao;
 
     private Date serverDate;
 
@@ -72,6 +77,9 @@ public class UserSession {
     }
 
     public List<User> getUsersOfDepartment() {
+        if(usersOfDepartment == null) {
+            usersOfDepartment = userDao.getUserByDepartment(getComputerName().getDepartment());
+        }
         return usersOfDepartment;
     }
 

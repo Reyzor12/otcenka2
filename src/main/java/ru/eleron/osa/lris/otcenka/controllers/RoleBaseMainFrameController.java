@@ -15,6 +15,7 @@ import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.User;
 import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
+import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
 import java.util.List;
@@ -35,10 +36,13 @@ public class RoleBaseMainFrameController {
     private TableColumn<OpenReport,String> tableColumnNameOfReport;
 
     @FXML
-    private TableColumn<OpenReport,User> tableColumnOwnerOfReport;
+    private TableColumn<OpenReport,String> tableColumnOwnerOfReport;
 
     @FXML
-    private TableColumn<OpenReport,Integer> tableColumnStatusOfReport;
+    private TableColumn<OpenReport,String> tableColumnStatusOfReport;
+
+    @FXML
+    private TableColumn<OpenReport,String> tableColumnComment;
 
     @FXML
     private TextField textFieldNameOfReport;
@@ -47,13 +51,18 @@ public class RoleBaseMainFrameController {
     private ChoiceBox<User> choiceBoxOwnerOfReport;
 
     @FXML
-    private ChoiceBox<Integer> choiceBoxStatusOfReport;
+    private ChoiceBox<String> choiceBoxStatusOfReport;
 
     private List<OpenReport> openReportList;
 
     public void initialize(){
         openReportList = baseOperationOpenReport.getList();
+        choiceBoxOwnerOfReport.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
+        choiceBoxStatusOfReport.setItems(FXCollections.observableArrayList(ConvertorForUse.getAllStatusInString()));
         tableColumnNameOfReport.setCellValueFactory((param ->  new SimpleStringProperty(param.getValue().getReport().getShortName())));
+        tableColumnOwnerOfReport.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getReport().getResponsible().toString()));
+        tableColumnStatusOfReport.setCellValueFactory((param) -> new SimpleStringProperty(ConvertorForUse.convertStatusToString(param.getValue().getStatus())));
+        tableColumnComment.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getComment()==null?"нет комментариев":"есть комментарий"));
         tableViewOpenReport.setItems(FXCollections.observableArrayList(openReportList));
     }
 
