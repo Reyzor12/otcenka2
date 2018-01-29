@@ -25,6 +25,10 @@ import java.util.List;
 @Component
 public class RoleBaseMainFrameController {
 
+    private static final String DEFAULT_NAME = "";
+    private static final User DEFAULT_USER = null;
+    private static final Integer DEFAULT_STATUS = -1;
+
     @Autowired
     private UserSession userSession;
 
@@ -71,6 +75,16 @@ public class RoleBaseMainFrameController {
         SortedList<OpenReport> sortedListOpenReport = new SortedList<>(filteredListOpenReport);
         sortedListOpenReport.comparatorProperty().bind(tableViewOpenReport.comparatorProperty());
         tableViewOpenReport.setItems(sortedListOpenReport);
+
+        textFieldNameOfReport.textProperty().addListener((observable,oldValue,newValue)->{
+            filteredListOpenReport.setPredicate(openReport -> filterOpenReport(openReport));
+        });
+        choiceBoxStatusOfReport.setOnAction(event->{
+            filteredListOpenReport.setPredicate(openReport -> filterOpenReport(openReport));
+        });
+        choiceBoxOwnerOfReport.setOnAction(event->{
+            filteredListOpenReport.setPredicate(openReport -> filterOpenReport(openReport));
+        });
     }
 
     @FXML
@@ -92,5 +106,26 @@ public class RoleBaseMainFrameController {
     public void addNewReport(){
         userSession.setChoosenOpenReport(null);
         SceneLoader.loadScene("view/NewReport.fxml");
+    }
+
+    public Boolean filterOpenReport(OpenReport openReport){
+        if(     textFieldNameOfReport.getText().equals(DEFAULT_NAME)&&
+                choiceBoxOwnerOfReport.getValue() == null&&
+                choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex() == -1) {
+            System.out.println(1);
+            return true;
+        }else if(
+
+                openReport.getReport().getShortName().toLowerCase().contains(textFieldNameOfReport.getText().toLowerCase())||
+                openReport.getStatus().equals(choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex()+1)||
+                openReport.getReport().getResponsible().equals(choiceBoxOwnerOfReport.getValue())
+
+                ) {
+            System.out.println(openReport.getReport().getShortName().toLowerCase().contains(textFieldNameOfReport.getText().toLowerCase()));
+            System.out.println(openReport.getStatus().equals(choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex()+1));
+            System.out.println(openReport.getReport().getResponsible().equals(choiceBoxOwnerOfReport.getValue()));
+            return true;
+        }
+        return false;
     }
 }
