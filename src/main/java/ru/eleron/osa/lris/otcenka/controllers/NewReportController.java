@@ -19,6 +19,7 @@ import ru.eleron.osa.lris.otcenka.entities.Report;
 import ru.eleron.osa.lris.otcenka.entities.ReportYear;
 import ru.eleron.osa.lris.otcenka.entities.User;
 import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
+import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
 import ru.eleron.osa.lris.otcenka.service.dao.ReportDao;
 import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
 import ru.eleron.osa.lris.otcenka.service.implementation.BaseOperation;
@@ -51,7 +52,7 @@ public class NewReportController {
     private ReportDao<Report> reportDao;
 
     @Autowired
-    private BaseOperationIF<OpenReport> baseOperationOpenReport;
+    private OpenReportDao<OpenReport> baseOperationOpenReport;
 
     @FXML
     private ChoiceBox<ReportYear> choiceBoxStart;

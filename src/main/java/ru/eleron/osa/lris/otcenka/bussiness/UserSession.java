@@ -1,5 +1,7 @@
 package ru.eleron.osa.lris.otcenka.bussiness;
 
+import org.hibernate.Hibernate;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.*;
@@ -27,6 +29,8 @@ public class UserSession {
     private List<ReportYear> reportYearList;
 
     private List<User> usersOfDepartment;
+
+    private Report report;
 
     public ComputerName getComputerName() {
         return computerName;

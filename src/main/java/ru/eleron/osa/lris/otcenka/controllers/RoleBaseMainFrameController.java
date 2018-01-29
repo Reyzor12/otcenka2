@@ -1,7 +1,6 @@
 package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -10,13 +9,12 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.User;
-import ru.eleron.osa.lris.otcenka.service.dao.BaseOperationIF;
+import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
 import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
@@ -33,7 +31,7 @@ public class RoleBaseMainFrameController {
     private UserSession userSession;
 
     @Autowired
-    private BaseOperationIF<OpenReport> baseOperationOpenReport;
+    private OpenReportDao<OpenReport> baseOperationOpenReport;
 
     @FXML
     private TableView<OpenReport> tableViewOpenReport;
@@ -64,7 +62,7 @@ public class RoleBaseMainFrameController {
     private List<OpenReport> openReportList;
 
     public void initialize(){
-        openReportList = baseOperationOpenReport.getList();
+        openReportList = baseOperationOpenReport.getListWithDepartments();
         choiceBoxOwnerOfReport.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
         choiceBoxStatusOfReport.setItems(FXCollections.observableArrayList(ConvertorForUse.getAllStatusInString()));
         tableColumnNameOfReport.setCellValueFactory((param ->  new SimpleStringProperty(param.getValue().getReport().getShortName())));
@@ -112,18 +110,14 @@ public class RoleBaseMainFrameController {
         if(     textFieldNameOfReport.getText().equals(DEFAULT_NAME)&&
                 choiceBoxOwnerOfReport.getValue() == null&&
                 choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex() == -1) {
-            System.out.println(1);
             return true;
         }else if(
 
-                openReport.getReport().getShortName().toLowerCase().contains(textFieldNameOfReport.getText().toLowerCase())||
-                openReport.getStatus().equals(choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex()+1)||
-                openReport.getReport().getResponsible().equals(choiceBoxOwnerOfReport.getValue())
+                openReport.getReport().getShortName().toLowerCase().contains(textFieldNameOfReport.getText().toLowerCase())&&
+                (choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex() == -1 || openReport.getStatus().equals(choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex()+1))&&
+                (choiceBoxOwnerOfReport.getValue() == null || openReport.getReport().equals(choiceBoxOwnerOfReport.getValue()))
 
                 ) {
-            System.out.println(openReport.getReport().getShortName().toLowerCase().contains(textFieldNameOfReport.getText().toLowerCase()));
-            System.out.println(openReport.getStatus().equals(choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex()+1));
-            System.out.println(openReport.getReport().getResponsible().equals(choiceBoxOwnerOfReport.getValue()));
             return true;
         }
         return false;
