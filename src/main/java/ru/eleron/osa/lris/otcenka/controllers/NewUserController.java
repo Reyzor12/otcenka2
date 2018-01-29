@@ -71,6 +71,8 @@ public class NewUserController {
 
         if(checkData()){
             userDao.add(new User(textFieldName.getText(), textFieldSurname.getText(), textFieldLastname.getText(),choiceBoxDepartment.getValue()));
+            userSession.setUsersOfDepartment(null);
+            userSession.getUsersOfDepartment();
             back();
         } else{
             messageGenerator.getWarningMessage("Не все поля были заполнены или данный пользователь уже существует");

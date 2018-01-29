@@ -27,7 +27,7 @@ public class User extends AbstractEntities {
     @Column(name = "lastName",nullable = false)
     private String lastName;
     @NotNull(message = "department of user is null")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department",referencedColumnName = "id",nullable = false)
     private Department department;
     @NotNull(message = "role of user is null")

@@ -115,7 +115,7 @@ public class RoleBaseMainFrameController {
 
                 openReport.getReport().getShortName().toLowerCase().contains(textFieldNameOfReport.getText().toLowerCase())&&
                 (choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex() == -1 || openReport.getStatus().equals(choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex()+1))&&
-                (choiceBoxOwnerOfReport.getValue() == null || openReport.getReport().equals(choiceBoxOwnerOfReport.getValue()))
+                (choiceBoxOwnerOfReport.getValue() == null || openReport.getReport().getResponsible().equals(choiceBoxOwnerOfReport.getValue()))
 
                 ) {
             return true;

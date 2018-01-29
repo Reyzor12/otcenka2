@@ -26,6 +26,7 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
         List<OpenReport> list = getList();
         for(OpenReport openReport : list){
             Hibernate.initialize(openReport.getReport());
+            Hibernate.initialize(openReport.getReport().getResponsible());
         }
         return list;
     }
