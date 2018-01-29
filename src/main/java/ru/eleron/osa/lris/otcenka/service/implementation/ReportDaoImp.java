@@ -1,5 +1,6 @@
 package ru.eleron.osa.lris.otcenka.service.implementation;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,5 +29,13 @@ public class ReportDaoImp extends BaseOperation<Report> implements ReportDao<Rep
         return (Report) sessionFactory.getCurrentSession().createQuery(GET_REPORT_BY_LONG_NAME_AND_OWNER)
                 .setParameter("fullName",longName)
                 .setParameter("responsible",owner).list().get(0);
+    }
+
+    @Override
+    @Transactional
+    public Report getReportWithAll(Report report) {
+        Report reportDB =  get(report.getId());
+        Hibernate.initialize(reportDB.getPerformers());
+        return reportDB;
     }
 }

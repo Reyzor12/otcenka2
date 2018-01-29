@@ -8,4 +8,5 @@ public interface BaseOperationIF<T> {
     void removeById(Long id);
     List<T> getList();
     boolean update(T object);
+    T get(Long id);
 }

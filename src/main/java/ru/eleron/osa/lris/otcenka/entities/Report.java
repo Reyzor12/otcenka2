@@ -16,11 +16,11 @@ public class Report extends AbstractEntities {
     @Column(name = "fullName",nullable = false)
     private String fullName;
     @NotNull(message = "dateStart of report can't be null")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "dateStart",nullable = false)
     private ReportYear dateStart;
     @NotNull(message = "dateEnd of report can't be null")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "dateEnd",nullable = false)
     private ReportYear dateEnd;
     @NotNull(message = "responsible of report can't be null")

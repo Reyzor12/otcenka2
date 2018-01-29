@@ -56,4 +56,12 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
     public boolean update(T object) {
         return false;
     }
+
+    @Override
+    @Transactional
+    public T get(Long id) {
+        return sessionFactory.getCurrentSession().get(clazz,id);
+    }
+
+
 }

@@ -30,7 +30,7 @@
                               <ChoiceBox fx:id="choiceBoxStatusOfReport" layoutX="531.0" layoutY="42.0" prefWidth="150.0" />
                               <Button onAction="#addNewReport" layoutX="47.0" layoutY="198.0" mnemonicParsing="false" text="Создать" />
                               <Button layoutX="186.0" layoutY="198.0" mnemonicParsing="false" text="Удалить" />
-                              <Button layoutX="315.0" layoutY="198.0" mnemonicParsing="false" text="Редактировать" />
+                              <Button onAction="#editReport" layoutX="315.0" layoutY="198.0" mnemonicParsing="false" text="Редактировать" />
                               <Button layoutX="447.0" layoutY="198.0" mnemonicParsing="false" text="Заполнить" />
                               <Button layoutX="571.0" layoutY="198.0" mnemonicParsing="false" text="Отправить" />
                               <Label layoutX="37.0" layoutY="47.0" text="Название" />

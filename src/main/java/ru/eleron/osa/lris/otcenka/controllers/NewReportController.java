@@ -107,15 +107,29 @@ public class NewReportController {
         List<Person> persons = new ArrayList<>();
         if(userSession.getChoosenOpenReport() == null){
             initValuePersentageOfYear = 0;
-            tableColumnPart.setCellValueFactory(new PropertyValueFactory<Person,Boolean>("check"));
+
             for(User user : userSession.getUsersOfDepartment()){
                 persons.add(new Person(user));
             }
         }else{
-            //initValuePersentageOfYear = 0;
+            final Report report = userSession.getChoosenOpenReport().getReport();
+            textFieldShort.setText(report.getShortName());
+            textFieldLong.setText(report.getFullName());
+            choiceBoxStart.setValue(report.getDateStart());
+            choiceBoxEnd.setValue(report.getDateEnd());
+            choiceBoxOwner.setValue(report.getResponsible());
+            initValuePersentageOfYear = report.getPercentagePerYear();
+            for(User user : userSession.getUsersOfDepartment()){
+                Person person = new Person(user);
+                if(reportDao.getReportWithAll(report).getPerformers().contains(user)){
+                    person.setCheck(true);
+                }
+                persons.add(person);
+            }
         }
         tableColumnPart.setCellFactory(column -> new CheckBoxTableCell());
         spinnerYearPersentage.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100,initValuePersentageOfYear));
+        tableColumnPart.setCellValueFactory(new PropertyValueFactory<Person,Boolean>("check"));
         tableColumnPart.setEditable(true);
 
         tableViewUsers.setEditable(true);

@@ -16,6 +16,7 @@ import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.User;
 import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
 import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
+import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
 import java.util.List;
@@ -32,6 +33,9 @@ public class RoleBaseMainFrameController {
 
     @Autowired
     private OpenReportDao<OpenReport> baseOperationOpenReport;
+
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     @FXML
     private TableView<OpenReport> tableViewOpenReport;
@@ -106,6 +110,17 @@ public class RoleBaseMainFrameController {
         SceneLoader.loadScene("view/NewReport.fxml");
     }
 
+    @FXML
+    public void editReport(){
+        final OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        if(openReport == null) {
+            messageGenerator.getWarningMessage("Не выбран НИОКР для заполнения");
+        }else{
+            userSession.setChoosenOpenReport(openReport);
+            SceneLoader.loadScene("view/NewReport.fxml");
+        }
+    }
+
     public Boolean filterOpenReport(OpenReport openReport){
         if(     textFieldNameOfReport.getText().equals(DEFAULT_NAME)&&
                 choiceBoxOwnerOfReport.getValue() == null&&
@@ -122,4 +137,6 @@ public class RoleBaseMainFrameController {
         }
         return false;
     }
+
+
 }
