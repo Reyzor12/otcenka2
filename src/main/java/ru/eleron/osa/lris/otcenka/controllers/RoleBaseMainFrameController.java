@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
+import ru.eleron.osa.lris.otcenka.entities.Report;
 import ru.eleron.osa.lris.otcenka.entities.User;
 import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
+import ru.eleron.osa.lris.otcenka.service.dao.ReportDao;
 import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
@@ -24,15 +26,14 @@ import java.util.List;
 @Component
 public class RoleBaseMainFrameController {
 
-    private static final String DEFAULT_NAME = "";
-    private static final User DEFAULT_USER = null;
-    private static final Integer DEFAULT_STATUS = -1;
-
     @Autowired
     private UserSession userSession;
 
     @Autowired
     private OpenReportDao<OpenReport> baseOperationOpenReport;
+
+    @Autowired
+    private ReportDao<Report> reportDao;
 
     @Autowired
     private MessageGenerator messageGenerator;
@@ -122,7 +123,7 @@ public class RoleBaseMainFrameController {
     }
 
     public Boolean filterOpenReport(OpenReport openReport){
-        if(     textFieldNameOfReport.getText().equals(DEFAULT_NAME)&&
+        if(     textFieldNameOfReport.getText().equals("")&&
                 choiceBoxOwnerOfReport.getValue() == null&&
                 choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex() == -1) {
             return true;
@@ -138,5 +139,31 @@ public class RoleBaseMainFrameController {
         return false;
     }
 
+    @FXML
+    public void deleteReport(){
+        final OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        if (openReport == null) {
+            messageGenerator.getWarningMessage("Не выбран НИОКР для удаления");
+        }else{
+            reportDao.remove(openReport.getReport());
+            userSession.setOpenreportList(baseOperationOpenReport.getListWithDepartments());
+            tableViewOpenReport.setItems(FXCollections.observableArrayList(userSession.getOpenreportList()));
+            messageGenerator.getInfoMessage("НИОКР успешно удален");
+        }
+    }
 
+    @FXML
+    public void sendOpenReport(){
+        final OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        if (openReport == null) {
+           messageGenerator.getWarningMessage("Не выбран НИОКР для отправки");
+        } else if (openReport.getStatus() != OpenReport.FILL_REPORT) {
+            messageGenerator.getWarningMessage("НИОКР не заполнен");
+        } else {
+            openReport.setStatus(OpenReport.CONSIDERED);
+            baseOperationOpenReport.update(openReport);
+            userSession.getOpenreportList().set(tableViewOpenReport.getSelectionModel().getSelectedIndex(),openReport);
+            tableViewOpenReport.setItems(FXCollections.observableArrayList(userSession.getOpenreportList()));
+        }
+    }
 }

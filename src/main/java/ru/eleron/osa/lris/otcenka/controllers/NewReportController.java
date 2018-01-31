@@ -190,6 +190,22 @@ public class NewReportController {
                 baseOperationOpenReport.add(openReport);
                 messageGenerator.getInfoMessage("Репорт успешно добавлен");
                 back();
+            } else {
+                final Report report = userSession.getChoosenOpenReport().getReport();
+                report.setShortName(textFieldShort.getText());
+                report.setFullName(textFieldLong.getText());
+                report.setDateStart(choiceBoxStart.getValue());
+                report.setDateEnd(choiceBoxEnd.getValue());
+                report.setResponsible(choiceBoxOwner.getValue());
+                report.setPercentagePerYear(spinnerYearPersentage.getValue());
+                List<User> users = new ArrayList<>();
+                for(Person person : tableViewUsers.getItems()){
+                    if(person.getCheck().getValue()) users.add(person.getUser());
+                }
+                report.setPerformers(users);
+                reportDao.update(report);
+                messageGenerator.getInfoMessage("НИОКР успешно изменен");
+                back();
             }
         }else{
             messageGenerator.getWarningMessage("Не все поля были заполнены!");

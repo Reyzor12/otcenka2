@@ -25,6 +25,7 @@ public class ConvertorForUse {
         statusMap.put(OpenReport.REPORT_BACK_WITHOUT_COMMENT, "НИОКР был возвращен без коментариев");
         statusMap.put(OpenReport.REPORT_BACK_WITH_COMMENT, "НИОКР был возвращен с комментарием");
         statusMap.put(OpenReport.REPORT_APPROVED, "НИОКР был одобрен");
+        statusMap.put(OpenReport.CONSIDERED, "НИОКР проверяется");
     }
 
     public static List<String> getAllStatusInString(){

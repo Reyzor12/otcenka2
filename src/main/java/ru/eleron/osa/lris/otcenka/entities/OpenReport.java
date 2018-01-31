@@ -38,6 +38,7 @@ public class OpenReport extends AbstractEntities {
     public static final Integer REPORT_BACK_WITHOUT_COMMENT = 4;
     public static final Integer REPORT_BACK_WITH_COMMENT = 5;
     public static final Integer REPORT_APPROVED = 6;
+    public static final Integer CONSIDERED = 7;
 
     public OpenReport(){super();}
     public OpenReport(Long id){super();}
@@ -47,7 +48,7 @@ public class OpenReport extends AbstractEntities {
         this.reportMonth = reportMonth;
         this.report = report;
         this.percentagePerMonth = 0;
-        this.status = NEW_REPORT;
+        this.status = NOT_FILL_REPORT;
     }
     public OpenReport(String text, String problems, Integer percentagePerMonth, ReportYear reportYear,Integer reportMonth, Report report,Integer status){
         this(reportYear,reportMonth,report);

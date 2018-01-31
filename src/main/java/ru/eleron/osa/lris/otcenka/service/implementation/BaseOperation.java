@@ -36,7 +36,7 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
     @Override
     @Transactional
     public void remove(T object) {
-
+        sessionFactory.getCurrentSession().remove(object);
     }
 
     @Override
@@ -54,7 +54,8 @@ public class BaseOperation<T> implements BaseOperationIF<T> {
     @Override
     @Transactional
     public boolean update(T object) {
-        return false;
+        sessionFactory.getCurrentSession().update(object);
+        return true;
     }
 
     @Override
