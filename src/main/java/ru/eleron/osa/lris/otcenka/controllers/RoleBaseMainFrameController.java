@@ -125,7 +125,7 @@ public class RoleBaseMainFrameController {
     public Boolean filterOpenReport(OpenReport openReport){
         if(     textFieldNameOfReport.getText().equals("")&&
                 choiceBoxOwnerOfReport.getValue() == null&&
-                choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex() == -1) {
+                choiceBoxStatusOfReport.getValue() == null) {
             return true;
         }else if(
 
@@ -164,6 +164,28 @@ public class RoleBaseMainFrameController {
             baseOperationOpenReport.update(openReport);
             userSession.getOpenreportList().set(tableViewOpenReport.getSelectionModel().getSelectedIndex(),openReport);
             tableViewOpenReport.setItems(FXCollections.observableArrayList(userSession.getOpenreportList()));
+        }
+    }
+
+    /**
+     * Use for clear TextField and ChoiceBoxes
+     * */
+
+    @FXML
+    public void clearSearch(){
+        textFieldNameOfReport.clear();
+        choiceBoxOwnerOfReport.setValue(null);
+        choiceBoxStatusOfReport.setValue(null);
+    }
+
+    @FXML
+    public void fillReport(){
+        final OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        if (openReport == null) {
+            messageGenerator.getWarningMessage("Не выбран НИОКР для заполнения");
+        } else {
+           userSession.setChoosenOpenReport(openReport);
+           SceneLoader.loadScene("view/FillReportFrame.fxml");
         }
     }
 }

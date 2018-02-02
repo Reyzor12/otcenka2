@@ -1,7 +1,5 @@
 package ru.eleron.osa.lris.otcenka.bussiness;
 
-import org.hibernate.Hibernate;
-import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.*;

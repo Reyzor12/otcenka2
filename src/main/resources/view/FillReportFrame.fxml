@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.FillReportFrameController">
+   <children>
+      <SplitPane dividerPositions="0.25146771037182" layoutX="398.0" layoutY="269.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button layoutX="101.0" layoutY="121.0" mnemonicParsing="false" text="Сохранить" />
+                  <Button layoutX="101.0" layoutY="209.0" mnemonicParsing="false" text="Отмена" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label layoutX="209.0" layoutY="24.0" text="Окно заполнения НИОКР за месяц" />
+                  <Label layoutX="62.0" layoutY="81.0" text="Текст НИОКР'а" />
+                  <TextArea layoutX="62.0" layoutY="110.0" prefHeight="115.0" prefWidth="596.0" />
+                  <Label layoutX="62.0" layoutY="250.0" text="Проблемы" />
+                  <TextArea layoutX="62.0" layoutY="279.0" prefHeight="98.0" prefWidth="596.0" />
+                  <Label layoutX="62.0" layoutY="422.0" text="Процент за месяц" />
+                  <Spinner layoutX="187.0" layoutY="418.0" />
+                  <Label layoutX="65.0" layoutY="474.0" text="Комментарий" />
+                  <TextArea layoutX="62.0" layoutY="498.0" prefHeight="144.0" prefWidth="596.0" />
+                  <CheckBox layoutX="62.0" layoutY="652.0" mnemonicParsing="false" text="убрать комментарий" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

@@ -28,15 +28,16 @@
                            <children>
                               <TextField fx:id="textFieldNameOfReport" layoutX="168.0" layoutY="42.0" />
                               <ChoiceBox fx:id="choiceBoxStatusOfReport" layoutX="531.0" layoutY="42.0" prefWidth="150.0" />
-                              <Button onAction="#addNewReport" layoutX="47.0" layoutY="198.0" mnemonicParsing="false" text="Создать" />
-                              <Button onAction="#deleteReport" layoutX="186.0" layoutY="198.0" mnemonicParsing="false" text="Удалить" />
-                              <Button onAction="#editReport" layoutX="315.0" layoutY="198.0" mnemonicParsing="false" text="Редактировать" />
-                              <Button layoutX="447.0" layoutY="198.0" mnemonicParsing="false" text="Заполнить" />
-                              <Button onAction="#sendOpenReport" layoutX="571.0" layoutY="198.0" mnemonicParsing="false" text="Отправить" />
+                              <Button layoutX="47.0" layoutY="198.0" mnemonicParsing="false" onAction="#addNewReport" text="Создать" />
+                              <Button layoutX="186.0" layoutY="198.0" mnemonicParsing="false" onAction="#deleteReport" text="Удалить" />
+                              <Button layoutX="315.0" layoutY="198.0" mnemonicParsing="false" onAction="#editReport" text="Редактировать" />
+                              <Button layoutX="447.0" layoutY="198.0" mnemonicParsing="false" text="Заполнить" onAction="#fillReport" />
+                              <Button layoutX="571.0" layoutY="198.0" mnemonicParsing="false" onAction="#sendOpenReport" text="Отправить" />
                               <Label layoutX="37.0" layoutY="47.0" text="Название" />
                               <Label layoutX="37.0" layoutY="102.0" text="Исполнитель" />
                               <Label layoutX="420.0" layoutY="47.0" text="Статус" />
                               <ChoiceBox fx:id="choiceBoxOwnerOfReport" layoutX="168.0" layoutY="107.0" prefWidth="150.0" />
+                              <Button onAction="#clearSearch" layoutX="51.0" layoutY="155.0" mnemonicParsing="false" text="Очистить поиск" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

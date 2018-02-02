@@ -3,10 +3,8 @@ package ru.eleron.osa.lris.otcenka;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
-import ru.eleron.osa.lris.otcenka.service.config.HibernateConfig;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
 @Component
