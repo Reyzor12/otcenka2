@@ -1,15 +1,25 @@
 package ru.eleron.osa.lris.otcenka.bussiness;
 
+import javafx.event.ActionEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.*;
 import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
+import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
+import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
 import java.util.Date;
 import java.util.List;
 
 @Component
 public class UserSession {
+
+    private static final Logger log = LogManager.getLogger();
+
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     @Autowired
     private UserDao<User> userDao;
@@ -95,5 +105,15 @@ public class UserSession {
             if(y.equals(y1)) return y;
         }
         return null;
+    }
+
+    public void toMainFrame(ActionEvent event){
+        switch(user.getRole()){
+            case 1:
+                SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");break;
+            default:
+                log.warn("User with id = " + user.getId() + " has undefined role = " + user.getRole());
+                messageGenerator.getWarningMessage("Пользователь имеет не правильные права доступа, обратитись к разработчику программы");
+        }
     }
 }

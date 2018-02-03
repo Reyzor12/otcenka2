@@ -2,10 +2,15 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
+import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
 /**
  * Contoller for FXML doc {@link view/FillReportFrame.fxml}
@@ -17,6 +22,9 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class FillReportFrameController {
+
+    @Autowired
+    private UserSession userSession;
 
     @FXML
     private TextField textFieldTextOfReport;
@@ -42,4 +50,7 @@ public class FillReportFrameController {
     public void fillReport(ActionEvent event){}
 
     @FXML
+    public void back(ActionEvent event) {
+        userSession.toMainFrame(event);
+    }
 }
