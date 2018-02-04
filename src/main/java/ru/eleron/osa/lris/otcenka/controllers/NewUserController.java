@@ -1,6 +1,7 @@
 package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -15,6 +16,7 @@ import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 import ru.eleron.osa.lris.otcenka.utilities.TextFieldUtil;
+
 
 
 @Component
@@ -67,27 +69,21 @@ public class NewUserController {
     }
 
     @FXML
-    public void addNewUser(){
+    public void addNewUser(ActionEvent event){
 
         if(checkData()){
             userDao.add(new User(textFieldName.getText(), textFieldSurname.getText(), textFieldLastname.getText(),choiceBoxDepartment.getValue()));
             userSession.setUsersOfDepartment(null);
             userSession.getUsersOfDepartment();
-            back();
+            back(event);
         } else{
             messageGenerator.getWarningMessage("Не все поля были заполнены или данный пользователь уже существует");
         }
     }
 
     @FXML
-    public void back(){
-        switch(userSession.getUser().getRole()){
-            case 1: SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");break;
-            default: {
-                log.warn("user with id " + userSession.getUser().getId() + " has unappropriate role");
-                messageGenerator.getWarningMessage("У пользователя сбились права доступа, обратитись к разработчику программы");
-            };break;
-        }
+    public void back(ActionEvent event){
+        userSession.toMainFrame(event);
     }
 
 }

@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -139,12 +140,8 @@ public class NewReportController {
     }
 
     @FXML
-    public void back(){
-        switch(userSession.getUser().getRole()){
-            case 1: userSession.setChoosenOpenReport(null);SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");break;
-            default: log.warn("user with id = " + userSession.getUser().getId() + " has undefined role with id = " + userSession.getUser().getRole());
-            messageGenerator.getInfoMessage("Пользователь с неправильно заданной ролью, обратитесь к разработчику программы");
-        }
+    public void back(ActionEvent event){
+        userSession.toMainFrame(event);
     }
 
     @FXML
@@ -168,7 +165,7 @@ public class NewReportController {
     }
 
     @FXML
-    public void addReport(){
+    public void addReport(ActionEvent event){
         if(check()){
             if(userSession.getChoosenOpenReport() == null){
                 List<User> users = new ArrayList<>();
@@ -189,7 +186,7 @@ public class NewReportController {
                 OpenReport openReport = new OpenReport(userSession.getCurrentReportYear(userSession.getServerDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()),userSession.getServerDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue(),report);
                 baseOperationOpenReport.add(openReport);
                 messageGenerator.getInfoMessage("Репорт успешно добавлен");
-                back();
+                back(event);
             } else {
                 final Report report = userSession.getChoosenOpenReport().getReport();
                 report.setShortName(textFieldShort.getText());
@@ -205,7 +202,7 @@ public class NewReportController {
                 report.setPerformers(users);
                 reportDao.update(report);
                 messageGenerator.getInfoMessage("НИОКР успешно изменен");
-                back();
+                back(event);
             }
         }else{
             messageGenerator.getWarningMessage("Не все поля были заполнены!");

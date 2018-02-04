@@ -1,5 +1,6 @@
 package ru.eleron.osa.lris.otcenka.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import org.apache.logging.log4j.LogManager;
@@ -34,24 +35,18 @@ public class ReviewFrameController {
     }
 
     @FXML
-    public void sendReview(){
+    public void sendReview(ActionEvent event){
         if(textAreaReview.getText().trim().isEmpty()) {
             messageGenerator.getWarningMessage("Поле сообщения не заполнено1");
         } else {
             baseOperationReview.add(new Review(userSession.getComputerName().getDepartment(), userSession.getUser(), textAreaReview.getText()));
             messageGenerator.getInfoMessage("Отзыв успешно добавлен");
-            back();
+            back(event);
         }
     }
 
     @FXML
-    public void back(){
-        switch(userSession.getUser().getRole()){
-            case 1:
-                SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");break;
-            default:
-                log.warn("User with id = " + userSession.getUser().getId() + " has undefined role = " + userSession.getUser().getRole());
-                messageGenerator.getWarningMessage("Пользователь имеет не правильные права доступа, обратитись к разработчику программы");
-        }
+    public void back(ActionEvent event){
+        userSession.toMainFrame(event);
     }
 }

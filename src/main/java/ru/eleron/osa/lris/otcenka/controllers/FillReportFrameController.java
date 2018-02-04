@@ -2,10 +2,7 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,11 +24,11 @@ public class FillReportFrameController {
     private UserSession userSession;
 
     @FXML
-    private TextField textFieldTextOfReport;
+    private TextArea textAreaTextOfReport;
     @FXML
-    private TextField textFieldProblemsOfReport;
+    private TextArea textAreaProblemsOfReport;
     @FXML
-    private TextField textFieldCommentOfReport;
+    private TextArea textAreaCommentOfReport;
     @FXML
     private Spinner<Integer> spinnerPersentageOfMonthReport;
     @FXML
@@ -43,7 +40,17 @@ public class FillReportFrameController {
      * */
 
     public void initialize(){
-
+        textAreaTextOfReport.setText(userSession.getChoosenOpenReport().getText());
+        textAreaProblemsOfReport.setText(userSession.getChoosenOpenReport().getProblems());
+        textAreaCommentOfReport.setText(userSession.getChoosenOpenReport().getComment());
+        if(
+                userSession.getChoosenOpenReport().getComment() == null ||
+                userSession.getChoosenOpenReport().getComment().equals("")
+          ){
+            checkBoxDisableCommentOfReport.setDisable(true);
+        }
+        spinnerPersentageOfMonthReport.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100,0));
+        if(userSession.getChoosenOpenReport().getPercentagePerMonth() != null) spinnerPersentageOfMonthReport.getValueFactory().setValue(userSession.getChoosenOpenReport().getPercentagePerMonth());
     }
 
     @FXML
@@ -53,4 +60,6 @@ public class FillReportFrameController {
     public void back(ActionEvent event) {
         userSession.toMainFrame(event);
     }
+
+
 }

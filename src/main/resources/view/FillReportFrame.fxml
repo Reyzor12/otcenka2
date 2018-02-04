@@ -14,22 +14,22 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button layoutX="101.0" layoutY="121.0" mnemonicParsing="false" text="Сохранить" />
-                  <Button layoutX="101.0" layoutY="209.0" mnemonicParsing="false" text="Отмена" />
+                  <Button onAction="#fillReport" layoutX="101.0" layoutY="121.0" mnemonicParsing="false" text="Сохранить" />
+                  <Button onAction="#back" layoutX="101.0" layoutY="209.0" mnemonicParsing="false" text="Отмена" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <Label layoutX="209.0" layoutY="24.0" text="Окно заполнения НИОКР за месяц" />
                   <Label layoutX="62.0" layoutY="81.0" text="Текст НИОКР'а" />
-                  <TextArea layoutX="62.0" layoutY="110.0" prefHeight="115.0" prefWidth="596.0" />
+                  <TextArea fx:id="textAreaTextOfReport" layoutX="62.0" layoutY="110.0" prefHeight="115.0" prefWidth="596.0" />
                   <Label layoutX="62.0" layoutY="250.0" text="Проблемы" />
-                  <TextArea layoutX="62.0" layoutY="279.0" prefHeight="98.0" prefWidth="596.0" />
+                  <TextArea fx:id="textAreaProblemsOfReport" layoutX="62.0" layoutY="279.0" prefHeight="98.0" prefWidth="596.0" />
                   <Label layoutX="62.0" layoutY="422.0" text="Процент за месяц" />
-                  <Spinner layoutX="187.0" layoutY="418.0" />
+                  <Spinner fx:id="spinnerPersentageOfMonthReport" layoutX="187.0" layoutY="418.0" />
                   <Label layoutX="65.0" layoutY="474.0" text="Комментарий" />
-                  <TextArea layoutX="62.0" layoutY="498.0" prefHeight="144.0" prefWidth="596.0" />
-                  <CheckBox layoutX="62.0" layoutY="652.0" mnemonicParsing="false" text="убрать комментарий" />
+                  <TextArea fx:id="textAreaCommentOfReport" layoutX="62.0" layoutY="498.0" prefHeight="144.0" prefWidth="596.0" />
+                  <CheckBox fx:id="checkBoxDisableCommentOfReport" layoutX="62.0" layoutY="652.0" mnemonicParsing="false" text="убрать комментарий" />
                </children>
             </AnchorPane>
         </items>
