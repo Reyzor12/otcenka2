@@ -2,12 +2,16 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextArea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
-import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
+import ru.eleron.osa.lris.otcenka.entities.OpenReport;
+import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
+import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 
 /**
  * Contoller for FXML doc {@link view/FillReportFrame.fxml}
@@ -22,6 +26,12 @@ public class FillReportFrameController {
 
     @Autowired
     private UserSession userSession;
+
+    @Autowired
+    private OpenReportDao<OpenReport> openReportDao;
+
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     @FXML
     private TextArea textAreaTextOfReport;
@@ -43,6 +53,7 @@ public class FillReportFrameController {
         textAreaTextOfReport.setText(userSession.getChoosenOpenReport().getText());
         textAreaProblemsOfReport.setText(userSession.getChoosenOpenReport().getProblems());
         textAreaCommentOfReport.setText(userSession.getChoosenOpenReport().getComment());
+        textAreaCommentOfReport.setEditable(false);
         if(
                 userSession.getChoosenOpenReport().getComment() == null ||
                 userSession.getChoosenOpenReport().getComment().equals("")
@@ -54,12 +65,38 @@ public class FillReportFrameController {
     }
 
     @FXML
-    public void fillReport(ActionEvent event){}
+    public void fillReport(ActionEvent event){
+        OpenReport openReport = userSession.getChoosenOpenReport();
+        constructOpenReport(openReport);
+        openReport.setStatus(OpenReport.FILL_REPORT);
+        openReportDao.update(openReport);
+        messageGenerator.getInfoMessage("НИОКР был успешно заполнен");
+        back(event);
+    }
 
     @FXML
     public void back(ActionEvent event) {
         userSession.toMainFrame(event);
     }
 
-
+    private void constructOpenReport(OpenReport openReport){
+        if (textAreaTextOfReport.getText().isEmpty() && textAreaProblemsOfReport.getText().isEmpty()) {
+            messageGenerator.getWarningMessage("Не были заполнены поля");
+            return;
+        }
+        openReport.setText(textAreaTextOfReport.getText());
+        openReport.setProblems(textAreaProblemsOfReport.getText());
+        openReport.setPercentagePerMonth(spinnerPersentageOfMonthReport.getValue());
+        if (    !(openReport.getComment() == null ||
+                openReport.getComment().isEmpty() ||
+                openReport.getStatus() != OpenReport.REPORT_BACK_WITH_COMMENT)
+           ) {
+            if (checkBoxDisableCommentOfReport.isSelected()) {
+                openReport.setComment(null);
+            } else {
+                messageGenerator.getWarningMessage("Не был учтен комментарий");
+                return;
+            }
+        }
+    }
 }

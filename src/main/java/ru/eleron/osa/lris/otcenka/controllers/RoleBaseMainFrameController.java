@@ -67,7 +67,7 @@ public class RoleBaseMainFrameController {
     private List<OpenReport> openReportList;
 
     public void initialize(){
-        openReportList = baseOperationOpenReport.getListWithDepartments();
+        openReportList = userSession.getOpenreportList();
         choiceBoxOwnerOfReport.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
         choiceBoxStatusOfReport.setItems(FXCollections.observableArrayList(ConvertorForUse.getAllStatusInString()));
         tableColumnNameOfReport.setCellValueFactory((param ->  new SimpleStringProperty(param.getValue().getReport().getShortName())));

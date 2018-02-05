@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface OpenReportDao<OpenReport> extends BaseOperationIF<OpenReport>{
     List<OpenReport> getListWithDepartments();
+    List<OpenReport> getListWithDepartmentsCurrnetMonths();
 }

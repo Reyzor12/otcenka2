@@ -30,4 +30,11 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
         }
         return list;
     }
+
+    @Override
+    @Transactional
+    public List<OpenReport> getListWithDepartmentsCurrnetMonths() {
+        List<OpenReport> list = sessionFactory.getCurrentSession().createQuery(From);
+        return null;
+    }
 }

@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.*;
+import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
 import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
@@ -20,6 +21,9 @@ public class UserSession {
 
     @Autowired
     private MessageGenerator messageGenerator;
+
+    @Autowired
+    private OpenReportDao<OpenReport> openReportDao;
 
     @Autowired
     private UserDao<User> userDao;
@@ -57,6 +61,9 @@ public class UserSession {
     }
 
     public List<OpenReport> getOpenreportList() {
+        if (openreportList == null) {
+            openreportList = openReportDao.getListWithDepartments();
+        }
         return openreportList;
     }
 
