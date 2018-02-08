@@ -34,7 +34,7 @@ public class UserSession {
 
     private User user;
 
-    private List<OpenReport> openreportList;
+    private List<OpenReport> openReportList;
 
     private OpenReport choosenOpenReport;
 
@@ -61,14 +61,14 @@ public class UserSession {
     }
 
     public List<OpenReport> getOpenreportList() {
-        if (openreportList == null) {
-            openreportList = openReportDao.getListWithDepartments();
+        if (openReportList == null) {
+            openReportList = openReportDao.getListWithDepartmentsCurrnetMonths();
         }
-        return openreportList;
+        return openReportList;
     }
 
-    public void setOpenreportList(List<OpenReport> openreportList) {
-        this.openreportList = openreportList;
+    public void setOpenreportList(List<OpenReport> openReportList) {
+        this.openReportList = openReportList;
     }
 
     public Date getServerDate() {
