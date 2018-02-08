@@ -48,6 +48,16 @@ public class RoleHeadDepartmentMainFrameController {
         choiceBoxUser.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
         choiceBoxStatus.setItems(FXCollections.observableArrayList(ConvertorForUse.getAllStatusInString()));
 
+        textFieldName.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredListOpenReport.setPredicate(openReport -> filterOpenReport(openReport));
+        });
+        choiceBoxStatus.setOnAction(event -> {
+            filteredListOpenReport.setPredicate(openReport -> filterOpenReport(openReport));
+        });
+        choiceBoxUser.setOnAction(event -> {
+            filteredListOpenReport.setPredicate(openReport -> filterOpenReport(openReport));
+        });
+
         tableColumnName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getReport().getShortName()));
         tableColumnUser.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getReport().getResponsible().toString()));
         tableColumnStatus.setCellValueFactory(param -> new SimpleStringProperty(ConvertorForUse.convertStatusToString(param.getValue().getStatus())));
@@ -94,13 +104,15 @@ public class RoleHeadDepartmentMainFrameController {
 
     public Boolean filterOpenReport (OpenReport openReport) {
         if (
-                textFieldName.getText().isEmpty() ||
-                choiceBoxUser.getValue() == null ||
+                textFieldName.getText().isEmpty() &&
+                choiceBoxUser.getValue() == null &&
                 choiceBoxStatus.getValue() == null
                 ) {
             return true;
         } else if (
-                openReport.getReport().getShortName().toLowerCase().contains(textFieldName.getText().toLowerCase())
+                openReport.getReport().getShortName().toLowerCase().contains(textFieldName.getText().toLowerCase()) &&
+                (choiceBoxStatus.getValue() == null || openReport.getStatus().equals(choiceBoxStatus.getSelectionModel().getSelectedIndex()+1)) &&
+                (choiceBoxUser.getValue() == null || openReport.getReport().getResponsible().equals(choiceBoxUser.getValue()))
                 ) {
             return true;
         }
