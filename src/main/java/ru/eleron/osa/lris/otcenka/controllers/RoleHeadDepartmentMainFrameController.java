@@ -1,16 +1,28 @@
 package ru.eleron.osa.lris.otcenka.controllers;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.User;
+import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
 
 @Component
 public class RoleHeadDepartmentMainFrameController {
+
+    @Autowired
+    private UserSession userSession;
 
     @FXML
     private TextField textFieldName;
@@ -23,18 +35,42 @@ public class RoleHeadDepartmentMainFrameController {
     @FXML
     private TableColumn<OpenReport,String> tableColumnName;
     @FXML
-    private TableColumn<OpenReport,User> tableColumnUser;
+    private TableColumn<OpenReport,String> tableColumnUser;
     @FXML
     private TableColumn<OpenReport,String> tableColumnStatus;
 
-    public void initialize(){}
+    private ObservableList<OpenReport> observableListOpenReport;
+    private FilteredList<OpenReport> filteredListOpenReport;
+    private SortedList<OpenReport> sortedListOpenReport;
+
+    public void initialize() {
+
+        choiceBoxUser.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
+        choiceBoxStatus.setItems(FXCollections.observableArrayList(ConvertorForUse.getAllStatusInString()));
+
+        tableColumnName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getReport().getShortName()));
+        tableColumnUser.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getReport().getResponsible().toString()));
+        tableColumnStatus.setCellValueFactory(param -> new SimpleStringProperty(ConvertorForUse.convertStatusToString(param.getValue().getStatus())));
+
+        observableListOpenReport = FXCollections.observableArrayList(userSession.getOpenreportList());
+        filteredListOpenReport = new FilteredList<OpenReport>(observableListOpenReport, p -> true);
+        sortedListOpenReport = new SortedList<OpenReport>(filteredListOpenReport);
+        sortedListOpenReport.comparatorProperty().bind(tableViewOpenReport.comparatorProperty());
+        tableViewOpenReport.setItems(sortedListOpenReport);
+    }
 
     @FXML
-    public void addNewUser(){}
+    public void addNewUser(ActionEvent event) {
+        userSession.addNewUserFrame(event);
+    }
     @FXML
-    public void addNewReview(){}
+    public void addNewReview(ActionEvent event) {
+        userSession.addNewReviewFrame(event);
+    }
     @FXML
-    public void changeCurrentUser(){}
+    public void changeCurrentUser(ActionEvent event) {
+        userSession.changeUserFrame(event);
+    }
     @FXML
     public void backChoosenOpenReport(){}
     @FXML
@@ -55,4 +91,19 @@ public class RoleHeadDepartmentMainFrameController {
     public void editChoosenOpenReport(){}
     @FXML
     public void viewChoosenOpenReport(){}
+
+    public Boolean filterOpenReport (OpenReport openReport) {
+        if (
+                textFieldName.getText().isEmpty() ||
+                choiceBoxUser.getValue() == null ||
+                choiceBoxStatus.getValue() == null
+                ) {
+            return true;
+        } else if (
+                openReport.getReport().getShortName().toLowerCase().contains(textFieldName.getText().toLowerCase())
+                ) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -118,6 +118,8 @@ public class UserSession {
         switch(user.getRole()){
             case 1:
                 SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");break;
+            case 2:
+                SceneLoader.loadScene("view/RoleHeadDepartmentMainFrame.fxml");break;
             default:
                 log.warn("User with id = " + user.getId() + " has undefined role = " + user.getRole());
                 messageGenerator.getWarningMessage("Пользователь имеет не правильные права доступа, обратитись к разработчику программы");
