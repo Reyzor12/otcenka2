@@ -46,6 +46,22 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
 
     @Override
     @Transactional
+    public List<OpenReport> getListWithDepartments(ReportYear reportYear, Integer month) {
+        List<OpenReport> openReportList = sessionFactory
+                .getCurrentSession()
+                .createQuery("FROM OpenReport WHERE reportYear = :reportYear and reportMonth = :reportMonth")
+                .setParameter("reportYear",reportYear)
+                .setParameter("reportMonth",month)
+                .list();
+        for(OpenReport openReport : openReportList){
+            Hibernate.initialize(openReport.getReport());
+            Hibernate.initialize(openReport.getReport().getResponsible());
+        }
+        return openReportList;
+    }
+
+    @Override
+    @Transactional
     public List<OpenReport> getListWithDepartmentsCurrnetMonths() {
         Date currentDate = baseDataFromDB.getServerData();
         LocalDate currentLocalDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -62,6 +78,6 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
                 ).setParameter("currentY",currentY)
                 .setParameter("currentM",currentM);
         query.executeUpdate();
-        return getListWithDepartments();
+        return getListWithDepartments(currentY,currentM);
     }
 }
