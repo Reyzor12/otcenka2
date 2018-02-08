@@ -123,4 +123,16 @@ public class UserSession {
                 messageGenerator.getWarningMessage("Пользователь имеет не правильные права доступа, обратитись к разработчику программы");
         }
     }
+
+    public void addNewUserFrame(ActionEvent event) {
+        SceneLoader.loadScene("view/NewUser.fxml");
+    }
+
+    public void addNewReviewFrame(ActionEvent event) {
+        SceneLoader.loadScene("view/ReviewFrame.fxml");
+    }
+
+    public void changeUserFrame(ActionEvent event) {
+        SceneLoader.loadScene("view/UserLoginFrame.fxml");
+    }
 }

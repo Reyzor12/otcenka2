@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -91,19 +92,17 @@ public class RoleBaseMainFrameController {
     }
 
     @FXML
-    public void addNewUser(){
-        SceneLoader.loadScene("view/NewUser.fxml");
+    public void addNewUser(ActionEvent event){
+        userSession.addNewUserFrame(event);
     }
 
     @FXML
-    public void addNewReview(){
-        SceneLoader.loadScene("view/ReviewFrame.fxml");
+    public void addNewReview(ActionEvent event){
+        userSession.addNewReviewFrame(event);
     }
 
     @FXML
-    public void changeUser(){
-        SceneLoader.loadScene("view/UserLoginFrame.fxml");
-    }
+    public void changeUser(ActionEvent event){ userSession.changeUserFrame(event); }
 
     @FXML
     public void addNewReport(){

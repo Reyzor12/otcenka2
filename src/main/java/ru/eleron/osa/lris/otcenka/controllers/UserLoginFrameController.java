@@ -48,6 +48,10 @@ public class UserLoginFrameController {
                 SceneLoader.loadScene("view/RoleBaseMainFrame.fxml");
                 break;
             }
+            case 2: {
+                SceneLoader.loadScene("view/RoleHeadDepartmentMainFrame.fxml");
+                break;
+            }
             default: {
                 log.warn("User have undefined role id = " + userSession.getUser().getRole());
                 messageGenerator.getWarningMessage("Пользователь имеет недопутимую роль, свяжитесь с разработчиками!");
