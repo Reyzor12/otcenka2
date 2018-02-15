@@ -9,18 +9,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.RoleHeadDepartmentMainFrameController">
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.RoleHeadDepartmentMainFrameController">
    <children>
       <SplitPane dividerPositions="0.25146771037182" layoutX="398.0" layoutY="269.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button onAction="#addNewUser" layoutX="62.0" layoutY="49.0" mnemonicParsing="false" text="Новый пользователь" />
-                  <Button onAction="#addNewReview" layoutX="94.0" layoutY="125.0" mnemonicParsing="false" text="Отзыв" />
-                  <Button onAction="#changeCurrentUser" layoutX="45.0" layoutY="201.0" mnemonicParsing="false" text="Смена пользователя" />
-                  <Button onAction="#backChoosenOpenReport" layoutX="36.0" layoutY="579.0" mnemonicParsing="false" text="Отозвать выбранный НИОКР" />
-                  <Button onAction="#backAllOpenReport" layoutX="53.0" layoutY="651.0" mnemonicParsing="false" text="Отозвать все НИОКРы" />
+                  <Button layoutX="62.0" layoutY="49.0" mnemonicParsing="false" onAction="#addNewUser" text="Новый пользователь" />
+                  <Button layoutX="94.0" layoutY="125.0" mnemonicParsing="false" onAction="#addNewReview" text="Отзыв" />
+                  <Button layoutX="45.0" layoutY="201.0" mnemonicParsing="false" onAction="#changeCurrentUser" text="Смена пользователя" />
+                  <Button layoutX="36.0" layoutY="579.0" mnemonicParsing="false" onAction="#backChoosenOpenReport" text="Отозвать выбранный НИОКР" />
+                  <Button layoutX="53.0" layoutY="651.0" mnemonicParsing="false" onAction="#backAllOpenReport" text="Отозвать все НИОКРы" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -31,18 +30,17 @@
                            <children>
                               <TextField fx:id="textFieldName" layoutX="168.0" layoutY="42.0" />
                               <ChoiceBox fx:id="choiceBoxStatus" layoutX="531.0" layoutY="42.0" prefWidth="150.0" />
-                              <Button onAction="#rejectChoosenOpenReport" layoutX="47.0" layoutY="198.0" mnemonicParsing="false" text="Отказ" />
-                              <Button onAction="#sendChoosenOpenReport" layoutX="186.0" layoutY="198.0" mnemonicParsing="false" text="Отправка" />
-                              <Button onAction="#sendAllOpenReport" layoutX="315.0" layoutY="198.0" mnemonicParsing="false" text="Отправка всех" />
-                              <Button onAction="#editChoosenOpenReport" layoutX="447.0" layoutY="198.0" mnemonicParsing="false" text="Редактирование" />
-                              <Button onAction="#viewChoosenOpenReport" layoutX="571.0" layoutY="198.0" mnemonicParsing="false" text="Посмотреть" />
+                              <Button layoutX="47.0" layoutY="198.0" mnemonicParsing="false" onAction="#rejectChoosenOpenReport" text="Отказ" />
+                              <Button layoutX="186.0" layoutY="198.0" mnemonicParsing="false" onAction="#sendChoosenOpenReport" text="Отправка" />
+                              <Button layoutX="315.0" layoutY="198.0" mnemonicParsing="false" onAction="#sendAllOpenReport" text="Отправка всех" />
+                              <Button layoutX="447.0" layoutY="198.0" mnemonicParsing="false" onAction="#editChoosenOpenReport" text="Редактирование" />
                               <Label layoutX="37.0" layoutY="47.0" text="Название" />
                               <Label layoutX="37.0" layoutY="102.0" text="Исполнитель" />
                               <Label layoutX="420.0" layoutY="47.0" text="Статус" />
                               <ChoiceBox fx:id="choiceBoxUser" layoutX="168.0" layoutY="107.0" prefWidth="150.0" />
-                              <Button onAction="#clearSearch" layoutX="358.0" layoutY="107.0" mnemonicParsing="false" text="Очистить поиск" />
-                              <Button onAction="#showChoosenOpenReportWORD" layoutX="46.0" layoutY="149.0" mnemonicParsing="false" text="Показать WORD выбранного НИОРК" />
-                              <Button onAction="#showAllOpenReportWORD" layoutX="294.0" layoutY="149.0" mnemonicParsing="false" text="Показать WORD всех" />
+                              <Button layoutX="358.0" layoutY="107.0" mnemonicParsing="false" onAction="#clearSearch" text="Очистить поиск" />
+                              <Button layoutX="46.0" layoutY="149.0" mnemonicParsing="false" onAction="#showChoosenOpenReportWORD" text="Показать WORD выбранного НИОРК" />
+                              <Button layoutX="294.0" layoutY="149.0" mnemonicParsing="false" onAction="#showAllOpenReportWORD" text="Показать WORD всех" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

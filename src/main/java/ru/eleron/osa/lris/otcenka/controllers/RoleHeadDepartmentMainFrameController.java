@@ -17,12 +17,17 @@ import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.User;
 import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
+import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
+import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
 @Component
 public class RoleHeadDepartmentMainFrameController {
 
     @Autowired
     private UserSession userSession;
+
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     @FXML
     private TextField textFieldName;
@@ -98,9 +103,15 @@ public class RoleHeadDepartmentMainFrameController {
     @FXML
     public void sendAllOpenReport(){}
     @FXML
-    public void editChoosenOpenReport(){}
-    @FXML
-    public void viewChoosenOpenReport(){}
+    public void editChoosenOpenReport(){
+        OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        if (openReport == null) {
+            messageGenerator.getWarningMessage("Не выбран не один НИОКР!");
+        } else {
+            userSession.setChoosenOpenReport(openReport);
+            SceneLoader.loadScene("view/ViewOrEditOpenReportFrame.fxml");
+        }
+    }
 
     public Boolean filterOpenReport (OpenReport openReport) {
         if (
