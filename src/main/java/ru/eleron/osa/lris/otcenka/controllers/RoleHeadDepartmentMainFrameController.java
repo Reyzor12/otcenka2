@@ -7,10 +7,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
@@ -19,6 +16,8 @@ import ru.eleron.osa.lris.otcenka.entities.User;
 import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
+
+import java.util.Optional;
 
 @Component
 public class RoleHeadDepartmentMainFrameController {
@@ -87,11 +86,26 @@ public class RoleHeadDepartmentMainFrameController {
         userSession.changeUserFrame(event);
     }
     @FXML
-    public void backChoosenOpenReport(){}
+    public void backChoosenOpenReport(){
+        OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        if (openReport == null) {
+            messageGenerator.getWarningMessage("Не выбран НИОКР!");
+        } else {
+            Optional<ButtonType> option = messageGenerator.getConfirmMessage("Вы дейтсвительно хотите отправить НИОКР на доработку?");
+            if (option.get().equals(ButtonType.OK)) {
+                userSession.setChoosenOpenReport(openReport);
+                SceneLoader.loadSceneInNewFrame("view/CommentToOpenReport.fxml");
+            }
+        }
+    }
     @FXML
     public void backAllOpenReport(){}
     @FXML
-    public void clearSearch(){}
+    public void clearSearch(){
+        textFieldName.setText("");
+        choiceBoxStatus.setValue(null);
+        choiceBoxUser.setValue(null);
+    }
     @FXML
     public void showChoosenOpenReportWORD(){}
     @FXML

@@ -1,8 +1,11 @@
 package ru.eleron.osa.lris.otcenka.utilities;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class MessageGenerator {
@@ -26,5 +29,14 @@ public class MessageGenerator {
         alert.setContentText(text);
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
+    }
+
+    public Optional<ButtonType> getConfirmMessage(String text) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(INFO);
+        alert.setHeaderText(text);
+        alert.setContentText(null);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        return alert.showAndWait();
     }
 }
