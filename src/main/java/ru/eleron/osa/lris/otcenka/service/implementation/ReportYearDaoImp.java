@@ -28,4 +28,13 @@ public class ReportYearDaoImp extends BaseOperation<ReportYear> implements Repor
         if (list.isEmpty()) return null;
         return list.get(0);
     }
+
+    @Override
+    @Transactional
+    public List<ReportYear> getAfterYear(Integer year) {
+        List<ReportYear> list = sessionFactory.getCurrentSession().createQuery("FROM ReportYear WHERE year >= :year")
+                .setParameter("year",year)
+                .list();
+        return list;
+    }
 }

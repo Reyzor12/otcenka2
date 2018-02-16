@@ -185,6 +185,7 @@ public class NewReportController {
                 report = reportDao.getReportByLongNameAndOwner(textFieldLong.getText(),choiceBoxOwner.getValue());
                 OpenReport openReport = new OpenReport(userSession.getCurrentReportYear(userSession.getServerDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()),userSession.getServerDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue(),report);
                 baseOperationOpenReport.add(openReport);
+                userSession.setOpenreportList(baseOperationOpenReport.getListWithDepartmentsCurrnetMonths());
                 messageGenerator.getInfoMessage("Репорт успешно добавлен");
                 back(event);
             } else {

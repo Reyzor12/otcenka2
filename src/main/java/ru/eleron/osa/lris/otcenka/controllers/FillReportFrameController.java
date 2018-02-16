@@ -67,11 +67,12 @@ public class FillReportFrameController {
     @FXML
     public void fillReport(ActionEvent event){
         OpenReport openReport = userSession.getChoosenOpenReport();
-        constructOpenReport(openReport);
-        openReport.setStatus(OpenReport.FILL_REPORT);
-        openReportDao.update(openReport);
-        messageGenerator.getInfoMessage("НИОКР был успешно заполнен");
-        back(event);
+        if (constructOpenReport(openReport)) {
+            openReport.setStatus(OpenReport.FILL_REPORT);
+            openReportDao.update(openReport);
+            messageGenerator.getInfoMessage("НИОКР был успешно заполнен");
+            back(event);
+        }
     }
 
     @FXML
@@ -79,14 +80,11 @@ public class FillReportFrameController {
         userSession.toMainFrame(event);
     }
 
-    private void constructOpenReport(OpenReport openReport){
-        if (textAreaTextOfReport.getText().isEmpty() && textAreaProblemsOfReport.getText().isEmpty()) {
+    private boolean constructOpenReport(OpenReport openReport){
+        if (textAreaTextOfReport.getText() == null && textAreaProblemsOfReport.getText() == null) {
             messageGenerator.getWarningMessage("Не были заполнены поля");
-            return;
+            return false;
         }
-        openReport.setText(textAreaTextOfReport.getText());
-        openReport.setProblems(textAreaProblemsOfReport.getText());
-        openReport.setPercentagePerMonth(spinnerPersentageOfMonthReport.getValue());
         if (    !(openReport.getComment() == null ||
                 openReport.getComment().isEmpty() ||
                 openReport.getStatus() != OpenReport.REPORT_BACK_WITH_COMMENT)
@@ -95,8 +93,12 @@ public class FillReportFrameController {
                 openReport.setComment(null);
             } else {
                 messageGenerator.getWarningMessage("Не был учтен комментарий");
-                return;
+                return false;
             }
         }
+        openReport.setText(textAreaTextOfReport.getText());
+        openReport.setProblems(textAreaProblemsOfReport.getText());
+        openReport.setPercentagePerMonth(spinnerPersentageOfMonthReport.getValue());
+        return true;
     }
 }

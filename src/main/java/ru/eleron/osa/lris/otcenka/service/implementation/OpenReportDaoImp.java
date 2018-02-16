@@ -66,17 +66,34 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
         Date currentDate = baseDataFromDB.getServerData();
         LocalDate currentLocalDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Integer currentM = currentLocalDate.getMonthValue();
+        Integer previousM = currentM - 1 == 0 ? 12 : currentM - 1;
         ReportYear currentY = reportYearDao.getYear(currentLocalDate.getYear());
+        List<ReportYear> reportYearList = reportYearDao.getAfterYear(currentLocalDate.getYear());
+
+        NativeQuery query0 = sessionFactory.getCurrentSession()
+                .createNativeQuery(
+                        "update dbo.report " +
+                          "set percentagePerYear = (percentagePerYear + percentagePerMonth) " +
+                          "from dbo.report r, dbo.openReport o " +
+                          "where r.dateEnd in :listY and o.report = r.id and o.reportMonth = :previousM and not exists( " +
+                          "select 1 from dbo.openReport o1 " +
+                          "where o1.report = r.id and o1.reportMonth = :currentM) "
+                ).setParameter("listY",reportYearList)
+                .setParameter("previousM",previousM)
+                .setParameter("currentM",currentM);
+        query0.executeUpdate();
+
         NativeQuery query = sessionFactory.getCurrentSession()
                 .createNativeQuery(
                         "insert into dbo.openReport(status,report,reportYear,reportMonth,percentagePerMonth)" +
                                 "select 2,r.id,:currentY,:currentM,0" +
                                 "from dbo.report r " +
-                                "where r.dateEnd < :currentY and not exists( " +
+                                "where r.dateEnd in :listY and not exists( " +
                                 "select 1 from dbo.openReport o where " +
                                 "o.report = r.id and o.reportYear = :currentY and o.reportMonth = :currentM)"
                 ).setParameter("currentY",currentY)
-                .setParameter("currentM",currentM);
+                .setParameter("currentM",currentM)
+                .setParameter("listY",reportYearList);
         query.executeUpdate();
         return getListWithDepartments(currentY,currentM);
     }
