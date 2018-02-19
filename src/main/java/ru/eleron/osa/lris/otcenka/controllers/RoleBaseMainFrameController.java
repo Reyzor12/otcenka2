@@ -162,7 +162,8 @@ public class RoleBaseMainFrameController {
             openReport.setStatus(OpenReport.CONSIDERED);
             baseOperationOpenReport.update(openReport);
             userSession.getOpenreportList().set(tableViewOpenReport.getSelectionModel().getSelectedIndex(),openReport);
-            tableViewOpenReport.setItems(FXCollections.observableArrayList(userSession.getOpenreportList()));
+            //tableViewOpenReport.setItems(FXCollections.observableArrayList(userSession.getOpenreportList()));
+            tableViewOpenReport.refresh();
         }
     }
 

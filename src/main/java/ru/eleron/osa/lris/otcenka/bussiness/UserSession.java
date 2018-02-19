@@ -14,6 +14,15 @@ import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * UserSession class is kind of cache of user session
+ * This class have some common tools for any kind of user with various level of access
+ *
+ * @author reyzor
+ * @version 1.0
+ * @since 19.02.2018
+ * */
+
 @Component
 public class UserSession {
 

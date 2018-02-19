@@ -19,6 +19,15 @@ import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
 import java.util.Optional;
 
+/**
+ * Controller for RoleHeadDepartmentMainFrame.fxml
+ * Used to head of deapartment main frame
+ *
+ * @author reyzor
+ * @version 1.0
+ * @since 19.02.2018
+ * */
+
 @Component
 public class RoleHeadDepartmentMainFrameController {
 
@@ -85,6 +94,11 @@ public class RoleHeadDepartmentMainFrameController {
     public void changeCurrentUser(ActionEvent event) {
         userSession.changeUserFrame(event);
     }
+
+    /**
+     * return report to responsible person with comment or without if report not correspond
+     * */
+
     @FXML
     public void backChoosenOpenReport(){
         OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
@@ -95,11 +109,24 @@ public class RoleHeadDepartmentMainFrameController {
             if (option.get().equals(ButtonType.OK)) {
                 userSession.setChoosenOpenReport(openReport);
                 SceneLoader.loadSceneInNewFrame("view/CommentToOpenReport.fxml");
+                tableViewOpenReport.refresh();
             }
         }
     }
+
+    /**
+     * return all reports to responsible person with comment or without if report not correspond
+     * */
+
     @FXML
-    public void backAllOpenReport(){}
+    public void backAllOpenReport(){
+        if (userSession.getChoosenOpenReport() != null) userSession.setChoosenOpenReport(null);
+        Optional<ButtonType> option = messageGenerator.getConfirmMessage("Вы действительно хотите отправить все НИОКР'ы на доработку?");
+        if (option.get().equals(ButtonType.OK)) {
+            SceneLoader.loadSceneInNewFrame("view/CommentToOpenReport.fxml");
+            tableViewOpenReport.refresh();
+        }
+    }
     @FXML
     public void clearSearch(){
         textFieldName.setText("");
