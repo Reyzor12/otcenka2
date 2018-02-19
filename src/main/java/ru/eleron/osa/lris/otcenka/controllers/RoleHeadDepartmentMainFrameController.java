@@ -13,15 +13,18 @@ import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.User;
+import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
 import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * Controller for RoleHeadDepartmentMainFrame.fxml
- * Used to head of deapartment main frame
+ * Used to head of department main frame
  *
  * @author reyzor
  * @version 1.0
@@ -33,9 +36,10 @@ public class RoleHeadDepartmentMainFrameController {
 
     @Autowired
     private UserSession userSession;
-
     @Autowired
     private MessageGenerator messageGenerator;
+    @Autowired
+    private OpenReportDao<OpenReport> openReportDao;
 
     @FXML
     private TextField textFieldName;
@@ -137,12 +141,44 @@ public class RoleHeadDepartmentMainFrameController {
     public void showChoosenOpenReportWORD(){}
     @FXML
     public void showAllOpenReportWORD(){}
+
+    /**
+     * Method change status of chosen report and update it in database
+     * */
+
     @FXML
-    public void rejectChoosenOpenReport(){}
+    public void sendChoosenOpenReport(){
+        OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        if (openReport == null) {
+            messageGenerator.getWarningMessage("Не выбран НИКОР для отправки!");
+        } else {
+            Optional<ButtonType> option = messageGenerator.getConfirmMessage("Вы действительно хотите отправить выбранный НИКОР?");
+            if (option.get().equals(ButtonType.OK)) {
+                if (openReport.getStatus() == OpenReport.CONSIDERED) {
+                    openReport.setStatus(OpenReport.REPORT_APPROVED);
+                    openReportDao.update(openReport);
+                    tableViewOpenReport.refresh();
+                }
+            }
+        }
+    }
+
+    /**
+     * Method change all status of open report with status considered on status approved and update it in database
+     * */
+
     @FXML
-    public void sendChoosenOpenReport(){}
-    @FXML
-    public void sendAllOpenReport(){}
+    public void sendAllOpenReport() {
+        Optional<ButtonType> option = messageGenerator.getConfirmMessage("Вы действительно хотите отправить все НИОКРЫ?");
+        if (option.get().equals(ButtonType.OK)) {
+            userSession.getOpenreportList().stream().filter(p -> p.getStatus() == OpenReport.CONSIDERED).forEach(p -> {
+                p.setStatus(OpenReport.REPORT_APPROVED);
+                openReportDao.update(p);
+            });
+            tableViewOpenReport.refresh();
+        }
+
+    }
     @FXML
     public void editChoosenOpenReport(){
         OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();

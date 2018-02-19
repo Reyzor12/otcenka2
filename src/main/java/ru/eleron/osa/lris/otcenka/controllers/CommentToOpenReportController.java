@@ -89,7 +89,10 @@ public class CommentToOpenReportController {
         userSession.getOpenreportList().stream().filter(s -> s.getStatus() == OpenReport.CONSIDERED).forEach(s -> list.add(s));
         if (list.isEmpty()) return;
         if (checkBoxComment.isSelected()) {
-            list.stream().forEach(s -> s.setStatus(OpenReport.REPORT_BACK_WITHOUT_COMMENT));
+            list.stream().forEach(s -> {
+                s.setStatus(OpenReport.REPORT_BACK_WITHOUT_COMMENT);
+                openReportDao.update(s);
+            });
         } else {
             list.stream().forEach(s -> {
                 s.setStatus(OpenReport.REPORT_BACK_WITH_COMMENT);

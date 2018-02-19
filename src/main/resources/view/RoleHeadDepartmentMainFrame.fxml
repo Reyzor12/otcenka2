@@ -30,7 +30,6 @@
                            <children>
                               <TextField fx:id="textFieldName" layoutX="168.0" layoutY="42.0" />
                               <ChoiceBox fx:id="choiceBoxStatus" layoutX="531.0" layoutY="42.0" prefWidth="150.0" />
-                              <Button layoutX="47.0" layoutY="198.0" mnemonicParsing="false" onAction="#rejectChoosenOpenReport" text="Отказ" />
                               <Button layoutX="186.0" layoutY="198.0" mnemonicParsing="false" onAction="#sendChoosenOpenReport" text="Отправка" />
                               <Button layoutX="315.0" layoutY="198.0" mnemonicParsing="false" onAction="#sendAllOpenReport" text="Отправка всех" />
                               <Button layoutX="447.0" layoutY="198.0" mnemonicParsing="false" onAction="#editChoosenOpenReport" text="Редактирование" />
