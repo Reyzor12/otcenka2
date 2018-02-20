@@ -65,10 +65,8 @@ public class MicrosoftReports {
             for(XWPFTableRow row : table.getRows()){
                 for(XWPFTableCell cell : row.getTableCells()){
                     for(XWPFParagraph paragraph : cell.getParagraphs()){
-                        System.out.println(paragraph.getText());
                         for(XWPFRun run : paragraph.getRuns()){
                             String text = run.getText(0);
-                            System.out.println(" run text = " + text);
                             if(text != null){
                                 for(String key : replacer.keySet()){
                                     if(text.contains(key) && replacer.get(key) != null){
@@ -247,6 +245,19 @@ public class MicrosoftReports {
 
     public void GenerateAndSaveReportUseTemplates (String pathToMainDocTemplate, String pathToReportDescriptionTemplate, List<OpenReport> openReportList, String pathToSave) {
         GenerateAndSaveReportUseTemplates(pathToMainDocTemplate, pathToReportDescriptionTemplate, openReportList, pathToSave, "$reports");
+    }
+
+    /**
+     * Update docx document, unite similar run
+     * */
+
+    public XWPFDocument updateXWPFDocument(XWPFDocument document) {
+        for(XWPFParagraph paragraph: document.getParagraphs()) {
+            for(XWPFRun run : paragraph.getRuns()) {
+                
+            }
+        }
+        return document;
     }
 
     /**
