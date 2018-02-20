@@ -252,11 +252,7 @@ public class MicrosoftReports {
      * */
 
     public XWPFDocument updateXWPFDocument(XWPFDocument document) {
-        for(XWPFParagraph paragraph: document.getParagraphs()) {
-            for(XWPFRun run : paragraph.getRuns()) {
-                
-            }
-        }
+        document.getRange()
         return document;
     }
 
