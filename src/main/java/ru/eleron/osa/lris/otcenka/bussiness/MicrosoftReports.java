@@ -1,6 +1,8 @@
 package ru.eleron.osa.lris.otcenka.bussiness;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.wp.usermodel.Paragraph;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
@@ -98,16 +100,22 @@ public class MicrosoftReports {
     /**
      * Method fill data from OpenReportList to XWPFDocument with template in document
      *
-     * @param document - document to work
+     * @param templatePath - path to template docx
      * @param openReportList - list of open reports which will fill the doc
      */
 
-    public XWPFDocument fillDataFromOpenReportList (XWPFDocument document, List<OpenReport> openReportList) {
-
-        for (OpenReport openReport : openReportList) {
-            XWfdgdfPFDocument temp = new XWPFDocument();
-           gmp.creafdsgfdgteParagraph().;
-            document.getParagraphs();
+    public XWPFDocument fillDataFromOpenReportList (String templatePath, List<OpenReport> openReportList){
+        XWPFDocument document = new XWPFDocument();
+        try {
+            XWPFDocument temp = new XWPFDocument(OPCPackage.open(templatePath));
+            for (OpenReport openReport : openReportList) {
+                temp = fillDataFromOpenReport(openReport,temp);
+                document = mergeXWPFDocument(document,temp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
         }
         return document;
     }
@@ -161,6 +169,93 @@ public class MicrosoftReports {
     }
 
     /**
+     * Method merge two XWPFDocument in new One
+     * @param base - base XWPFDocument in which will be added new XWPFParagraph from sub
+     * @param sub  - XWPFDocument merged with base
+     * @return merged base XWPFDocument
+     * */
+
+    public XWPFDocument mergeXWPFDocument(XWPFDocument base, XWPFDocument sub) {
+        if (base == null || sub == null) return null;
+        List<XWPFParagraph> subParagraphList = sub.getParagraphs();
+        for (XWPFParagraph paragraph : subParagraphList) {
+            base.setParagraph(paragraph,base.getPosOfParagraph(base.getLastParagraph())+1);
+        }
+        return base;
+    }
+
+    /**
+     * Method merge tow XWPFDocument in new one put one of them in particular position in another one
+     * @param base - base XWPFDocument in which will be added new XWPFParagraph from sub
+     * @param sub - XWPFDocument merged with base
+     * @param keyWord - paragraph with key word will be replaced on List of paragraph from sub
+     * @return merged base XWPFDocument;
+     * */
+
+    public XWPFDocument mergeXWPFDocument(XWPFDocument base, XWPFDocument sub, String keyWord) {
+        if (base == null || sub == null || keyWord.isEmpty()) return null;
+        Integer index = -1;
+        for (XWPFParagraph paragraph : base.getParagraphs()) {
+            if (paragraph.getText().contains(keyWord)) {
+                index = base.getPosOfParagraph(paragraph);
+                break;
+            }
+        }
+        for (XWPFParagraph paragraph : sub.getParagraphs()) {
+            base.setParagraph(paragraph,index);
+        }
+        return base;
+    }
+
+    /**
+     * Method to save XWPFDocument
+     * @param document - XWPFDocument what have to save
+     * @param pathToSave - string - path to save
+     * */
+
+    public void saveDocument(XWPFDocument document, String pathToSave) {
+        try {
+            document.write(new FileOutputStream(pathToSave));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method generate Report on base two templates for document and for description of report
+     * and list of report. At the end it save doc in specific place. Key word for replacing $reports
+     *
+     * @param pathToMainDocTemplate - string - path to main template of document
+     * @param pathToReportDescriptionTemplate - string - path to template of report description
+     * @param openReportList - list of OpenReport which have to insert in report template
+     * @param pathToSave - string - path to save document
+     * @param keyWord - string - key word for inserting reports
+     * */
+
+    public void GenerateAndSaveReportUseTemplates (String pathToMainDocTemplate, String pathToReportDescriptionTemplate, List<OpenReport> openReportList, String pathToSave, String keyWord) {
+        try {
+            XWPFDocument mainDocument = new XWPFDocument(OPCPackage.open(pathToMainDocTemplate));
+            XWPFDocument reportDocument = fillDataFromOpenReportList(pathToReportDescriptionTemplate,openReportList);
+            mainDocument = mergeXWPFDocument(mainDocument,reportDocument,keyWord);
+            saveDocument(mainDocument,pathToSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void GenerateAndSaveReportUseTemplates (String pathToMainDocTemplate, String pathToReportDescriptionTemplate, List<OpenReport> openReportList, String pathToSave) {
+        GenerateAndSaveReportUseTemplates(pathToMainDocTemplate, pathToReportDescriptionTemplate, openReportList, pathToSave, "$reports");
+    }
+
+    /**
+     * =====================================================================================================
+     * WORK FOR SPECIFIC DOCX TEMPLATE
+     * =====================================================================================================
+     * */
+
+    /**
      * Method to transfer open report to word doc (save file)
      *
      * @param replacer -  map of pairs key word - replace value
@@ -210,6 +305,7 @@ public class MicrosoftReports {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Method to transfer open report to word doc (save file)
