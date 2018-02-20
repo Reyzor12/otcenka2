@@ -2,7 +2,6 @@ package ru.eleron.osa.lris.otcenka.bussiness;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.wp.usermodel.Paragraph;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
@@ -10,7 +9,6 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
-import ru.eleron.osa.lris.otcenka.entities.User;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,7 +41,7 @@ public class MicrosoftReports {
                 String text = run.getText(0);
                 if(text != null){
                     for(String key : replacer.keySet()){
-                        if(text.contains(key)){
+                        if(text.contains(key) && replacer.get(key) != null){
                             text = text.replace(key,replacer.get(key));
                         }
                     }
@@ -67,11 +65,13 @@ public class MicrosoftReports {
             for(XWPFTableRow row : table.getRows()){
                 for(XWPFTableCell cell : row.getTableCells()){
                     for(XWPFParagraph paragraph : cell.getParagraphs()){
+                        System.out.println(paragraph.getText());
                         for(XWPFRun run : paragraph.getRuns()){
                             String text = run.getText(0);
+                            System.out.println(" run text = " + text);
                             if(text != null){
                                 for(String key : replacer.keySet()){
-                                    if(text.contains(key)){
+                                    if(text.contains(key) && replacer.get(key) != null){
                                         text = text.replace(key,replacer.get(key));
                                     }
                                 }

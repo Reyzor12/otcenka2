@@ -27,7 +27,7 @@ public class Report extends AbstractEntities {
     @ManyToOne
     @JoinColumn(name = "responsible",nullable = false)
     private User responsible;
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="report_user", joinColumns={@JoinColumn(name="report_id")},inverseJoinColumns={@JoinColumn(name="user_id")})
     private List<User> performers;
     @NotNull(message = "department of report can't be null")

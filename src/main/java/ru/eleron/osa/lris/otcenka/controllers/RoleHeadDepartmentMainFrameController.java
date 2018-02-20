@@ -8,8 +8,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eleron.osa.lris.otcenka.bussiness.MicrosoftReports;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.User;
@@ -18,9 +22,9 @@ import ru.eleron.osa.lris.otcenka.utilities.ConvertorForUse;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Controller for RoleHeadDepartmentMainFrame.fxml
@@ -40,6 +44,8 @@ public class RoleHeadDepartmentMainFrameController {
     private MessageGenerator messageGenerator;
     @Autowired
     private OpenReportDao<OpenReport> openReportDao;
+    @Autowired
+    private MicrosoftReports microsoftReports;
 
     @FXML
     private TextField textFieldName;
@@ -137,8 +143,31 @@ public class RoleHeadDepartmentMainFrameController {
         choiceBoxStatus.setValue(null);
         choiceBoxUser.setValue(null);
     }
+
+    /**
+     * Open docx document generate on chosen open report
+     * */
+
     @FXML
-    public void showChoosenOpenReportWORD(){}
+    public void showChosenOpenReportWORD(){
+        String path = getClass().getClassLoader().getResource("docs/template.docx").getPath();
+        System.out.println(path);
+        OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        try {
+            XWPFDocument document = new XWPFDocument(OPCPackage.open(path));
+            //Map<String,String> replacer = new HashMap<>();
+            //replacer.put("{$hello}","world");
+            //document = microsoftReports.replaceInDocument(replacer,document);
+            document = microsoftReports.fillDataFromOpenReport(openReport,document);
+            String pathToSave = getClass().getClassLoader().getResource("docs/test1.docx").getPath();
+            microsoftReports.saveDocument(document,pathToSave);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     public void showAllOpenReportWORD(){}
 

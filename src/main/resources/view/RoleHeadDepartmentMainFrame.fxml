@@ -38,7 +38,7 @@
                               <Label layoutX="420.0" layoutY="47.0" text="Статус" />
                               <ChoiceBox fx:id="choiceBoxUser" layoutX="168.0" layoutY="107.0" prefWidth="150.0" />
                               <Button layoutX="358.0" layoutY="107.0" mnemonicParsing="false" onAction="#clearSearch" text="Очистить поиск" />
-                              <Button layoutX="46.0" layoutY="149.0" mnemonicParsing="false" onAction="#showChoosenOpenReportWORD" text="Показать WORD выбранного НИОРК" />
+                              <Button layoutX="46.0" layoutY="149.0" mnemonicParsing="false" onAction="#showChosenOpenReportWORD" text="Показать WORD выбранного НИОРК" />
                               <Button layoutX="294.0" layoutY="149.0" mnemonicParsing="false" onAction="#showAllOpenReportWORD" text="Показать WORD всех" />
                            </children>
                         </AnchorPane>
