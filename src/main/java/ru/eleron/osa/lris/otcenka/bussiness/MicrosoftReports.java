@@ -3,6 +3,7 @@ package ru.eleron.osa.lris.otcenka.bussiness;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.usermodel.*;
+import org.apache.xmlbeans.XmlCursor;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
@@ -15,6 +16,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class for transfer Open Report object into word document for restrict template of document
@@ -106,6 +109,7 @@ public class MicrosoftReports {
 
     public XWPFDocument fillDataFromOpenReportList (String templatePath, List<OpenReport> openReportList){
         XWPFDocument document = new XWPFDocument();
+        document.createParagraph();
         try {
             XWPFDocument temp = new XWPFDocument(OPCPackage.open(templatePath));
             for (OpenReport openReport : openReportList) {
@@ -129,7 +133,7 @@ public class MicrosoftReports {
 
     public XWPFDocument fillDataFromOpenReport(OpenReport openReport, XWPFDocument document) {
         Map<String,String> replacer = replacerForOpenReport(openReport);
-        return replaceInDocument(replacer,document);
+        return replace(document,replacer);
     }
 
     /**
@@ -178,8 +182,10 @@ public class MicrosoftReports {
     public XWPFDocument mergeXWPFDocument(XWPFDocument base, XWPFDocument sub) {
         if (base == null || sub == null) return null;
         List<XWPFParagraph> subParagraphList = sub.getParagraphs();
+        Integer last = base.getPosOfParagraph(base.getLastParagraph());
         for (XWPFParagraph paragraph : subParagraphList) {
-            base.setParagraph(paragraph,base.getPosOfParagraph(base.getLastParagraph())+1);
+            XWPFParagraph p = base.createParagraph();
+            base.setParagraph(paragraph,base.getPosOfParagraph(p));
         }
         return base;
     }
@@ -197,14 +203,34 @@ public class MicrosoftReports {
         Integer index = -1;
         for (XWPFParagraph paragraph : base.getParagraphs()) {
             if (paragraph.getText().contains(keyWord)) {
-                index = base.getPosOfParagraph(paragraph);
+                index = base.getPosOfParagraph(paragraph) - 1;
                 break;
             }
         }
-        for (XWPFParagraph paragraph : sub.getParagraphs()) {
-            base.setParagraph(paragraph,index);
+        List<XWPFParagraph> paragraphs = sub.getParagraphs();
+        base.setParagraph(paragraphs.get(1),index);
+        for(int i = 2; i < paragraphs.size(); i++) {
+            index += 1;
+            XmlCursor cursor = base.getParagraphArray(index).getCTP().newCursor();
+            XWPFParagraph p = base.insertNewParagraph(cursor);
+            base.setParagraph(paragraphs.get(i),index);
         }
         return base;
+    }
+
+    /**
+     * Create new XWPFDocument from List of XWPFParagraph
+     * @param paragraphs - list of XWPFParagraph's
+     * @return new XWPFDocument
+     * */
+
+    public XWPFDocument createXWPFDocument(List<XWPFParagraph> paragraphs) {
+        XWPFDocument document = new XWPFDocument();
+        for(XWPFParagraph paragraph : paragraphs) {
+            XWPFParagraph p = document.createParagraph();
+            document.setParagraph(paragraph,document.getPosOfParagraph(p));
+        }
+        return document;
     }
 
     /**
@@ -232,9 +258,9 @@ public class MicrosoftReports {
      * @param keyWord - string - key word for inserting reports
      * */
 
-    public void GenerateAndSaveReportUseTemplates (String pathToMainDocTemplate, String pathToReportDescriptionTemplate, List<OpenReport> openReportList, String pathToSave, String keyWord) {
+    public void GenerateAndSaveReportUseTemplates (String pathToMainDocTemplate, Map<String,String> replacer, String pathToReportDescriptionTemplate, List<OpenReport> openReportList, String pathToSave, String keyWord) {
         try {
-            XWPFDocument mainDocument = new XWPFDocument(OPCPackage.open(pathToMainDocTemplate));
+            XWPFDocument mainDocument = replace(new XWPFDocument(OPCPackage.open(pathToMainDocTemplate)),replacer);
             XWPFDocument reportDocument = fillDataFromOpenReportList(pathToReportDescriptionTemplate,openReportList);
             mainDocument = mergeXWPFDocument(mainDocument,reportDocument,keyWord);
             saveDocument(mainDocument,pathToSave);
@@ -245,8 +271,8 @@ public class MicrosoftReports {
         }
     }
 
-    public void GenerateAndSaveReportUseTemplates (String pathToMainDocTemplate, String pathToReportDescriptionTemplate, List<OpenReport> openReportList, String pathToSave) {
-        GenerateAndSaveReportUseTemplates(pathToMainDocTemplate, pathToReportDescriptionTemplate, openReportList, pathToSave, "$reports");
+    public void GenerateAndSaveReportUseTemplates (String pathToMainDocTemplate, Map<String,String> replacer, String pathToReportDescriptionTemplate, List<OpenReport> openReportList, String pathToSave) {
+        GenerateAndSaveReportUseTemplates(pathToMainDocTemplate, replacer, pathToReportDescriptionTemplate, openReportList, pathToSave, "$reports");
     }
 
     /**
@@ -413,5 +439,118 @@ public class MicrosoftReports {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * ======================================================================================================
+     * TESTS
+     * ======================================================================================================
+     * */
+
+    public XWPFDocument replace(XWPFDocument doc, Map<String, String> data){
+        for (XWPFParagraph p : doc.getParagraphs()) {
+            replace2(p, data);
+        }
+        for (XWPFTable tbl : doc.getTables()) {
+            for (XWPFTableRow row : tbl.getRows()) {
+                for (XWPFTableCell cell : row.getTableCells()) {
+                    for (XWPFParagraph p : cell.getParagraphs()) {
+                        replace2(p, data);
+                    }
+                }
+            }
+        }
+        return doc;
+    }
+
+    private void replace2(XWPFParagraph p, Map<String, String> data) {
+        String pText = p.getText(); // Взяли текст параграфа
+        if (pText.contains("{$")) { // если он тест содержит команду замены, то начинаем работать дальше
+            TreeMap<Integer, XWPFRun> posRuns = getPosToRuns(p); //Формируем карту
+            Pattern pat = Pattern.compile("\\{\\$(.+?)\\}");
+            Matcher m = pat.matcher(pText);
+            while (m.find()) { // for all patterns in the paragraph
+                String g = m.group(1);
+                int s = m.start(1);
+                int e = m.end(1);
+                String key = "{$" + g + "}";
+                String x = data.get(key);
+                if (x == null)
+                    x = "";
+                SortedMap<Integer, XWPFRun> range = posRuns.subMap(s - 2, true, e + 1, true); // get runs which contain the pattern
+                boolean found1 = false; // found {
+                boolean found2 = false; // found $
+                boolean found3 = false; // found }
+                XWPFRun prevRun = null; // previous run handled in the loop
+                XWPFRun found2Run = null; // run in which { was found
+                int found2Pos = -1; // pos of { within above run
+                for (XWPFRun r : range.values())
+                {
+                    if (r == prevRun)
+                        continue; // this run has already been handled
+                    if (found3)
+                        break; // done working on current key pattern
+                    prevRun = r;
+                    for (int k = 0;; k++) { // iterate over texts of run r
+                        if (found3)
+                            break;
+                        String txt = null;
+                        try {
+                            txt = r.getText(k); // note: should return null, but throws exception if the text does not exist
+                        } catch (Exception ex) {
+
+                        }
+                        if (txt == null)
+                            break; // no more texts in the run, exit loop
+                        if (txt.contains("{") && !found1) {  // found {, replace it with value from data map
+                            txt = txt.replaceFirst("\\{", x);
+                            found1 = true;
+                        }
+                        if (txt.contains("$") && !found2 && found1) {
+                            found2Run = r; // found { replace it with empty string and remember location
+                            found2Pos = txt.indexOf('$');
+                            txt = txt.replaceFirst("\\$", "");
+                            found2 = true;
+                        }
+                        if (found1 && found2 && !found3) { // find } and set all chars between { and } to blank
+                            if (txt.contains("}"))
+                            {
+                                if (r == found2Run)
+                                { // complete pattern was within a single run
+                                    txt = txt.substring(0, found2Pos)+txt.substring(txt.indexOf('}'));
+                                }
+                                else // pattern spread across multiple runs
+                                    txt = txt.substring(txt.indexOf('}'));
+                            }
+                            else if (r == found2Run) // same run as { but no }, remove all text starting at {
+                                txt = txt.substring(0,  found2Pos);
+                            else
+                                txt = ""; // run between { and }, set text to blank
+                        }
+                        if (txt.contains("}") && !found3) {
+                            txt = txt.replaceFirst("\\}", "");
+                            found3 = true;
+                        }
+                        r.setText(txt, k);
+                    }
+                }
+            }
+        }
+    }
+
+    private TreeMap<Integer, XWPFRun> getPosToRuns(XWPFParagraph paragraph) {
+        int pos = 0;
+        TreeMap<Integer, XWPFRun> map = new TreeMap<Integer, XWPFRun>();
+        for (XWPFRun run : paragraph.getRuns()) {
+            String runText = run.text();
+            if (runText != null && runText.length() > 0) {
+                for (int i = 0; i < runText.length(); i++) {
+                    map.put(pos + i, run);
+                }
+                pos += runText.length();
+            }
+
+        }
+        return map;
     }
 }

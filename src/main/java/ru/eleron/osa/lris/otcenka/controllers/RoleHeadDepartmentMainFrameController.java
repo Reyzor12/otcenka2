@@ -153,14 +153,22 @@ public class RoleHeadDepartmentMainFrameController {
         String path = getClass().getClassLoader().getResource("docs/template.docx").getPath();
         System.out.println(path);
         OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+        if(openReport == null) {
+            System.out.println("NOT SELECTED");
+            return;
+        }
         try {
             XWPFDocument document = new XWPFDocument(OPCPackage.open(path));
-            //Map<String,String> replacer = new HashMap<>();
-            //replacer.put("{$hello}","world");
+            Map<String,String> replacer = new HashMap<>();
+            replacer.put("{$hello}","world");
             //document = microsoftReports.replaceInDocument(replacer,document);
-            document = microsoftReports.fillDataFromOpenReport(openReport,document);
+            //document = microsoftReports.fillDataFromOpenReport(openReport,document);
             String pathToSave = getClass().getClassLoader().getResource("docs/test1.docx").getPath();
-            microsoftReports.saveDocument(document,pathToSave);
+            //microsoftReports.saveDocument(document,pathToSave);
+//            Map<String,String> replacer = microsoftReports.replacerForOpenReport(openReport);
+//            microsoftReports.replace(document,replacer);
+            String pathReport = getClass().getClassLoader().getResource("docs/reporttempl.docx").getPath();
+            microsoftReports.GenerateAndSaveReportUseTemplates(path,replacer,pathReport,Arrays.asList(openReport),pathToSave);
 
         } catch (IOException e) {
             e.printStackTrace();
