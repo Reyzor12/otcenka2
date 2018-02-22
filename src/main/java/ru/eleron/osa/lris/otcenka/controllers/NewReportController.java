@@ -183,7 +183,7 @@ public class NewReportController {
                         );
                 reportDao.add(report);
                 report = reportDao.getReportByLongNameAndOwner(textFieldLong.getText(),choiceBoxOwner.getValue());
-                OpenReport openReport = new OpenReport(userSession.getCurrentReportYear(userSession.getServerDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()),userSession.getServerDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue(),report);
+                OpenReport openReport = new OpenReport(userSession.getCurrentReportYear(userSession.getServerDate().getYear()),userSession.getServerDate().getMonthValue(),report);
                 baseOperationOpenReport.add(openReport);
                 userSession.setOpenreportList(baseOperationOpenReport.getListWithDepartmentsCurrnetMonths());
                 messageGenerator.getInfoMessage("Репорт успешно добавлен");

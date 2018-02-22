@@ -11,6 +11,7 @@ import ru.eleron.osa.lris.otcenka.service.dao.UserDao;
 import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class UserSession {
     @Autowired
     private UserDao<User> userDao;
 
-    private Date serverDate;
+    private LocalDate serverDate;
 
     private ComputerName computerName;
 
@@ -80,11 +81,11 @@ public class UserSession {
         this.openReportList = openReportList;
     }
 
-    public Date getServerDate() {
+    public LocalDate getServerDate() {
         return serverDate;
     }
 
-    public void setServerDate(Date serverDate) {
+    public void setServerDate(LocalDate serverDate) {
         this.serverDate = serverDate;
     }
 

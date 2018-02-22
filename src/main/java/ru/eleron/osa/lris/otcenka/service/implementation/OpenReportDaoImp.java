@@ -63,8 +63,7 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
     @Override
     @Transactional
     public List<OpenReport> getListWithDepartmentsCurrnetMonths() {
-        Date currentDate = baseDataFromDB.getServerData();
-        LocalDate currentLocalDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate currentLocalDate = baseDataFromDB.getServerData();
         Integer currentM = currentLocalDate.getMonthValue();
         Integer previousM = currentM - 1 == 0 ? 12 : currentM - 1;
         ReportYear currentY = reportYearDao.getYear(currentLocalDate.getYear());

@@ -1,8 +1,8 @@
 package ru.eleron.osa.lris.otcenka.service.dao;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface BaseDataFromDB {
 
-    Date getServerData();
+    LocalDate getServerData();
 }

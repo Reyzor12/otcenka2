@@ -7,6 +7,9 @@ import java.util.List;
 @Entity
 @Table(name="department")
 public class Department extends AbstractEntities {
+    @NotNull(message = "head of department don't set")
+    @Column(name = "department_head")
+    private String departmentHead;
     @NotNull(message = "department name is null")
     @Column(name = "name",unique = true,nullable = false)
     private String name;
@@ -17,9 +20,10 @@ public class Department extends AbstractEntities {
 
     public Department(){super();};
     public Department(Long id){super(id);};
-    public Department(String name){
+    public Department(String name, String departmentHead){
         super();
         this.name = name;
+        this.departmentHead = departmentHead;
     }
 
     public String getName() {
@@ -44,6 +48,14 @@ public class Department extends AbstractEntities {
 
     public void setReports(List<Report> reports) {
         this.reports = reports;
+    }
+
+    public String getDepartmentHead() {
+        return departmentHead;
+    }
+
+    public void setDepartmentHead(String departmentHead) {
+        this.departmentHead = departmentHead;
     }
 
     @Override

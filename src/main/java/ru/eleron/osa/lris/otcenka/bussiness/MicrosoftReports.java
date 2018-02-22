@@ -11,11 +11,14 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +32,24 @@ import java.util.regex.Pattern;
 
 @Component
 public class MicrosoftReports {
+
+    /**
+     * Open docx file
+     * @param path - path to docx file
+     * */
+    public boolean openDocxFile(String path) {
+        if (Desktop.isDesktopSupported()) {
+            final File document = new File(path);
+            try {
+                Desktop.getDesktop().open(document);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Method find in document key word in TEXT and replace it for new one
@@ -111,10 +132,10 @@ public class MicrosoftReports {
         XWPFDocument document = new XWPFDocument();
         document.createParagraph();
         try {
-            XWPFDocument temp = new XWPFDocument(OPCPackage.open(templatePath));
             for (OpenReport openReport : openReportList) {
-                temp = fillDataFromOpenReport(openReport,temp);
-                document = mergeXWPFDocument(document,temp);
+                XWPFDocument temp = new XWPFDocument(OPCPackage.open(templatePath));
+                XWPFDocument doc = fillDataFromOpenReport(openReport,temp);
+                document = mergeXWPFDocument(document,doc);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -203,10 +224,11 @@ public class MicrosoftReports {
         Integer index = -1;
         for (XWPFParagraph paragraph : base.getParagraphs()) {
             if (paragraph.getText().contains(keyWord)) {
-                index = base.getPosOfParagraph(paragraph) - 1;
+                index = base.getPosOfParagraph(paragraph);
                 break;
             }
         }
+        if (index == -1) return null;
         List<XWPFParagraph> paragraphs = sub.getParagraphs();
         base.setParagraph(paragraphs.get(1),index);
         for(int i = 2; i < paragraphs.size(); i++) {
@@ -214,6 +236,7 @@ public class MicrosoftReports {
             XmlCursor cursor = base.getParagraphArray(index).getCTP().newCursor();
             XWPFParagraph p = base.insertNewParagraph(cursor);
             base.setParagraph(paragraphs.get(i),index);
+
         }
         return base;
     }

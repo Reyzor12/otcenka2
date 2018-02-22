@@ -1,5 +1,6 @@
 package ru.eleron.osa.lris.otcenka.controllers;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +26,7 @@ import ru.eleron.osa.lris.otcenka.utilities.SceneLoader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Controller for RoleHeadDepartmentMainFrame.fxml
@@ -46,6 +48,8 @@ public class RoleHeadDepartmentMainFrameController {
     private OpenReportDao<OpenReport> openReportDao;
     @Autowired
     private MicrosoftReports microsoftReports;
+    @Autowired
+    private ConvertorForUse convertorForUse;
 
     @FXML
     private TextField textFieldName;
@@ -65,8 +69,10 @@ public class RoleHeadDepartmentMainFrameController {
     private ObservableList<OpenReport> observableListOpenReport;
     private FilteredList<OpenReport> filteredListOpenReport;
     private SortedList<OpenReport> sortedListOpenReport;
+    private Map<String,String> replacer;
 
     public void initialize() {
+        fillFieldForReplaceInReportWord();
 
         choiceBoxUser.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
         choiceBoxStatus.setItems(FXCollections.observableArrayList(ConvertorForUse.getAllStatusInString()));
@@ -150,34 +156,22 @@ public class RoleHeadDepartmentMainFrameController {
 
     @FXML
     public void showChosenOpenReportWORD(){
-        String path = getClass().getClassLoader().getResource("docs/template.docx").getPath();
-        System.out.println(path);
-        OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
+
+        final OpenReport openReport = tableViewOpenReport.getSelectionModel().getSelectedItem();
         if(openReport == null) {
-            System.out.println("NOT SELECTED");
+            messageGenerator.getWarningMessage("Не выбран НИОКР для формирования word документа!");
             return;
         }
-        try {
-            XWPFDocument document = new XWPFDocument(OPCPackage.open(path));
-            Map<String,String> replacer = new HashMap<>();
-            replacer.put("{$hello}","world");
-            //document = microsoftReports.replaceInDocument(replacer,document);
-            //document = microsoftReports.fillDataFromOpenReport(openReport,document);
-            String pathToSave = getClass().getClassLoader().getResource("docs/test1.docx").getPath();
-            //microsoftReports.saveDocument(document,pathToSave);
-//            Map<String,String> replacer = microsoftReports.replacerForOpenReport(openReport);
-//            microsoftReports.replace(document,replacer);
-            String pathReport = getClass().getClassLoader().getResource("docs/reporttempl.docx").getPath();
-            microsoftReports.GenerateAndSaveReportUseTemplates(path,replacer,pathReport,Arrays.asList(openReport),pathToSave);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidFormatException e) {
-            e.printStackTrace();
-        }
+        generateReportsWord(Arrays.asList(openReport));
     }
     @FXML
-    public void showAllOpenReportWORD(){}
+    public void showAllOpenReportWORD(){
+        if (observableListOpenReport.isEmpty()) {
+            messageGenerator.getInfoMessage("Нет НИОКРов для вывода в word");
+        } else {
+            generateReportsWord(observableListOpenReport);
+        }
+    }
 
     /**
      * Method change status of chosen report and update it in database
@@ -242,5 +236,44 @@ public class RoleHeadDepartmentMainFrameController {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Method fill map replacer fields
+     * */
+
+    public void fillFieldForReplaceInReportWord() {
+        replacer = new HashMap<String,String>();
+        replacer.put("{$month}",convertorForUse.monthName(userSession.getServerDate().getMonthValue()).get(3));
+        replacer.put("{$year}",Integer.toString(userSession.getServerDate().getYear()));
+        replacer.put("{$department}",userSession.getComputerName().getDepartment().getName());
+        replacer.put("{$department_head}",userSession.getComputerName().getDepartment().getDepartmentHead());
+    }
+
+    /**
+     * Method generate reports
+     * @param
+     * */
+
+    public void generateReportsWord(List<OpenReport> openReportList) {
+        final String path = getClass().getClassLoader().getResource("docs/DepartmentTemplate.docx").getPath();
+        final String pathToSave = getClass().getClassLoader().getResource("docs/test1.docx").getPath();
+        final String pathReport = getClass().getClassLoader().getResource("docs/reporttempl.docx").getPath();
+        try {
+            final XWPFDocument document = new XWPFDocument(OPCPackage.open(path));
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> microsoftReports.GenerateAndSaveReportUseTemplates(path,replacer,pathReport,openReportList,pathToSave));
+            future.thenRun( () -> {
+                Platform.runLater(() -> {
+                    messageGenerator.getInfoMessage("Отчет успешно сформирован!");
+                    if(!microsoftReports.openDocxFile(pathToSave)) {
+                        messageGenerator.getWarningMessage("Нельзя открыть файл на данном компьютере!\nФайл распологается " + pathToSave);
+                    }
+                });
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        }
     }
 }

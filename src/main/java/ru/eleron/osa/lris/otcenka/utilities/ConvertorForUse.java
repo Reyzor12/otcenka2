@@ -1,9 +1,11 @@
 package ru.eleron.osa.lris.otcenka.utilities;
 
+import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 
 import java.util.*;
 
+@Component
 public class ConvertorForUse {
 
     private static Map<Integer,String> statusMap;
@@ -33,5 +35,30 @@ public class ConvertorForUse {
             createStatusMap();
         }
         return new ArrayList<String>(statusMap.values());
+    }
+
+    /**
+     * Method convert number of month to list of strings - name of month with capital letter,
+     * without and in padej roditel
+     * @param monthNumber - number of month
+     * @return - list of names of the month
+     * */
+
+    public static List<String> monthName(Integer monthNumber) {
+        switch (monthNumber%12) {
+            case 1: return Arrays.asList("Январь", "январь", "января","январе");
+            case 2: return Arrays.asList("Февраль", "февраль", "февраля","феврале");
+            case 3: return Arrays.asList("Март", "март", "марта","марте");
+            case 4: return Arrays.asList("Апрель", "апрель", "апреля","апреле");
+            case 5: return Arrays.asList("Май", "май", "мая","мае");
+            case 6: return Arrays.asList("Июнь", "июнь", "июня","июне");
+            case 7: return Arrays.asList("Июль", "июль", "июля","июле");
+            case 8: return Arrays.asList("Август", "август", "августа","августе");
+            case 9: return Arrays.asList("Сентябрь", "сентабрь", "сентября","сентябре");
+            case 10: return Arrays.asList("Октябрь", "октябрь", "октября","октябре");
+            case 11: return Arrays.asList("Ноябрь", "ноябрь", "нооября","ноябре");
+            case 0: return Arrays.asList("Декабрь", "декабрь", "декабря","декабре");
+            default: return Arrays.asList("Неизвестный месяц", "Неизвестный месяц", "Неизвестный месяц", "Неизвестный месяц");
+        }
     }
 }
