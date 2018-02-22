@@ -164,6 +164,9 @@ public class MicrosoftReports {
      * {$percentagePerMonth} - openReport.getPercentagePerMonth();
      * {$reportYear} - openReport.getReportYear().getYear();
      * {$comment} - openReport.getComment();
+     * {$month} - openReport.getReportMonth();
+     * {$year} - openReport.getReportYear().getYear()
+     * {$month.day} - Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)
      * {$report.shortName} - openReport.getReport().getShortName();
      * {$report.fullName} - openReport.getReport().getFullName();
      * {$report.dateStart} - openReport.getReport().getDateStart();
@@ -181,6 +184,9 @@ public class MicrosoftReports {
         map.put("{$percentagePerMonth}",openReport.getPercentagePerMonth().toString());
         map.put("{$reportYear}",openReport.getReportYear().getYear().toString());
         map.put("{$comment}",openReport.getComment());
+        map.put("{$month}",openReport.getReportMonth().toString());
+        map.put("{$year}",openReport.getReportYear().getYear().toString());
+        map.put("{$month.day}",Integer.toString(Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)));
         map.put("{$report.shortName}",openReport.getReport().getShortName());
         map.put("{$report.fullName}",openReport.getReport().getFullName());
         map.put("{$report.dateStart}",openReport.getReport().getDateStart().getYear().toString());
