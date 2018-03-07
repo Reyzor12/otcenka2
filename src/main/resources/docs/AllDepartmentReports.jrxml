@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AllDepartmentReports" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee768754-c3cd-48f1-b516-26111d10afdd">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="cDate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="longName" class="java.lang.String"/>
+	<field name="deviation" class="java.lang.String"/>
+	<field name="problems" class="java.lang.String"/>
+	<field name="comment" class="java.lang.String"/>
+	<field name="perMonth" class="java.lang.String"/>
+	<field name="perYear" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<group name="department">
+		<groupExpression><![CDATA[$F{department}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="0" y="0" width="554" height="30" uuid="8a446b29-e162-46d1-9af3-24be40e0c197"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{department}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="174" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="120" height="20" uuid="afaf2ce6-4d0e-4a72-aec2-a5727f9a4e37"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Исх.№__________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="60" height="20" uuid="e10c2c05-7ced-43bf-aa9e-47b85c208db5"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[от___.___.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="20" width="60" height="20" uuid="0cfb3960-01e7-44ce-a49d-725b3bdd8f4c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="20" width="20" height="20" uuid="c56c4e75-c5df-4663-9430-34c3f749ad95"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[г.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="320" height="110" uuid="e97ad215-34ca-4e96-bc53-3511e7b5215c"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Генеральному директору АО ФЦНИФТ "СНПО"ЭЛЕРОН" Коновалову В.А. 
+Первому заместителю генерального директора - директору НТЦ ТСБ АО ФЦНИФТ "СНПО"ЭЛЕРОН" Давыдову Ю.Л. Главному конструктору - директору НИИСБАО ФЦНИВТ "СНПО"ЭЛЕРОН" Паршенцеву В.А.Техническому директору АО ФЦНИВТ "СНПО"ЭЛЕРОН" Кушникову В.К.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="130" y="130" width="290" height="40" uuid="c6600674-8516-43e7-a02f-e9ac7d01de5e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[СПРАВКА
+по ходу выполнения НИОКР по состоянию на]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="410" y="144" width="100" height="26" uuid="d0e9b091-503a-45cb-90d2-36d952ca20f9"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="140" height="30" uuid="b9b521e3-4367-4a77-841f-efbc1403ba54">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f76364c3-48b0-4677-a058-da2a15eb260f"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Наименование темы]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="10" width="108" height="30" uuid="722ad607-42fd-42c7-8686-366ccd90d59f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="454c793e-67bd-4873-908d-bf4dc64b19de"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Отклонение от план-графика]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="248" y="10" width="120" height="30" uuid="c3bd660e-dac7-4044-9fdb-79ee68b01a34">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e3116ea9-ccd7-4e81-ad1d-f88e1e33e90e"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Проблемные вопросы]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="10" width="92" height="30" uuid="f6350929-188e-4891-8bd8-7e5adad7c221">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78af19bc-0895-477d-9dc5-8c53d3cdeefe"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Примечания]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="10" width="50" height="30" uuid="0d7c3a12-f840-47c1-984d-1275fb6ee569">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78c7b659-f216-47a2-a21b-2c9a69f870b8"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[% за месяц]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="10" width="44" height="30" uuid="0fd0ffa0-a851-4abd-b393-8e9e2db4cd23">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="efe4432e-5c66-4195-9adb-27bfb1f04bcb"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[% за год]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="140" height="30" uuid="4bc44345-3c1d-4f5c-8c5f-e75950c8111a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f76364c3-48b0-4677-a058-da2a15eb260f"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{longName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="140" y="0" width="108" height="30" uuid="674e092f-5570-4b72-8498-a0ea5f05bf9f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="454c793e-67bd-4873-908d-bf4dc64b19de"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deviation}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="248" y="0" width="120" height="30" uuid="78836026-d401-410c-bc1f-cd39161b0494">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e3116ea9-ccd7-4e81-ad1d-f88e1e33e90e"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{problems}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="368" y="0" width="92" height="30" uuid="8ffbc057-427e-4f5b-862b-65337b0cb387">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78af19bc-0895-477d-9dc5-8c53d3cdeefe"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comment}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="460" y="0" width="50" height="30" uuid="68e51181-c2fa-45d9-afb1-71bf939a29f6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78c7b659-f216-47a2-a21b-2c9a69f870b8"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{perMonth}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="510" y="0" width="44" height="30" uuid="ad389943-0087-4f79-8d40-f7663b8ad2e8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="efe4432e-5c66-4195-9adb-27bfb1f04bcb"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{perYear}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="100" height="20" uuid="083c32e8-186d-4da4-ba45-f5139dc023b7"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Начальник НТО]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="10" width="134" height="30" uuid="97911d10-3868-4391-8fa6-4d148d3da8cf"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[___________С.Н. Жихарев]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
