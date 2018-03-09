@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AllDepartmentReports" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee768754-c3cd-48f1-b516-26111d10afdd">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="year" class="java.lang.String"/>
@@ -54,14 +54,14 @@
 				<text><![CDATA[от___.___.]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="60" y="20" width="60" height="20" uuid="0cfb3960-01e7-44ce-a49d-725b3bdd8f4c"/>
+				<reportElement x="60" y="20" width="40" height="20" uuid="0cfb3960-01e7-44ce-a49d-725b3bdd8f4c"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="120" y="20" width="20" height="20" uuid="c56c4e75-c5df-4663-9430-34c3f749ad95"/>
+				<reportElement x="100" y="20" width="20" height="20" uuid="c56c4e75-c5df-4663-9430-34c3f749ad95"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
@@ -76,7 +76,7 @@
 Первому заместителю генерального директора - директору НТЦ ТСБ АО ФЦНИФТ "СНПО"ЭЛЕРОН" Давыдову Ю.Л. Главному конструктору - директору НИИСБАО ФЦНИВТ "СНПО"ЭЛЕРОН" Паршенцеву В.А.Техническому директору АО ФЦНИВТ "СНПО"ЭЛЕРОН" Кушникову В.К.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="130" y="130" width="290" height="40" uuid="c6600674-8516-43e7-a02f-e9ac7d01de5e"/>
+				<reportElement positionType="FixRelativeToBottom" x="130" y="130" width="260" height="40" uuid="c6600674-8516-43e7-a02f-e9ac7d01de5e"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
@@ -84,7 +84,7 @@
 по ходу выполнения НИОКР по состоянию на]]></text>
 			</staticText>
 			<textField>
-				<reportElement stretchType="RelativeToTallestObject" x="410" y="144" width="100" height="26" uuid="d0e9b091-503a-45cb-90d2-36d952ca20f9"/>
+				<reportElement stretchType="RelativeToTallestObject" x="390" y="144" width="100" height="26" uuid="d0e9b091-503a-45cb-90d2-36d952ca20f9"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -187,7 +187,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="140" height="30" uuid="4bc44345-3c1d-4f5c-8c5f-e75950c8111a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f76364c3-48b0-4677-a058-da2a15eb260f"/>
@@ -280,12 +280,6 @@
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
 		<band height="54" splitType="Stretch">
 			<staticText>

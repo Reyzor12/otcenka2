@@ -4,18 +4,23 @@ import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import ru.eleron.osa.lris.otcenka.entities.Department;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.ReportYear;
 import ru.eleron.osa.lris.otcenka.service.dao.BaseDataFromDB;
 import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
 import ru.eleron.osa.lris.otcenka.service.dao.ReportYearDao;
+import ru.eleron.osa.lris.otcenka.utilities.entitysupply.NiokrFinalEntity;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -30,6 +35,9 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
 
     @Autowired
     private ReportYearDao<ReportYear> reportYearDao;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public OpenReportDaoImp(){super(OpenReport.class);}
 
@@ -95,5 +103,30 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
                 .setParameter("listY",reportYearList);
         query.executeUpdate();
         return getListWithDepartments(currentY,currentM);
+    }
+
+    @Override
+    @Transactional
+    public List<NiokrFinalEntity> getListNiokrFinalEntity(ReportYear year, Integer month, Department department) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public List<NiokrFinalEntity> getListNiokrFinalEntity(ReportYear year, Integer month) {
+        String sql = "select d.name, r.fullName, o.text, o.problems, o.comment, o.percentagePerMonth, r.percentagePerYear from dbo.department d, dbo.report r, dbo.openReport o where r.department = d.id and o.report = r.id and o.status = 6 and o.reportYear = :reportYear and o.reportMonth = :reportMonth"
+                .replace(":reportYear",year.getId().toString()).replace(":reportMonth",month.toString());
+        List<NiokrFinalEntity> list = jdbcTemplate.query(sql,(resultSet, i) -> {
+            NiokrFinalEntity entity = new NiokrFinalEntity();
+            entity.setDepartment(resultSet.getString(1));
+            entity.setLongName(resultSet.getString(2));
+            entity.setDeviation(resultSet.getString(3));
+            entity.setProblems(resultSet.getString(4));
+            entity.setComment(resultSet.getString(5));
+            entity.setPerMonth(Integer.toString(resultSet.getInt(6)));
+            entity.setPerYear(Integer.toString(resultSet.getInt(7)));
+            return entity;
+        });
+        return list;
     }
 }

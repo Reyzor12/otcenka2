@@ -10,15 +10,23 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.Department;
+import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.ReportYear;
+import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
+import ru.eleron.osa.lris.otcenka.utilities.entitysupply.NiokrFinalEntity;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 /**
  * Controller for RoleNiokrHeadMainFrame.fxml
@@ -33,6 +41,8 @@ public class RoleNiokrHeadMainFrameController {
 
     @Autowired
     private UserSession userSession;
+    @Autowired
+    private OpenReportDao<OpenReport> openReportDao;
 
     @FXML private ChoiceBox<ReportYear> choiceBoxYear;
     @FXML private ChoiceBox<Integer> choiceBoxMonth;
@@ -90,8 +100,38 @@ public class RoleNiokrHeadMainFrameController {
     @FXML public void createWordForChosenDepartment() {
 
     }
-    @FXML public void createWordForAllDepartment() {
 
+    /**
+     * Create all niokrs for all departments
+     * */
+
+    @FXML public void createWordForAllDepartment() {
+        Map<String,Object> parameters = new HashMap();
+        parameters.put("year",choiceBoxYear.getValue().getYear().toString());
+        parameters.put("cDate",choiceBoxMonth.getValue().toString() + "." + choiceBoxYear.getValue().getYear());
+/*
+        List<NiokrFinalEntity> list = Arrays.asList(
+                new NiokrFinalEntity("longName1","deviation1","problems1","comment1","perMonth1","perYear1","department1"),
+                new NiokrFinalEntity("longName2","deviation2","problems2","comment2","perMonth2","perYear2","department1"),
+                new NiokrFinalEntity("longName3","deviation3","problems3","comment3","perMonth3","perYear3","department2")
+        );*/
+        List<NiokrFinalEntity> list = openReportDao.getListNiokrFinalEntity(choiceBoxYear.getValue(), choiceBoxMonth.getValue());
+
+        JRDataSource dataSource = new JRBeanCollectionDataSource(list);
+        String path = getClass().getClassLoader().getResource("docs/AllDepartmentReports.jasper").getPath();
+
+        JasperPrint jasperPrint = null;
+        try {
+            jasperPrint = JasperFillManager.fillReport(path,parameters, dataSource);
+            JRDocxExporter exporter = new JRDocxExporter();
+            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+            File file = new File(getClass().getClassLoader().getResource("docs/test1.docx").getPath());
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(file));
+            exporter.exportReport();
+            System.out.println("hello world");
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
