@@ -108,17 +108,30 @@ public class OpenReportDaoImp extends BaseOperation<OpenReport> implements OpenR
     @Override
     @Transactional
     public List<NiokrFinalEntity> getListNiokrFinalEntity(ReportYear year, Integer month, Department department) {
-        return null;
+        String sql = "select d.name, r.fullName, o.text, o.problems, o.comment, o.percentagePerMonth, r.percentagePerYear, d.department_head from dbo.department d, dbo.report r, dbo.openReport o where r.department = d.id and o.report = r.id and o.status = 6 and o.reportYear = :reportYear and o.reportMonth = :reportMonth and d.id = :department"
+                .replace(":reportYear",year.getId().toString()).replace(":reportMonth",month.toString()).replace(":department",department.getId().toString());
+        List<NiokrFinalEntity> list = jdbcTemplate.query(sql,(resultSet, i) -> {
+            NiokrFinalEntity entity = new NiokrFinalEntity();
+            entity.setDepartment(resultSet.getString(1) + " (" + resultSet.getString(8) + ")");
+            entity.setLongName(resultSet.getString(2));
+            entity.setDeviation(resultSet.getString(3));
+            entity.setProblems(resultSet.getString(4));
+            entity.setComment(resultSet.getString(5));
+            entity.setPerMonth(Integer.toString(resultSet.getInt(6)));
+            entity.setPerYear(Integer.toString(resultSet.getInt(7)));
+            return entity;
+        });
+        return list;
     }
 
     @Override
     @Transactional
     public List<NiokrFinalEntity> getListNiokrFinalEntity(ReportYear year, Integer month) {
-        String sql = "select d.name, r.fullName, o.text, o.problems, o.comment, o.percentagePerMonth, r.percentagePerYear from dbo.department d, dbo.report r, dbo.openReport o where r.department = d.id and o.report = r.id and o.status = 6 and o.reportYear = :reportYear and o.reportMonth = :reportMonth"
+        String sql = "select d.name, r.fullName, o.text, o.problems, o.comment, o.percentagePerMonth, r.percentagePerYear, d.department_head from dbo.department d, dbo.report r, dbo.openReport o where r.department = d.id and o.report = r.id and o.status = 6 and o.reportYear = :reportYear and o.reportMonth = :reportMonth"
                 .replace(":reportYear",year.getId().toString()).replace(":reportMonth",month.toString());
         List<NiokrFinalEntity> list = jdbcTemplate.query(sql,(resultSet, i) -> {
             NiokrFinalEntity entity = new NiokrFinalEntity();
-            entity.setDepartment(resultSet.getString(1));
+            entity.setDepartment(resultSet.getString(1) + " (" + resultSet.getString(8) + ")");
             entity.setLongName(resultSet.getString(2));
             entity.setDeviation(resultSet.getString(3));
             entity.setProblems(resultSet.getString(4));

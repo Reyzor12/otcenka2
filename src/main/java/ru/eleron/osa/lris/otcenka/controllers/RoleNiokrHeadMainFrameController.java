@@ -1,5 +1,6 @@
 package ru.eleron.osa.lris.otcenka.controllers;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -18,11 +19,13 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eleron.osa.lris.otcenka.bussiness.MicrosoftReports;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
 import ru.eleron.osa.lris.otcenka.entities.Department;
 import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.ReportYear;
 import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
+import ru.eleron.osa.lris.otcenka.utilities.MessageGenerator;
 import ru.eleron.osa.lris.otcenka.utilities.entitysupply.NiokrFinalEntity;
 
 import java.io.File;
@@ -30,6 +33,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Controller for RoleNiokrHeadMainFrame.fxml
@@ -46,6 +50,10 @@ public class RoleNiokrHeadMainFrameController {
     private UserSession userSession;
     @Autowired
     private OpenReportDao<OpenReport> openReportDao;
+    @Autowired
+    private MessageGenerator messageGenerator;
+    @Autowired
+    private MicrosoftReports microsoftReports;
 
     @FXML private ChoiceBox<ReportYear> choiceBoxYear;
     @FXML private ChoiceBox<Integer> choiceBoxMonth;
@@ -60,6 +68,7 @@ public class RoleNiokrHeadMainFrameController {
     private Map<Department,List<Integer>> departmentStatisticMap;
     private ReportYear reportYear;
     private Integer month;
+    private JasperPrint jasperPrint;
 
     public void initialize() {
         reportYear = userSession.getCurrentReportYear(userSession.getServerDate().getYear());
@@ -100,8 +109,15 @@ public class RoleNiokrHeadMainFrameController {
     @FXML public void changeUser(ActionEvent event) {
         userSession.changeUserFrame(event);
     }
-    @FXML public void createWordForChosenDepartment() {
 
+    @FXML public void createWordForChosenDepartment() {
+        final Department department = tableViewDepartment.getSelectionModel().getSelectedItem();
+        if (department == null) {
+            messageGenerator.getWarningMessage("Не выбран ни одно подразделение для формирования отчетапо НИОКР");
+            return;
+        }
+        final List<NiokrFinalEntity> list = openReportDao.getListNiokrFinalEntity(choiceBoxYear.getValue(), choiceBoxMonth.getValue(),departmentgi);
+        createWordDocumentForNIOKRS(list);
     }
 
     /**
@@ -109,32 +125,49 @@ public class RoleNiokrHeadMainFrameController {
      * */
 
     @FXML public void createWordForAllDepartment() {
+        final List<NiokrFinalEntity> list = openReportDao.getListNiokrFinalEntity(choiceBoxYear.getValue(), choiceBoxMonth.getValue());
+        createWordDocumentForNIOKRS(list);
+    }
+
+    /**
+     * Create Words doc for niokrs
+     *
+     * */
+
+    private void createWordDocumentForNIOKRS(List<NiokrFinalEntity> list) {
+        if (list == null || list.isEmpty()) {
+            messageGenerator.getWarningMessage("Нет НИОКР'ов для формирования отчета!");
+            return;
+        }
         Map<String,Object> parameters = new HashMap();
         parameters.put("year",choiceBoxYear.getValue().getYear().toString());
         parameters.put("cDate",choiceBoxMonth.getValue().toString() + "." + choiceBoxYear.getValue().getYear());
-/*
-        List<NiokrFinalEntity> list = Arrays.asList(
-                new NiokrFinalEntity("longName1","deviation1","problems1","comment1","perMonth1","perYear1","department1"),
-                new NiokrFinalEntity("longName2","deviation2","problems2","comment2","perMonth2","perYear2","department1"),
-                new NiokrFinalEntity("longName3","deviation3","problems3","comment3","perMonth3","perYear3","department2")
-        );*/
-        List<NiokrFinalEntity> list = openReportDao.getListNiokrFinalEntity(choiceBoxYear.getValue(), choiceBoxMonth.getValue());
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(list);
-        String path = getClass().getClassLoader().getResource("docs/AllDepartmentReports.jasper").getPath();
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            try {
+                jasperPrint = JasperFillManager.fillReport(getClass().getClassLoader().getResource("docs/AllDepartmentReports.jasper").getPath(),parameters, dataSource);
+                JRDocxExporter exporter = new JRDocxExporter();
+                exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+                File file = new File(getClass().getClassLoader().getResource("docs/test1.docx").getPath());
+                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(file));
+                exporter.exportReport();
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
 
-        JasperPrint jasperPrint = null;
-        try {
-            jasperPrint = JasperFillManager.fillReport(path,parameters, dataSource);
-            JRDocxExporter exporter = new JRDocxExporter();
-            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-            File file = new File(getClass().getClassLoader().getResource("docs/test1.docx").getPath());
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(file));
-            exporter.exportReport();
-            System.out.println("hello world");
-        } catch (JRException e) {
-            e.printStackTrace();
-        }
+        });
+        future.exceptionally((e) -> {
+            Platform.runLater(() -> {messageGenerator.getWarningMessage("Не получилось сформировать отчет!");});
+            return null;
+        }).thenRun(() -> {
+            Platform.runLater(() -> {
+                messageGenerator.getInfoMessage("Отчет успешно сформирован!");
+                if(!microsoftReports.openDocxFile(getClass().getClassLoader().getResource("docs/test1.docx").getPath())) {
+                    messageGenerator.getWarningMessage("Нельзя открыть файл на данном компьютере!");
+                }
+            });
+        });
     }
 
     /**

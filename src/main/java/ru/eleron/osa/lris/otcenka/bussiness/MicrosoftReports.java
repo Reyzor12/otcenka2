@@ -51,6 +51,19 @@ public class MicrosoftReports {
         }
     }
 
+    public boolean openDocxFile(File file) {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().open(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Method find in document key word in TEXT and replace it for new one
      *
