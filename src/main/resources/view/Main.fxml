@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.Main">
+<AnchorPane id="pane" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.Main">
    <children>
-      <Label layoutX="122.0" layoutY="129.0" text="Добро божаловать в программу &quot;Оценка НИОКР&quot;" AnchorPane.topAnchor="150.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <ProgressBar fx:id="progressBarLoadProgramm" layoutX="125.0" layoutY="383.0" prefHeight="25.0" prefWidth="600.0" progress="0.0" />
-      <Label layoutX="309.0" layoutY="331.0" text="Загрузка данных">
-         <font>
-            <Font size="24.0" />
-         </font>
+      <Label id="main-title" layoutX="89.0" layoutY="195.0" text="Добро божаловать в программу &quot;Оценка НИОКР&quot;" AnchorPane.topAnchor="195.0">
+        
       </Label>
    </children>
 </AnchorPane>
