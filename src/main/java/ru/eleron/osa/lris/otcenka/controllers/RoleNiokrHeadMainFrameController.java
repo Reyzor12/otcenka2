@@ -116,7 +116,7 @@ public class RoleNiokrHeadMainFrameController {
             messageGenerator.getWarningMessage("Не выбран ни одно подразделение для формирования отчетапо НИОКР");
             return;
         }
-        final List<NiokrFinalEntity> list = openReportDao.getListNiokrFinalEntity(choiceBoxYear.getValue(), choiceBoxMonth.getValue(),departmentgi);
+        final List<NiokrFinalEntity> list = openReportDao.getListNiokrFinalEntity(choiceBoxYear.getValue(), choiceBoxMonth.getValue(),department);
         createWordDocumentForNIOKRS(list);
     }
 
