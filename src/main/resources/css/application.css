@@ -18,3 +18,18 @@
     -fx-font-size: 24px;
     -fx-text-fill: #4480e2;
 }
+
+#list-view-login {
+    -fx-font-size: 16px;
+    -fx-border-size: 2px;
+    -fx-border-color: #4480e2;
+}
+
+#button-type-1 {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4480e2;
+    -fx-background-color: #cbd8ed;
+    -fx-border-size: 2px;
+    -fx-border-color: #4480e2;
+}
