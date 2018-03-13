@@ -32,7 +32,7 @@ public class SceneLoader {
     public static void loadScene(String url){
         if(stage == null) return;
         Parent root = (Parent) loader.load(url);
-        stage.setScene(new Scene(root,800,600));
+        stage.setScene(new Scene(root,1024,720));
         stage.show();
         log.info("scene " + url + " load");
     }
