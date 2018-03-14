@@ -9,40 +9,45 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.RoleBaseMainFrameController">
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.RoleBaseMainFrameController">
    <children>
       <SplitPane dividerPositions="0.25146771037182" layoutX="398.0" layoutY="269.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane id="pane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button layoutX="62.0" layoutY="49.0" mnemonicParsing="false" onAction="#addNewUser" text="Новый пользователь" />
-                  <Button layoutX="94.0" layoutY="125.0" mnemonicParsing="false" onAction="#addNewReview" text="Отзыв" />
-                  <Button layoutX="45.0" layoutY="201.0" mnemonicParsing="false" onAction="#changeUser" text="Смена пользователя" />
+                  <Button id="button-type-1" layoutX="62.0" layoutY="49.0" mnemonicParsing="false" onAction="#addNewUser" prefHeight="50.0" text="Новый пользователь" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0" />
+                  <Button id="button-type-1" layoutX="15.0" layoutY="142.0" mnemonicParsing="false" onAction="#addNewReview" prefHeight="50.0" text="Отзыв" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="140.0" />
+                  <Button id="button-type-1" layoutX="15.0" layoutY="213.0" mnemonicParsing="false" onAction="#changeUser" prefHeight="50.0" text="Смена пользователя" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="210.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <SplitPane dividerPositions="0.361731843575419" layoutX="356.0" layoutY="203.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.38687150837988826" layoutX="356.0" layoutY="203.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane id="pane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TextField fx:id="textFieldNameOfReport" layoutX="168.0" layoutY="42.0" />
-                              <ChoiceBox fx:id="choiceBoxStatusOfReport" layoutX="531.0" layoutY="42.0" prefWidth="150.0" />
-                              <Button layoutX="47.0" layoutY="198.0" mnemonicParsing="false" onAction="#addNewReport" text="Создать" />
-                              <Button layoutX="186.0" layoutY="198.0" mnemonicParsing="false" onAction="#deleteReport" text="Удалить" />
-                              <Button layoutX="315.0" layoutY="198.0" mnemonicParsing="false" onAction="#editReport" text="Редактировать" />
-                              <Button layoutX="447.0" layoutY="198.0" mnemonicParsing="false" text="Заполнить" onAction="#fillReport" />
-                              <Button layoutX="571.0" layoutY="198.0" mnemonicParsing="false" onAction="#sendOpenReport" text="Отправить" />
-                              <Label layoutX="37.0" layoutY="47.0" text="Название" />
-                              <Label layoutX="37.0" layoutY="102.0" text="Исполнитель" />
-                              <Label layoutX="420.0" layoutY="47.0" text="Статус" />
-                              <ChoiceBox fx:id="choiceBoxOwnerOfReport" layoutX="168.0" layoutY="107.0" prefWidth="150.0" />
-                              <Button onAction="#clearSearch" layoutX="51.0" layoutY="155.0" mnemonicParsing="false" text="Очистить поиск" />
+                              <AnchorPane id="pane-1" layoutX="14.0" layoutY="32.0" prefHeight="137.0" prefWidth="727.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="50.0">
+                                 <children>
+                                    <ChoiceBox id="choicebox-mark-1" fx:id="choiceBoxOwnerOfReport" layoutX="142.0" layoutY="74.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="74.0" />
+                                    <TextField id="textfield-mark-1" fx:id="textFieldNameOfReport" layoutX="140.0" layoutY="23.0" prefHeight="25.0" prefWidth="250.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="25.0" />
+                                    <ChoiceBox id="choicebox-mark-1" fx:id="choiceBoxStatusOfReport" layoutX="421.0" layoutY="25.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="460.0" AnchorPane.topAnchor="25.0" />
+                                    <Label id="label-mark-1" layoutX="29.0" layoutY="77.0" text="Название" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="77.0" />
+                                    <Label id="label-mark-1" layoutX="27.0" layoutY="28.0" text="Исполнитель" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="30.0" />
+                                    <Label id="label-mark-1" layoutX="313.0" layoutY="32.0" text="Статус" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="30.0" />
+                                    <Button id="button-type-1" layoutX="617.0" layoutY="99.0" mnemonicParsing="false" onAction="#clearSearch" prefHeight="35.0" prefWidth="160.0" text="Очистить поиск" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                                 </children>
+                              </AnchorPane>
+                              <Button id="button-type-1" layoutX="33.0" layoutY="210.0" mnemonicParsing="false" onAction="#addNewReport" prefHeight="35.0" prefWidth="120.0" text="Создать" />
+                              <Button id="button-type-1" layoutX="165.0" layoutY="210.0" mnemonicParsing="false" onAction="#deleteReport" prefHeight="35.0" prefWidth="120.0" text="Удалить" />
+                              <Button id="button-type-1" layoutX="300.0" layoutY="210.0" mnemonicParsing="false" onAction="#editReport" prefHeight="35.0" prefWidth="160.0" text="Редактировать" />
+                              <Button id="button-type-1" layoutX="472.0" layoutY="210.0" mnemonicParsing="false" onAction="#fillReport" prefHeight="35.0" prefWidth="120.0" text="Заполнить" />
+                              <Button id="button-type-1" layoutX="605.0" layoutY="210.0" mnemonicParsing="false" onAction="#sendOpenReport" prefHeight="35.0" prefWidth="120.0" text="Отправить" />
+                              <Label id="label-mark-2" layoutX="17.0" layoutY="15.0" text="Панель поиска" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="15.0" />
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="465.0" prefWidth="760.0">
                            <children>
-                              <TableView fx:id="tableViewOpenReport" layoutX="154.0" layoutY="91.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="tableViewOpenReport" layoutX="154.0" layoutY="19.0" prefHeight="200.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                   <TableColumn fx:id="tableColumnNameOfReport" prefWidth="75.0" text="Название" />
                                   <TableColumn fx:id="tableColumnOwnerOfReport" prefWidth="75.0" text="Исполнитель" />
