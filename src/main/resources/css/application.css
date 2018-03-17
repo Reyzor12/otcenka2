@@ -134,16 +134,16 @@
 }
 
 #table-view-base-role-1 .column-header-background .label{
-    -fx-font-size: 16px;
-    -fx-font-weight:bold;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
 }
 
 
-#table-view-base-role-1 .column-header-background{
+#table-view-base-role-1 .column-header{
     -fx-background-color: #5b94ef;
 }
 
-#table-view-base-role-1 table-cell {
+#table-view-base-role-1 .table-cell {
     -fx-font-size: 14px;
-    -fx-font-weight:bold;
+    -fx-font-weight: bold;
 }
