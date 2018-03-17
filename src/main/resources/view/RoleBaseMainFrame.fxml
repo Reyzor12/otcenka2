@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.RoleBaseMainFrameController">
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.RoleBaseMainFrameController">
    <children>
       <SplitPane dividerPositions="0.25146771037182" layoutX="398.0" layoutY="269.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -30,7 +30,7 @@
                                  <children>
                                     <ChoiceBox id="choicebox-mark-1" fx:id="choiceBoxOwnerOfReport" layoutX="142.0" layoutY="74.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="74.0" />
                                     <TextField id="textfield-mark-1" fx:id="textFieldNameOfReport" layoutX="140.0" layoutY="23.0" prefHeight="25.0" prefWidth="250.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="25.0" />
-                                    <ChoiceBox id="choicebox-mark-1" fx:id="choiceBoxStatusOfReport" layoutX="421.0" layoutY="25.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="460.0" AnchorPane.topAnchor="25.0" />
+                                    <ChoiceBox id="choicebox-mark-1" fx:id="choiceBoxStatusOfReport" layoutX="421.0" layoutY="25.0" prefHeight="30.0" prefWidth="250.0" AnchorPane.leftAnchor="460.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="25.0" />
                                     <Label id="label-mark-1" layoutX="29.0" layoutY="77.0" text="Название" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="77.0" />
                                     <Label id="label-mark-1" layoutX="27.0" layoutY="28.0" text="Исполнитель" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="30.0" />
                                     <Label id="label-mark-1" layoutX="313.0" layoutY="32.0" text="Статус" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="30.0" />
@@ -47,7 +47,7 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="465.0" prefWidth="760.0">
                            <children>
-                              <TableView fx:id="tableViewOpenReport" layoutX="154.0" layoutY="19.0" prefHeight="200.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView id="table-view-base-role-1" fx:id="tableViewOpenReport" layoutX="154.0" layoutY="19.0" prefHeight="200.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                   <TableColumn fx:id="tableColumnNameOfReport" prefWidth="75.0" text="Название" />
                                   <TableColumn fx:id="tableColumnOwnerOfReport" prefWidth="75.0" text="Исполнитель" />
