@@ -6,21 +6,20 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.ReviewFrameController">
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.ReviewFrameController">
    <children>
       <SplitPane dividerPositions="0.25146771037182" layoutX="398.0" layoutY="269.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane id="pane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button onAction="#sendReview" layoutX="101.0" layoutY="121.0" mnemonicParsing="false" text="Сохранить" />
-                  <Button onAction="#back" layoutX="101.0" layoutY="209.0" mnemonicParsing="false" text="Отмена" />
+                  <Button id="button-type-1" layoutX="101.0" layoutY="121.0" mnemonicParsing="false" onAction="#sendReview" prefHeight="50.0" text="Сохранить" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0" />
+                  <Button id="button-type-1" layoutX="101.0" layoutY="209.0" mnemonicParsing="false" onAction="#back" prefHeight="50.0" text="Отмена" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="140.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane id="pane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TextArea fx:id="textAreaReview" layoutX="37.0" layoutY="111.0" prefHeight="439.0" prefWidth="662.0" />
-                  <Label layoutX="306.0" layoutY="54.0" text="Коментарии и замечания к работе программы" />
+                  <TextArea id="textfield-mark-1" fx:id="textAreaReview" layoutX="37.0" layoutY="111.0" prefHeight="439.0" prefWidth="662.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="70.0" />
+                  <Label id="title-level2" layoutX="112.0" layoutY="14.0" text="Коментарии и замечания к работе программы" AnchorPane.leftAnchor="112.0" AnchorPane.topAnchor="15.0" />
                </children>
             </AnchorPane>
         </items>
