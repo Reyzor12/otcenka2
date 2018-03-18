@@ -147,3 +147,30 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
+
+#spinner-1 {
+   -fx-font-size: 14px;
+   -fx-font-weight: bold;
+   -fx-border-weight: 2px;
+   -fx-control-inner-background: #abd3f2;
+   -fx-dark-text-color: #00447a;
+   -fx-mid-text-color: #00447a;
+   -fx-border-color: #4480e2;
+}
+
+#spinner-1 .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-body-color: #abd3f2;
+}
+
+#spinner-1 .increment-arrow-button:hover,
+#spinner-1 .decrement-arrow-button:hover {
+    -fx-body-color: ladder(#444, yellow 0%, red 100%);
+}
+
+#spinner-1 .increment-arrow-button:hover:pressed,
+#spinner-1 .decrement-arrow-button:hover:pressed,
+#spinner-1 .increment-arrow-button:pressed,
+#spinner-1 .decrement-arrow-button:pressed {
+    -fx-body-color: ladder(#AAA, yellow 0%, red 100%);
+}
