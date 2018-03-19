@@ -7,26 +7,25 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.ViewOrEditOpenReportFrameController">
+<AnchorPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.ViewOrEditOpenReportFrameController">
    <children>
       <SplitPane dividerPositions="0.25146771037182" layoutX="398.0" layoutY="269.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane id="pane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button onAction="#updateOpenReport" layoutX="101.0" layoutY="121.0" mnemonicParsing="false" text="Сохранить" />
-                  <Button onAction="#back" layoutX="101.0" layoutY="209.0" mnemonicParsing="false" text="Отмена" />
+                  <Button id="button-type-1" layoutX="101.0" layoutY="121.0" mnemonicParsing="false" onAction="#updateOpenReport" prefHeight="50.0" text="Сохранить" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0" />
+                  <Button id="button-type-1" layoutX="101.0" layoutY="209.0" mnemonicParsing="false" onAction="#back" prefHeight="50.0" text="Отмена" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="140.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane id="pane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Label layoutX="209.0" layoutY="24.0" text="Окно заполнения НИОКР за месяц" />
-                  <Label layoutX="62.0" layoutY="81.0" text="Текст НИОКР'а" />
-                  <TextArea fx:id="textAreaText" layoutX="62.0" layoutY="110.0" prefHeight="115.0" prefWidth="596.0" />
-                  <Label layoutX="62.0" layoutY="250.0" text="Проблемы" />
-                  <TextArea fx:id="textAreaProblem" layoutX="62.0" layoutY="279.0" prefHeight="98.0" prefWidth="596.0" />
-                  <Label layoutX="62.0" layoutY="422.0" text="Процент за месяц" />
-                  <Spinner fx:id="spinnerMonthPersentage" layoutX="187.0" layoutY="418.0" />
+                  <Label id="title-level2" layoutX="209.0" layoutY="24.0" prefHeight="28.0" prefWidth="460.0" text="Окно заполнения НИОКР за месяц" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="24.0" />
+                  <Label id="label-mark-1" layoutX="62.0" layoutY="81.0" text="Текст НИОКР'а" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="80.0" />
+                  <TextArea id="textfield-mark-1" fx:id="textAreaText" layoutX="62.0" layoutY="110.0" prefHeight="115.0" prefWidth="596.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="110.0" />
+                  <Label id="label-mark-1" layoutX="62.0" layoutY="250.0" text="Проблемы" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="250.0" />
+                  <TextArea id="textfield-mark-1" fx:id="textAreaProblem" layoutX="62.0" layoutY="279.0" prefHeight="115.0" prefWidth="596.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="280.0" />
+                  <Label id="label-mark-1" layoutX="62.0" layoutY="422.0" prefHeight="19.0" prefWidth="147.0" text="Процент за месяц" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="422.0" />
+                  <Spinner id="spinner-1" fx:id="spinnerMonthPersentage" layoutX="187.0" layoutY="418.0" prefHeight="25.0" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="418.0" />
                </children>
             </AnchorPane>
         </items>

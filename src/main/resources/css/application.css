@@ -174,3 +174,23 @@
 #spinner-1 .decrement-arrow-button:pressed {
     -fx-body-color: ladder(#AAA, yellow 0%, red 100%);
 }
+
+#check-box-1 {
+    -fx-font-size: 16px;
+    -fx-text-fill: #4480e2;
+    -fx-font-weight: bold;
+}
+
+#check-box-1 .box {
+    -fx-background-color: white;
+    -fx-border-color:grey;
+    -fx-border-radius:3px;
+}
+
+#check-box-1:selected .mark {
+    -fx-background-color: white;
+}
+
+#check-box-1:selected .box {
+    -fx-background-color: #28a3f4;
+}
