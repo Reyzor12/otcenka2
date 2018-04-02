@@ -32,7 +32,6 @@ public class OpenReport extends AbstractEntities {
     @Column(name = "status", nullable = false)
     private Integer status;
 
-    public static final Integer NEW_REPORT = 1;
     public static final Integer NOT_FILL_REPORT = 2;
     public static final Integer FILL_REPORT = 3;
     public static final Integer REPORT_BACK_WITHOUT_COMMENT = 4;

@@ -92,7 +92,7 @@ public class RoleHeadDepartmentMainFrameController {
         tableColumnStatus.setCellValueFactory(param -> new SimpleStringProperty(ConvertorForUse.convertStatusToString(param.getValue().getStatus())));
 
         observableListOpenReport = FXCollections.observableArrayList(userSession.getOpenreportList());
-        filteredListOpenReport = new FilteredList<OpenReport>(observableListOpenReport, p -> true);
+        filteredListOpenReport = new FilteredList<OpenReport>(observableListOpenReport, p -> p.getStatus() != 2);
         sortedListOpenReport = new SortedList<OpenReport>(filteredListOpenReport);
         sortedListOpenReport.comparatorProperty().bind(tableViewOpenReport.comparatorProperty());
         tableViewOpenReport.setItems(sortedListOpenReport);
@@ -225,13 +225,15 @@ public class RoleHeadDepartmentMainFrameController {
         if (
                 textFieldName.getText().isEmpty() &&
                 choiceBoxUser.getValue() == null &&
-                choiceBoxStatus.getValue() == null
+                choiceBoxStatus.getValue() == null &&
+                openReport.getStatus() != 2
                 ) {
             return true;
         } else if (
                 openReport.getReport().getShortName().toLowerCase().contains(textFieldName.getText().toLowerCase()) &&
-                (choiceBoxStatus.getValue() == null || openReport.getStatus().equals(choiceBoxStatus.getSelectionModel().getSelectedIndex()+1)) &&
-                (choiceBoxUser.getValue() == null || openReport.getReport().getResponsible().equals(choiceBoxUser.getValue()))
+                (choiceBoxStatus.getValue() == null || openReport.getStatus().equals(ConvertorForUse.getStatusId(choiceBoxStatus.getSelectionModel().getSelectedItem()))) &&
+                (choiceBoxUser.getValue() == null || openReport.getReport().getResponsible().equals(choiceBoxUser.getValue())) &&
+                 openReport.getStatus() != 2
                 ) {
             return true;
         }

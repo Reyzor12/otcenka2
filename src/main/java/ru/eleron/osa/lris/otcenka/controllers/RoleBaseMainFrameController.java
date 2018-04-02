@@ -129,7 +129,7 @@ public class RoleBaseMainFrameController {
         }else if(
 
                 openReport.getReport().getShortName().toLowerCase().contains(textFieldNameOfReport.getText().toLowerCase())&&
-                (choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex() == -1 || openReport.getStatus().equals(choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex()+1))&&
+                (choiceBoxStatusOfReport.getSelectionModel().getSelectedIndex() == -1 || openReport.getStatus().equals(ConvertorForUse.getStatusId(choiceBoxStatusOfReport.getSelectionModel().getSelectedItem())))&&
                 (choiceBoxOwnerOfReport.getValue() == null || openReport.getReport().getResponsible().equals(choiceBoxOwnerOfReport.getValue()))
 
                 ) {

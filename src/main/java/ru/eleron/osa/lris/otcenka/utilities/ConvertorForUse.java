@@ -21,13 +21,20 @@ public class ConvertorForUse {
 
     private static void createStatusMap(){
         statusMap = new HashMap<>();
-        statusMap.put(OpenReport.NEW_REPORT,"Новый НИОКР");
         statusMap.put(OpenReport.NOT_FILL_REPORT,"В этом месяцы не был заполнен");
         statusMap.put(OpenReport.FILL_REPORT,"Заполнен");
         statusMap.put(OpenReport.REPORT_BACK_WITHOUT_COMMENT, "НИОКР был возвращен без коментариев");
         statusMap.put(OpenReport.REPORT_BACK_WITH_COMMENT, "НИОКР был возвращен с комментарием");
         statusMap.put(OpenReport.REPORT_APPROVED, "НИОКР был одобрен");
         statusMap.put(OpenReport.CONSIDERED, "НИОКР проверяется");
+    }
+
+    public static Integer getStatusId(String status) {
+        if(statusMap == null || statusMap.isEmpty()) return -1;
+        for(Integer key : statusMap.keySet()) {
+            if (statusMap.get(key).equals(status)) return key;
+        }
+        return -1;
     }
 
     public static List<String> getAllStatusInString(){
