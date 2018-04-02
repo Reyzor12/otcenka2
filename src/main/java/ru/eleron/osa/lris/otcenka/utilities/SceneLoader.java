@@ -50,6 +50,7 @@ public class SceneLoader {
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root, 400, 250));
         newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.setResizable(false);
         newStage.initOwner(stage);
         log.info("scene " + url + " load in new Frame");
         newStage.showAndWait();

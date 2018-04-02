@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,11 +38,16 @@ public class CommentToOpenReportController {
     private TextArea textAreaComment;
     @FXML
     private CheckBox checkBoxComment;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button cancelButton;
 
     private List<OpenReport> openReportList;
 
     public void initialize() {
         checkBoxComment.selectedProperty().addListener((observable,newValue,oldValue) -> textAreaComment.setEditable(newValue));
+        setAllTooltips();
     }
 
     /**
@@ -100,5 +106,12 @@ public class CommentToOpenReportController {
                 openReportDao.update(s);
             });
         }
+    }
+
+    private void setAllTooltips() {
+        textAreaComment.setTooltip(new Tooltip("Текст замечания к НИКОР'у"));
+        checkBoxComment.setTooltip(new Tooltip("Убрать/оставить замечание к работе"));
+        addButton.setTooltip(new Tooltip("Отправить НИОКР на доработку"));
+        cancelButton.setTooltip(new Tooltip("Отмена"));
     }
 }

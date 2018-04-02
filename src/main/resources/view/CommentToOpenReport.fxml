@@ -10,8 +10,8 @@
 <AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.CommentToOpenReportController">
    <children>
       <CheckBox fx:id="checkBoxComment" layoutX="21.0" layoutY="211.0" mnemonicParsing="false" text="Не указывать" />
-      <Button onAction="#addComment" layoutX="225.0" layoutY="207.0" mnemonicParsing="false" text="Отправить" />
-      <Button onAction="#back" layoutX="317.0" layoutY="207.0" mnemonicParsing="false" text="Отмена" />
+      <Button onAction="#addComment" fx:id="addButton" layoutX="225.0" layoutY="207.0" mnemonicParsing="false" text="Отправить" />
+      <Button onAction="#back" fx:id="cancelButton" layoutX="317.0" layoutY="207.0" mnemonicParsing="false" text="Отмена" />
       <TextArea fx:id="textAreaComment" layoutX="21.0" layoutY="58.0" prefHeight="139.0" prefWidth="366.0" />
       <Label layoutX="21.0" layoutY="23.0" prefHeight="17.0" prefWidth="366.0" text="Комментарий" />
    </children>

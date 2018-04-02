@@ -2,10 +2,7 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
@@ -43,6 +40,10 @@ public class FillReportFrameController {
     private Spinner<Integer> spinnerPersentageOfMonthReport;
     @FXML
     private CheckBox checkBoxDisableCommentOfReport;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
 
 
     /**
@@ -62,6 +63,7 @@ public class FillReportFrameController {
         }
         spinnerPersentageOfMonthReport.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100,0));
         if(userSession.getChoosenOpenReport().getPercentagePerMonth() != null) spinnerPersentageOfMonthReport.getValueFactory().setValue(userSession.getChoosenOpenReport().getPercentagePerMonth());
+        setAllTooltip();
     }
 
     @FXML
@@ -100,5 +102,15 @@ public class FillReportFrameController {
         openReport.setProblems(textAreaProblemsOfReport.getText());
         openReport.setPercentagePerMonth(spinnerPersentageOfMonthReport.getValue());
         return true;
+    }
+
+    private void setAllTooltip() {
+        textAreaTextOfReport.setTooltip(new Tooltip("Тест проделанной работы"));
+        textAreaProblemsOfReport.setTooltip(new Tooltip("Проблемные вопросы"));
+        textAreaCommentOfReport.setTooltip(new Tooltip("Замечания от руководителя"));
+        saveButton.setTooltip(new Tooltip("Сохранить"));
+        cancelButton.setTooltip(new Tooltip("Отмена"));
+        checkBoxDisableCommentOfReport.setTooltip(new Tooltip("Учесть комментарий руководителя"));
+        spinnerPersentageOfMonthReport.setTooltip(new Tooltip("Процент выполнения за месяц"));
     }
 }
