@@ -81,6 +81,10 @@ public class NewReportController {
 
     @FXML
     private TextField textFieldLong;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
 
     private Integer timeFlag;
 
@@ -137,6 +141,7 @@ public class NewReportController {
 
 
         tableViewUsers.setItems(FXCollections.observableArrayList(persons));
+        setAllTooltip();
     }
 
     @FXML
@@ -219,5 +224,17 @@ public class NewReportController {
             return false;
         }
         return true;
+    }
+
+    private void setAllTooltip() {
+        saveButton.setTooltip(new Tooltip("Сохранить"));
+        cancelButton.setTooltip(new Tooltip("Отмена"));
+        textFieldShort.setTooltip(new Tooltip("Краткое название НИКОР"));
+        textFieldLong.setTooltip(new Tooltip("Полное название НИОКР"));
+        choiceBoxStart.setTooltip(new Tooltip("Дата начала НИОКР"));
+        choiceBoxEnd.setTooltip(new Tooltip("Дата окончания НИОКР"));
+        choiceBoxOwner.setTooltip(new Tooltip("Ответственный за НИОКР"));
+        spinnerYearPersentage.setTooltip(new Tooltip("Процент за выполненой работы за год"));
+        tableViewUsers.setTooltip(new Tooltip("Список исполнителей"));
     }
 }

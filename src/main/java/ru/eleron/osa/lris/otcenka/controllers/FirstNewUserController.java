@@ -2,8 +2,10 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
@@ -48,6 +50,11 @@ public class FirstNewUserController {
     private TextField textFieldLastname;
 
     @FXML
+    private Button addButton;
+    @FXML
+    private Button cancelButton;
+
+    @FXML
     private ChoiceBox<Department> choiceBoxDepartment;
 
     private User newUser;
@@ -57,6 +64,7 @@ public class FirstNewUserController {
         TextFieldUtil.insertOnly(textFieldName,TextFieldUtil.CHAR_ONLY_REGEX);
         TextFieldUtil.insertOnly(textFieldSurname,TextFieldUtil.CHAR_ONLY_REGEX);
         TextFieldUtil.insertOnly(textFieldLastname,TextFieldUtil.CHAR_ONLY_REGEX);
+        setAllTooltip();
     }
 
     @FXML
@@ -93,5 +101,13 @@ public class FirstNewUserController {
         } else{
             messageGenerator.getWarningMessage("Не все поля были заполнены или данный пользователь уже существует");
         }
+    }
+
+    private void setAllTooltip() {
+        addButton.setTooltip(new Tooltip("Добавить пользователя"));
+        cancelButton.setTooltip(new Tooltip("Отмена"));
+        textFieldName.setTooltip(new Tooltip("Имя пользователя"));
+        textFieldSurname.setTooltip(new Tooltip("Фамилия пользователя"));
+        textFieldLastname.setTooltip(new Tooltip("Отчество пользователя"));
     }
 }

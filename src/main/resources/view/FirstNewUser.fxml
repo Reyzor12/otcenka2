@@ -14,8 +14,8 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button id="button-type-1" layoutX="423.0" layoutY="571.0" mnemonicParsing="false" onAction="#saveUser" prefHeight="50.0" prefWidth="150.0" text="Создать" AnchorPane.leftAnchor="423.0" AnchorPane.topAnchor="571.0" />
-      <Button id="button-type-1" layoutX="621.0" layoutY="571.0" mnemonicParsing="false" onAction="#exit" prefHeight="50.0" prefWidth="150.0" text="Выйти" AnchorPane.leftAnchor="621.0" AnchorPane.topAnchor="571.0" />
+      <Button fx:id="addButton" id="button-type-1" layoutX="423.0" layoutY="571.0" mnemonicParsing="false" onAction="#saveUser" prefHeight="50.0" prefWidth="150.0" text="Создать" AnchorPane.leftAnchor="423.0" AnchorPane.topAnchor="571.0" />
+      <Button fx:id="cancelButton" id="button-type-1" layoutX="621.0" layoutY="571.0" mnemonicParsing="false" onAction="#exit" prefHeight="50.0" prefWidth="150.0" text="Выйти" AnchorPane.leftAnchor="621.0" AnchorPane.topAnchor="571.0" />
       <AnchorPane id="pane-1" layoutX="201.0" layoutY="170.0" prefHeight="383.0" prefWidth="570.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="253.0" AnchorPane.topAnchor="170.0">
          <children>
             <Label id="label-mark-1" layoutX="134.0" layoutY="31.0" text="Имя" AnchorPane.leftAnchor="134.0" AnchorPane.topAnchor="31.0" />
