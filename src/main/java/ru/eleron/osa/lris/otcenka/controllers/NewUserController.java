@@ -3,8 +3,10 @@ package ru.eleron.osa.lris.otcenka.controllers;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,10 @@ public class NewUserController {
 
     @FXML
     private ChoiceBox<Department> choiceBoxDepartment;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button cancelButton;
 
     public void initialize(){
         choiceBoxDepartment.setItems(FXCollections.observableArrayList(userSession.getComputerName().getDepartment()));
@@ -52,6 +58,7 @@ public class NewUserController {
         TextFieldUtil.insertOnly(textFieldName,TextFieldUtil.CHAR_ONLY_REGEX);
         TextFieldUtil.insertOnly(textFieldSurname,TextFieldUtil.CHAR_ONLY_REGEX);
         TextFieldUtil.insertOnly(textFieldLastname,TextFieldUtil.CHAR_ONLY_REGEX);
+        setAllTooltips();
     }
 
     public Boolean checkData(){
@@ -87,7 +94,11 @@ public class NewUserController {
     }
 
     private void setAllTooltips() {
-        
+        textFieldName.setTooltip(new Tooltip("Введите имя пользователя"));
+        textFieldSurname.setTooltip(new Tooltip("Введите фамилию пользователя"));
+        textFieldLastname.setTooltip(new Tooltip("Введите отчество пользователя"));
+        addButton.setTooltip(new Tooltip("Добавить пользователя"));
+        cancelButton.setTooltip(new Tooltip("Отмена"));
     }
 
 }

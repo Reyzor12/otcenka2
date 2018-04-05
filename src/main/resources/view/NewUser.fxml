@@ -9,8 +9,8 @@
 <AnchorPane id="pane" prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.eleron.osa.lris.otcenka.controllers.NewUserController">
    <children>
       <AnchorPane id="pane-1" layoutX="288.0" layoutY="49.0" prefHeight="589.0" prefWidth="524.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" />
-      <Button id="button-type-1" layoutX="350.0" layoutY="462.0" mnemonicParsing="false" onAction="#addNewUser" prefHeight="40.0" prefWidth="120.0" text="Создать" AnchorPane.leftAnchor="350.0" />
-      <Button id="button-type-1" layoutX="583.0" layoutY="462.0" mnemonicParsing="false" onAction="#back" prefHeight="40.0" prefWidth="120.0" text="Отмена" AnchorPane.leftAnchor="583.0" />
+      <Button fx:id="addButton" id="button-type-1" layoutX="350.0" layoutY="462.0" mnemonicParsing="false" onAction="#addNewUser" prefHeight="40.0" prefWidth="120.0" text="Создать" AnchorPane.leftAnchor="350.0" />
+      <Button fx:id="cancelButton" id="button-type-1" layoutX="583.0" layoutY="462.0" mnemonicParsing="false" onAction="#back" prefHeight="40.0" prefWidth="120.0" text="Отмена" AnchorPane.leftAnchor="583.0" />
       <Label id="title-level2" layoutX="106.0" layoutY="61.0" prefHeight="43.0" prefWidth="324.0" text="Новый пользователь" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="60.0" />
       <Label id="label-mark-1" layoutX="106.0" layoutY="161.0" prefHeight="19.0" prefWidth="76.0" text="Имя" AnchorPane.leftAnchor="350.0" />
       <Label id="label-mark-1" layoutX="104.0" layoutY="236.0" text="Фамилия" AnchorPane.leftAnchor="350.0" />
