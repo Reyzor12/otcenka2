@@ -6,10 +6,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
@@ -62,12 +59,31 @@ public class RoleBaseMainFrameController {
 
     @FXML
     private ChoiceBox<String> choiceBoxStatusOfReport;
+    @FXML
+    private Button newUserButton;
+    @FXML
+    private Button newReviewButton;
+    @FXML
+    private Button changeUserButton;
+    @FXML
+    private Button newReporButton;
+    @FXML
+    private Button removeReportButton;
+    @FXML
+    private Button editReportButton;
+    @FXML
+    private Button fillReportButton;
+    @FXML
+    private Button sendReportButton;
+    @FXML
+    private Button clearButton;
 
     private FilteredList<OpenReport> filteredListOpenReport;
 
     private List<OpenReport> openReportList;
 
     public void initialize(){
+        setAllTooltips();
         openReportList = userSession.getOpenreportList();
         choiceBoxOwnerOfReport.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
         choiceBoxStatusOfReport.setItems(FXCollections.observableArrayList(ConvertorForUse.getAllStatusInString()));
@@ -187,5 +203,22 @@ public class RoleBaseMainFrameController {
            userSession.setChoosenOpenReport(openReport);
            SceneLoader.loadScene("view/FillReportFrame.fxml");
         }
+    }
+
+    private void setAllTooltips() {
+        newUserButton.setTooltip(new Tooltip("Добавить нового пользователя"));
+        newReviewButton.setTooltip(new Tooltip("Добавить новый отзыв"));
+        changeUserButton.setTooltip(new Tooltip("Смена пользователя"));
+        clearButton.setTooltip(new Tooltip("Очистить поиск"));
+        newReporButton.setTooltip(new Tooltip("Создать новый отчет"));
+        removeReportButton.setTooltip(new Tooltip("Удалить отчет"));
+        editReportButton.setTooltip(new Tooltip("Редактировать отчет"));
+        fillReportButton.setTooltip(new Tooltip("Заполнить отчет"));
+        sendReportButton.setTooltip(new Tooltip("Отправить отчет"));
+        textFieldNameOfReport.setTooltip(new Tooltip("Введите название отчета"));
+        choiceBoxStatusOfReport.setTooltip(new Tooltip("Выберете статус отчета"));
+        choiceBoxOwnerOfReport.setTooltip(new Tooltip("Выберете ответственного за отчет"));
+        tableViewOpenReport.setTooltip(new Tooltip("Табилца отчетов"));
+        tableViewOpenReport.setPlaceholder(new Label("Таблица пуста"));
     }
 }

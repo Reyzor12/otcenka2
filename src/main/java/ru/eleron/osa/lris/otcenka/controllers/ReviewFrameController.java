@@ -2,7 +2,9 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,13 @@ public class ReviewFrameController {
 
     @FXML
     private TextArea textAreaReview;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button cancelButton;
 
     public void initialize(){
-
+        setAllTooltips();
     }
 
     @FXML
@@ -48,5 +54,11 @@ public class ReviewFrameController {
     @FXML
     public void back(ActionEvent event){
         userSession.toMainFrame(event);
+    }
+
+    private void setAllTooltips() {
+        textAreaReview.setTooltip(new Tooltip("Поле ввода сообщения"));
+        addButton.setTooltip(new Tooltip("Добавить запись"));
+        cancelButton.setTooltip(new Tooltip("Отмена"));
     }
 }
