@@ -86,4 +86,8 @@ public class NewUserController {
         userSession.toMainFrame(event);
     }
 
+    private void setAllTooltips() {
+        
+    }
+
 }
