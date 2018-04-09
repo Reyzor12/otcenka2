@@ -65,6 +65,17 @@ public class RoleHeadDepartmentMainFrameController {
     private TableColumn<OpenReport,String> tableColumnUser;
     @FXML
     private TableColumn<OpenReport,String> tableColumnStatus;
+    public Button newUserButton;
+    public Button newReviewButton;
+    public Button changeUserButton;
+    public Button rejectChosenNiokrButton;
+    public Button rejectAllNiokrButtton;
+    public Button clearButton;
+    public Button showWordChosenNiokrButton;
+    public Button showWordAllNiokrButton;
+    public Button sendChosenNiokrButton;
+    public Button sendAllNiokrButton;
+    public Button editButton;
 
     private ObservableList<OpenReport> observableListOpenReport;
     private FilteredList<OpenReport> filteredListOpenReport;
@@ -96,6 +107,7 @@ public class RoleHeadDepartmentMainFrameController {
         sortedListOpenReport = new SortedList<OpenReport>(filteredListOpenReport);
         sortedListOpenReport.comparatorProperty().bind(tableViewOpenReport.comparatorProperty());
         tableViewOpenReport.setItems(sortedListOpenReport);
+        setAllTooltip();
     }
 
     @FXML
@@ -277,5 +289,24 @@ public class RoleHeadDepartmentMainFrameController {
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setAllTooltip() {
+        textFieldName.setTooltip(new Tooltip("Введите название НИОКР"));
+        choiceBoxStatus.setTooltip(new Tooltip("Выберете статус"));
+        choiceBoxUser.setTooltip(new Tooltip("Выберете пользователя"));
+        tableViewOpenReport.setTooltip(new Tooltip("Табли НИОКР'ов"));
+        tableViewOpenReport.setPlaceholder(new Label("Таблица пуста"));
+        newUserButton.setTooltip(new Tooltip("Добавить нового пользователя"));
+        newReviewButton.setTooltip(new Tooltip("Добавить новый отзыв"));
+        changeUserButton.setTooltip(new Tooltip("Сменить пользователя"));
+        rejectChosenNiokrButton.setTooltip(new Tooltip("Отозвать выбранную работу"));
+        rejectAllNiokrButtton.setTooltip(new Tooltip("Отозвать все работы"));
+        clearButton.setTooltip(new Tooltip("Очистить поиск"));
+        showWordChosenNiokrButton.setTooltip(new Tooltip("Сформировать отчет в word для выбранной работы"));
+        showWordAllNiokrButton.setTooltip(new Tooltip("Сформировать отчеты в word для всех работ"));
+        sendChosenNiokrButton.setTooltip(new Tooltip("Отослать выбранную работу"));
+        sendAllNiokrButton.setTooltip(new Tooltip("Отослать все работы"));
+        editButton.setTooltip(new Tooltip("Редактировать работу"));
     }
 }
