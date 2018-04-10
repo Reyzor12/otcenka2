@@ -2,9 +2,7 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eleron.osa.lris.otcenka.bussiness.UserSession;
@@ -28,6 +26,8 @@ public class ViewOrEditOpenReportFrameController {
     private TextArea textAreaProblem;
     @FXML
     private Spinner<Integer> spinnerMonthPersentage;
+    public Button saveButton;
+    public Button cancelButton;
 
     private OpenReport openReport;
 
@@ -36,6 +36,7 @@ public class ViewOrEditOpenReportFrameController {
         textAreaText.setText(openReport.getText());
         textAreaProblem.setText(openReport.getProblems());
         spinnerMonthPersentage.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,100,openReport.getPercentagePerMonth()));
+        setAllTooltip();
     }
 
     @FXML
@@ -54,4 +55,13 @@ public class ViewOrEditOpenReportFrameController {
         back(event);
     }
 
+    private void setAllTooltip() {
+        textAreaText.setPromptText("Описание проделанной работы");
+        textAreaProblem.setPromptText("Описание проблемы");
+        textAreaText.setTooltip(new Tooltip("Описание проделанной работы"));
+        textAreaProblem.setTooltip(new Tooltip("Описание проблемы"));
+        spinnerMonthPersentage.setTooltip(new Tooltip("Процент выполнения за месяц"));
+        saveButton.setTooltip(new Tooltip("Сохранить"));
+        cancelButton.setTooltip(new Tooltip("Отмена"));
+    }
 }

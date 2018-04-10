@@ -5,10 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -64,6 +61,11 @@ public class RoleNiokrHeadMainFrameController {
     @FXML private Label labelDepartmentDoneWork;
     @FXML private Label labelDepartmentNotDoneWork;
     @FXML private Label labelDepartmentAll;
+    public Button newUser;
+    public Button newReview;
+    public Button changeUser;
+    public Button toWordChosenDepartment;
+    public Button toWordAllDepartment;
 
     private Map<Department,List<Integer>> departmentStatisticMap;
     private ReportYear reportYear;
@@ -98,6 +100,7 @@ public class RoleNiokrHeadMainFrameController {
         });
 
         tableViewDepartment.setItems(FXCollections.observableArrayList(departmentStatisticMap.keySet()));
+        setAllTooltip();
     }
 
     @FXML public void newUser(ActionEvent event) {
@@ -181,5 +184,17 @@ public class RoleNiokrHeadMainFrameController {
             if (list.get(0).equals(list.get(1))) result += 1;
         }
         return result;
+    }
+
+    private void setAllTooltip() {
+        choiceBoxMonth.setTooltip(new Tooltip("Показать статистику за месяц"));
+        choiceBoxYear.setTooltip(new Tooltip("Показать статистику за год"));
+        tableViewDepartment.setPlaceholder(new Label("Таблица пуста"));
+        tableViewDepartment.setTooltip(new Tooltip("Статистика отчетности по подразделениям"));
+        newUser.setTooltip(new Tooltip("Добавить пользователя"));
+        newReview.setTooltip(new Tooltip("Добавить отзыв"));
+        changeUser.setTooltip(new Tooltip("Сменить пользователя"));
+        toWordAllDepartment.setTooltip(new Tooltip("Вывести отчет по выбранному подразделению"));
+        toWordChosenDepartment.setTooltip(new Tooltip("Вывести отчет по всем подразделениям"));
     }
 }

@@ -2,7 +2,10 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +32,12 @@ public class UserLoginFrameController {
 
     @FXML
     private ListView<User> listView;
+    public Button enterButton;
+    public Button exitButton;
 
     public void initialize(){
         listView.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
+        setAllTooltip();
     }
 
     @FXML
@@ -61,5 +67,12 @@ public class UserLoginFrameController {
                 messageGenerator.getWarningMessage("Пользователь имеет недопутимую роль, свяжитесь с разработчиками!");
             }
         }
+    }
+
+    private void setAllTooltip() {
+        listView.setPlaceholder(new Label("Список пст"));
+        listView.setTooltip(new Tooltip("Список пользователей"));
+        enterButton.setTooltip(new Tooltip("Выбрать пользователя"));
+        exitButton.setTooltip(new Tooltip("Выйти"));
     }
 }
