@@ -162,7 +162,8 @@ public class RoleBaseMainFrameController {
         }else{
             reportDao.remove(openReport.getReport());
             userSession.setOpenreportList(baseOperationOpenReport.getListWithDepartments());
-            tableViewOpenReport.setItems(FXCollections.observableArrayList(userSession.getOpenreportList()));
+            openReportList.clear();
+            openReportList.addAll(FXCollections.observableArrayList(userSession.getOpenreportList()));
             messageGenerator.getInfoMessage("НИОКР успешно удален");
         }
     }
