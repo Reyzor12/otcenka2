@@ -144,8 +144,7 @@ public class Report extends AbstractEntities {
 
         if (!shortName.equals(report.shortName)) return false;
         if (!fullName.equals(report.fullName)) return false;
-        if (!responsible.equals(report.responsible)) return false;
-        return department.equals(report.department);
+        return getId().equals(report.getId());
     }
 
     @Override

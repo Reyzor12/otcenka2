@@ -6,9 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import ru.eleron.osa.lris.otcenka.entities.Department;
+import ru.eleron.osa.lris.otcenka.entities.OpenReport;
 import ru.eleron.osa.lris.otcenka.entities.Report;
 import ru.eleron.osa.lris.otcenka.entities.User;
+import ru.eleron.osa.lris.otcenka.service.dao.OpenReportDao;
 import ru.eleron.osa.lris.otcenka.service.dao.ReportDao;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @EnableTransactionManagement
@@ -18,6 +24,8 @@ public class ReportDaoImp extends BaseOperation<Report> implements ReportDao<Rep
 
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private OpenReportDao openReportDao;
 
     public ReportDaoImp() {
         super(Report.class);

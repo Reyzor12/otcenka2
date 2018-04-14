@@ -2,6 +2,7 @@ package ru.eleron.osa.lris.otcenka.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -80,18 +81,19 @@ public class RoleBaseMainFrameController {
 
     private FilteredList<OpenReport> filteredListOpenReport;
 
-    private List<OpenReport> openReportList;
+    //private List<OpenReport> openReportList;
+    private ObservableList<OpenReport> openReportObservableList;
 
     public void initialize(){
         setAllTooltips();
-        openReportList = userSession.getOpenreportList();
         choiceBoxOwnerOfReport.setItems(FXCollections.observableArrayList(userSession.getUsersOfDepartment()));
         choiceBoxStatusOfReport.setItems(FXCollections.observableArrayList(ConvertorForUse.getAllStatusInString()));
         tableColumnNameOfReport.setCellValueFactory((param ->  new SimpleStringProperty(param.getValue().getReport().getShortName())));
         tableColumnOwnerOfReport.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getReport().getResponsible().toString()));
         tableColumnStatusOfReport.setCellValueFactory((param) -> new SimpleStringProperty(ConvertorForUse.convertStatusToString(param.getValue().getStatus())));
         tableColumnComment.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getComment()==null?"нет комментариев":"есть комментарий"));
-        filteredListOpenReport = new FilteredList<>(FXCollections.observableArrayList(openReportList),p->true);
+        openReportObservableList = FXCollections.observableArrayList(userSession.getOpenreportList());
+        filteredListOpenReport = new FilteredList<>(openReportObservableList,p->true);
         SortedList<OpenReport> sortedListOpenReport = new SortedList<>(filteredListOpenReport);
         sortedListOpenReport.comparatorProperty().bind(tableViewOpenReport.comparatorProperty());
         tableViewOpenReport.setItems(sortedListOpenReport);
@@ -161,9 +163,8 @@ public class RoleBaseMainFrameController {
             messageGenerator.getWarningMessage("Не выбран НИОКР для удаления");
         }else{
             reportDao.remove(openReport.getReport());
-            userSession.setOpenreportList(baseOperationOpenReport.getListWithDepartments());
-            openReportList.clear();
-            openReportList.addAll(FXCollections.observableArrayList(userSession.getOpenreportList()));
+            userSession.setOpenreportList(baseOperationOpenReport.getListWithDepartmentsCurrnetMonths());
+            openReportObservableList.setAll(userSession.getOpenreportList());
             messageGenerator.getInfoMessage("НИОКР успешно удален");
         }
     }
